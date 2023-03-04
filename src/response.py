@@ -1,7 +1,7 @@
 import openai
 import pinecone
 
-def get_answer(question, index):
+def get_answer(question, index, sources):
 
     with open('prompts/rules.txt') as r:
         rules = r.read()
@@ -11,10 +11,12 @@ def get_answer(question, index):
     
     plausible = ''
     i = 0
+    source_list = []
     for match in answers['matches']:
         if match['score'] >= 0.75:
             plausible += str(i) + '. ' + match['metadata']['text'] + '\n\n'
             i += 1
+            source_list.append(sources[match['metadata']['text']])
             
     header = 'You are given the following question: ' + question + '\n'
     body = 'A crash-course on development gives the following possible answers: ' + plausible + '\n'
@@ -32,4 +34,4 @@ def get_answer(question, index):
     
     cleaned = chatgpt['choices'][0]['message']['content'].strip()
     
-    return cleaned, plausible
+    return cleaned, source_list

@@ -17,9 +17,13 @@ def load_data(fp):
 def scrape(page):
     with open(page) as s:
         soup = BeautifulSoup(s, 'html.parser')
+
+    paragraphs = soup.find_all('p')
             
-    ps = [p.text for p in soup.find_all('p')]
-    return ps
+    ps = [p.text for p in paragraphs]
+    marker = page.index('_html/') + 6
+    sources = {p.text: page[marker:] for p in paragraphs}
+    return ps, sources
 
 def embed(text, index):
 

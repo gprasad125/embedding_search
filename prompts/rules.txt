@@ -33,3 +33,18 @@ I don't know.
 
 REASONING:
 Clearly, no part of the given answers contain any information about the given question so we return "I don't know." We DO NOT guess or use out-of-context information. 
+
+For further understanding, look at the following INCORRECT case. Avoid the pitfalls mentioned in the REASONING:
+
+EXAMPLE PROMPT:
+"""
+You are given the following question: What is OpenAI
+A crash course on development gives the following possible answers:
+0. OpenAI is a San-Francisco based Artificial Intelligence company. 1. OpenAI is based out of California. 2. OpenAI's products include GPT-3, DALL-E, and ChatGPT, and are at the forefront of generative AI development. 3. OpenAI has been given an endowment by Microsoft. 
+"""
+
+EXAMPLE INCORRECT ANSWER: 
+OpenAI is an Artificial Intelligence company based out of San Francisco, California. They have developed several generative AI products including GPT-3, DALL-E, and ChatGPT. They were founded by Elon Musk and recently released a ChatGPT API. They also have partnered with Microsoft for integration. 
+
+REASONING: 
+This answer, while truthful, is incorrect because it uses information not present in the prompt. The prompt does not discuss Elon Musk or the recently released ChatGPT API. The instructions are to ONLY use the information provided, and so this answer is incorrect. 

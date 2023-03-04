@@ -16,24 +16,30 @@ def run():
     pages = load_data(backend_path) + load_data(frontend_path)
 
     text = []
+    sources = dict()
     for page in pages:
 
-        text += scrape(page)
+        words, source = scrape(page)
+        text += words
+        sources.update(source)
 
     index = create_index()
     embed(text, index)
 
-    return index
+    return index, sources
 
 st.write('Now loading your embeddings...')
 st.write('This may take a minute...')
-index = run()
+index, sources = run()
 
-question = st.text_input(label = 'type your question here!', value='what is Django?')
+question = st.text_input(label = 'type your question here!', value='What is Django?')
 st.write('You are asking: ' + question)
 
 if st.button('Click to query our database!'):
-    answer = get_answer(question, index)
+    answer, sources = get_answer(question, index, sources)
     st.write(answer)
+
+    if answer != "I don't know.":
+        st.write(sources)
 
 
