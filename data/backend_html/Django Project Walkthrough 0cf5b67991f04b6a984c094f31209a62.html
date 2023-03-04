@@ -1,0 +1,757 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Django Project Walkthrough</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0cf5b679-91f0-4b6a-984c-094f31209a62" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 69.36%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="django.png"/></div><h1 class="page-title">Django Project Walkthrough</h1></header><div class="page-body"><p id="cc3c1d36-5a03-451b-b526-00f560b2f006" class="">Below is a set up walkthrough for a Django application that summarizes input text. </p><p id="93302ee0-1851-4e46-bb06-5083ba808dc3" class="">All code for this project can be found in <mark class="highlight-blue"><a href="https://github.com/gprasad125/test_cc"><span style="border-bottom:0.05em solid">this repository</span></a></mark>. </p><nav id="09e17056-fc53-4e0e-9c21-912a385284be" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a445dccd-75c1-4f81-94d8-66fd7c9fa839">💻 Introduction to Django</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f8857827-ed23-4572-8caf-6c86683cccf9">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#06162d80-1266-4ab0-99a7-45ee3352184e">✅ To-Do List</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#649c3901-eef5-4a43-8146-612567e12ff9">Set Up</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0575db31-b0a7-429a-8c72-f0dffda2c289">Building the Summarizer</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0b3deab5-b7f4-4026-9f99-94b240a0ef59">Using the App</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#47503986-b52c-47f5-ad38-28c8f17a552d">🤖 Step 1: Installing Dependencies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#89132189-aae5-4c2e-bc2d-a6ecba4609d1">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b34399bf-78ce-4b83-9873-b1f8569376c3">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#29eecf16-794c-4ed2-b84c-3700fd7512e5">🔀 Step 2: Launching the Django App</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4fd3757d-e8a1-4a7d-af55-b4dbb2f3c04f">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#556a0baf-9da9-445b-b78b-aa565347bfe7">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7ca5e6a2-fb22-40a0-a0fb-183ef258c6d0">👺 Step 3: Models </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#690e8b46-c261-4415-a8af-e521bef18358">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f6c219cb-b970-4579-b12a-a964827251e0">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fdc03e99-b7cd-4857-a7a8-4bd4be58096b">👷‍♂️ Step 4: Building your App!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#29acbc8b-d3c6-4523-a700-a7157e8743a6">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3273b8d5-52e0-447c-b90d-c93e1fdb56ae">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8332c101-6db7-49f9-8871-d2f7db90b5e9">🥸 Step 5: Views </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e414b762-45f3-4a22-bd23-66922ce71e31">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#28c3ade6-63ca-4179-97da-45e7abcc3473">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#23fdd60d-23a7-4ad6-8816-cbc045245773">🌐 Step 6: URLs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#706bf4ea-0666-4c33-a43a-d40fd57a29ef">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#88a2e101-3bcc-4b5c-af9b-1abca497e608">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f6a08608-4ac1-4798-ac17-11275eab326d">🔬 Step 7: Trialing Your Application!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b787ee82-e921-4a90-a772-72256fa11cd4">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7737a404-cdc7-4ce8-a832-9e4ab6858b5c">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#56e584ef-3b3e-428a-a7bc-4e48babe0bdd">🏹 Step 8: Creating a GitHub Repository</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4149ac82-053c-47b3-bbd2-ed28f5202956">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#00758620-db8e-4461-b8d5-df5d46773360">👻 Step 9: Connect to Frontend </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#276309b3-e9d1-4fa6-993b-41187ffe0b1c">Action Item</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1866f0a9-d858-4795-82a9-4f4b78000076">💥 Extra Challenge 1! Deploy the App!</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b7c39928-578e-4de7-8db0-48c91c7297e4">🤔 Closing Thoughts</a></div></nav><hr id="97756e3c-7d61-43c9-9b3b-13b13d0ea28a"/><h2 id="a445dccd-75c1-4f81-94d8-66fd7c9fa839" class="">💻 Introduction to Django</h2><p id="d7546a91-a77d-44f3-93fc-97e7848ed169" class="">Django is a Python-based framework to write web applications. It is one of the most popular options for developers, given its immense flexibility, strong security protocols, and easy integration of AI models. </p><p id="63d70d3a-c916-415d-8f56-a307719ecdd9" class="">In this crash course, you’ll learn to <strong>set up and modify your own Django application</strong> to serve as a backend API to your program. Don’t know what an API is? See a definition <a href="https://www.notion.so/Frontend-Lingo-0a3ed29c3ab04445b694a6a1c0e7e6bf"><mark class="highlight-blue">here</mark></a>. </p><h3 id="f8857827-ed23-4572-8caf-6c86683cccf9" class="">Additional Resources</h3><figure id="03a29071-83ac-446b-937c-c25c1646e432" class="link-to-page"><a href="How%20does%20Django%20work%2003a2907183ac446b937cc25c1646e432.html"><img class="icon" src="https://www.notion.so/icons/gym_gray.svg"/>How does Django work? </a></figure><figure id="c1a2ec05-ac36-439e-a64f-2905987c9b46" class="link-to-page"><a href="The%20Backend%20Dictionary%20c1a2ec05ac36439ea64f2905987c9b46.html"><span class="icon">📚</span>The Backend Dictionary</a></figure><hr id="4c7530d6-3c38-42a9-b914-b5b31e670261"/><h2 id="06162d80-1266-4ab0-99a7-45ee3352184e" class="">✅ To-Do List</h2><p id="f3f5e9b2-eedb-49f5-a2a5-5bce868ab28e" class="">Throughout, you will see <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>[Action Items]</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> for you to do as you go through this project. </p><h3 id="649c3901-eef5-4a43-8146-612567e12ff9" class="">Set Up</h3><ul id="f301f67a-ce59-47b1-a770-c6fbf3ce6876" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Ensure you are working in a virtual environment</span></li></ul><ul id="6486a429-6be1-4e15-8b5a-047ce7d578ca" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Install the necessary Python libraries </span></li></ul><ul id="2fe7f4f6-fcc8-426a-bc79-ba1a73f98672" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Launch a Django project and internal application </span></li></ul><ul id="684f2575-0964-42c9-a5cd-3eb4cc53b490" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Run the Django server </span></li></ul><ul id="294b130e-201b-4a8d-a3b6-f8f1ebbd874a" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Create an Admin account (Super User) </span></li></ul><h3 id="0575db31-b0a7-429a-8c72-f0dffda2c289" class="">Building the Summarizer</h3><ul id="7cce3a95-4e92-4a21-9ba3-b9a058083c5d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Build a Django model with a text and date-time field</span></li></ul><ul id="d6207320-c010-491b-9d35-d8d99a830263" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Register your model on the admin page </span></li></ul><ul id="817cc69b-6c37-42da-a517-0ad9dc8923ff" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Create a summarizer using the OpenAI GPT-3 language model</span></li></ul><ul id="d497594e-b79c-407e-a642-e234b2ed9178" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Write a view to interact between Models and the data</span></li></ul><h3 id="0b3deab5-b7f4-4026-9f99-94b240a0ef59" class="">Using the App</h3><ul id="73dfba4f-1093-4057-a3fb-bcbc643eb9dc" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Write a URL to path back to your view</span></li></ul><ul id="16268472-1b28-44d4-b266-77405cbfd36c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Launch the Django admin site</span></li></ul><ul id="88d6ade7-887b-400a-87ba-5d4aaaa10a1f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Post some text to the webpage and summarize </span></li></ul><p id="fb6c9a11-5400-4f67-a7fd-fba8882e4473" class="">
+</p><p id="c7c5f30b-825b-4cea-aeff-3f70f1a33f27" class="">⭐ You will also sometimes see <strong>[Discussion]</strong> tags. These will be times for you to share your progress and work with your teammates! ⭐</p><hr id="2ecaad4f-92f5-459b-bc74-cf9828659824"/><h2 id="47503986-b52c-47f5-ad38-28c8f17a552d" class="">🤖 Step 1: Installing Dependencies</h2><p id="4b545977-1927-4c49-a571-4d35d8dfa83c" class="">Make sure you are working in a virtual environment, which you can read about <mark class="highlight-blue"><a href="Python%20Best%20Practices%20175abddebbbe4dcab9105ed0493f695f.html">here</a></mark>. Once that is set up, run the following command to install a few necessary packages for Django:</p><pre id="83db8e5c-f819-46b7-b563-78f4f364b067" class="code"><code>pip install django djangorestframework</code></pre><p id="ca270709-3a48-4cbd-84a6-d2baad39871e" class="">This will install:</p><ul id="dc857460-2efe-4d73-a85b-25b236575cdf" class="bulleted-list"><li style="list-style-type:disc">The base Django package for your application</li></ul><ul id="c4dbe2c9-05ed-465c-bd7a-8bab222ee28c" class="bulleted-list"><li style="list-style-type:disc">Django REST framework for making your application act like a REST API</li></ul><h3 id="89132189-aae5-4c2e-bc2d-a6ecba4609d1" class="">Additional Resources</h3><figure id="175abdde-bbbe-4dca-b910-5ed0493f695f" class="link-to-page"><a href="Python%20Best%20Practices%20175abddebbbe4dcab9105ed0493f695f.html"><img class="icon" src="https://www.notion.so/icons/window_green.svg"/>Python Best Practices</a></figure><figure id="9011e576-7235-480b-b2d7-4c6e1b8cc38e" class="link-to-page"><a href="Django%20Libraries%209011e5767235480bb2d74c6e1b8cc38e.html"><span class="icon">🌀</span>Django Libraries</a></figure><h3 id="b34399bf-78ce-4b83-9873-b1f8569376c3" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2690e4f8-33d6-4c57-bdd1-b445f567ecc7"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong>[Action Item] Install the necessary Django dependencies for your application. </strong></div></figure><h2 id="29eecf16-794c-4ed2-b84c-3700fd7512e5" class="">🔀 Step 2: Launching the Django App</h2><p id="f0e87afe-6d71-4e2f-8b5a-937ab7c9444b" class="">Now that we have the necessary installations, we’ll run a few commands to create the Django boilerplate code. By the end of this step, we’ll have a base Django project with your app activated. </p><p id="405c3a7c-21cd-4494-a0ae-c782941f1128" class="">Firstly, run the following command inside your project directory to launch a Django project:</p><pre id="418d2413-e58b-42ad-b1a7-65f3ddb2526a" class="code"><code>django-admin startproject project-name </code></pre><p id="af998956-0f31-4a20-a4b3-889ad1b879f7" class="">This will create the <mark class="highlight-blue"><a href="https://docs.djangoproject.com/en/4.1/intro/tutorial01/#creating-a-project">following file structure</a></mark> inside your folder:</p><ul id="cbff9c2c-fa4b-466a-ae65-c2782b4e0d8f" class="toggle"><li><details open=""><summary>📁 project-name</summary><ul id="e601e64d-6c75-4ec0-a7c0-82cf335d8ace" class="toggle"><li><details open=""><summary>📁 project-name</summary><p id="cac1fad8-e65b-4bcf-b02e-7470d40dd7df" class="">📄 settings.py<div class="indented"><p id="b25af1fa-fb28-4370-9ec7-3782127f81ee" class="">configuration settings for your django app</p></div></p><p id="46b0ebf4-1f0a-41c2-87df-e6bb3df98026" class="">📄 urls.py<div class="indented"><p id="ec460892-1cf0-46c7-9a7c-614c869cb960" class="">URL declaration for your application</p></div></p><p id="32491ced-0742-4479-9454-71a65ea3556c" class="">📄 wsgi.py and 📄 asgi.py<div class="indented"><p id="0c050ddf-28c0-4888-94ca-0d9fe0936a11" class="">entry points for WSGI / ASGI web servers</p></div></p></details></li></ul><p id="2e0b77ad-c1dc-4785-afc9-e0aff569c1bb" class="">📄 manage.py <div class="indented"><p id="d8fa1362-8223-4ced-8de4-6fea26c39077" class="">launch script - do not edit!</p></div></p></details></li></ul><p id="69dde3e5-527d-48dd-956d-2cbb7b69f0e7" class="">Now, navigate to the same level as <code>manage.py</code> and run the following command to launch your Django app:</p><pre id="66676d1a-3be3-4ac5-be85-1aaa6c729b14" class="code"><code>python manage.py startapp app_name</code></pre><p id="08d6656c-d92a-47ef-904e-492ab907ffab" class="">This will create the following file structure:</p><ul id="b53dc7db-a91d-4d40-abba-764af2df9873" class="toggle"><li><details open=""><summary>📁 app-name</summary><p id="a553b929-891f-4f63-9562-f610e46fe17c" class="">📄 admin.py</p><p id="ed958784-2614-4fcc-90cc-2f1fa6d77600" class="">📄 apps.py</p><p id="730a9956-c74f-4808-a359-90c02ee0e1d4" class="">📄 models.py</p><p id="ec790738-936d-48db-8d17-5cf58856bc85" class="">📄 tests.py</p><p id="4ef9193a-c397-44e7-bc6c-c45fcaae7793" class="">📄 views.py </p><ul id="55616bf8-de12-45e0-8865-4aeb1e05f8ed" class="toggle"><li><details open=""><summary>📁 migrations</summary></details></li></ul></details></li></ul><p id="3e58b5ec-2dbe-43ca-b11c-d8ba43c33864" class="">If you would like to know more about the difference between projects vs applications in Django, you can read more about it <mark class="highlight-blue"><a href="https://docs.djangoproject.com/en/4.1/intro/tutorial01/#creating-the-polls-app">here</a></mark>. Briefly, applications are web-based and actively <em><em>do</em></em> something, while projects are a collection of configurations &amp; settings for several applications. </p><p id="84404501-3a81-46ca-8f10-49cfd16c2b29" class="">Open your project directory in an IDE of your choice (we recommend <mark class="highlight-blue"><a href="https://code.visualstudio.com">VSCode</a></mark>), and you should see something like the following:</p><figure id="72186f12-64a5-45d7-bf3e-9af02583a887" class="image"><a href="Screenshot_2023-01-18_at_6.06.01_PM.png"><img style="width:200px" src="Screenshot_2023-01-18_at_6.06.01_PM.png"/></a><figcaption>Here, my virtual environment is called “env”, my Django project is called “my_project” and my application is called “my app”. </figcaption></figure><p id="1af54e33-bc1c-4d84-b129-3cddbf307c0a" class="">Now, we have to register the app inside our project, which we can do by adding our app name, as well as the REST Framework base app, to the list of INSTALLED_APPS inside <code>settings.py</code> like so:</p><pre id="496d3eef-106c-4f46-b862-3e25d58fba37" class="code"><code>INSTALLED_APPS = [
+	...,
+	...,
+	my_app,
+	rest_framework
+]</code></pre><p id="07039cf1-82ff-4280-8c68-905e21add3c0" class="">Next, let’s create a Django administrative account. This will let you register further components of your application onto your Django project. Run the following line in the same level as <code>manage.py</code>:</p><pre id="e318c65a-5146-401e-a123-3c9da648f693" class="code"><code>python manage.py migrate
+python manage.py createsuperuser</code></pre><p id="c8c14335-62c9-4d92-97cc-8068ef75348f" class="">You’ll be prompted to create a username, enter an email, and password. Fill in all of these, and your account will be registered! </p><p id="89bf0b12-4e3d-41aa-b4d4-cac86deba410" class="">Now, let’s verify it all worked out well! Open your command line tool, navigate to the same level as <code>manage.py</code> and run the following command:</p><pre id="963a4bce-f67e-4973-b8ef-6d99192c20d3" class="code"><code>python manage.py runserver</code></pre><p id="99137394-c0f2-4bf8-b96f-8a20d2326031" class="">You should then be able to open up <mark class="highlight-blue"><a href="http://localhost:8000">localhost:8000</a></mark> (or whatever port you’ve chosen) and you should see the following image:</p><figure id="bbc4d805-959c-4d8a-8953-4b102c448d7b" class="image"><a href="django%201.png"><img style="width:432px" src="django%201.png"/></a></figure><p id="fc35f479-9f50-4c0a-be50-c9a2eb92972d" class="">Awesome! You’ve launched your first Django app 👏 </p><p id="3dfad064-e1d8-4822-8824-5237629a038b" class="">Next, we’ll look into modifying it to have it complete some cool tasks. </p><h3 id="4fd3757d-e8a1-4a7d-af55-b4dbb2f3c04f" class="">Additional Resources</h3><figure id="0e1176b3-d08a-4c24-be8e-d973d737702f" class="link-to-page"><a href="The%20Django%20Dictionary%200e1176b3d08a4c24be8ed973d737702f.html"><span class="icon">📑</span>The Django Dictionary</a></figure><h3 id="556a0baf-9da9-445b-b78b-aa565347bfe7" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f70a3bda-b553-4d07-8f39-d79ef9252805"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong>[Action Item] Start your project, application, and then verify that it launches on your localhost server. 
+
+[Discussion] Take a screenshot of your file structure with the project + app, and send it into the specified Discord thread! </strong></div></figure><h2 id="7ca5e6a2-fb22-40a0-a0fb-183ef258c6d0" class="">👺 Step 3: Models </h2><p id="db2df054-a0d2-4320-88bf-91a8395e7548" class="">Let’s navigate to <code>models.py</code> and add a model that your app will use. We are expecting the following parts of data:</p><ol type="1" id="25d638ae-ab01-41f5-919f-09381e39390e" class="numbered-list" start="1"><li>text: The actual text value that a user sends to our application to be summarized<ul id="4e28ec0f-d9f1-4fc6-8695-d1396cc2e4ca" class="toggle"><li><details open=""><summary>Additional Info</summary><p id="01dd91cc-e1dc-4019-8712-030763ca098f" class="">We’ll mark that the max length (in characters) should be 500. You can edit this for your specific scenario. We’ll also say that this field CANNOT be blank, since the summarizer cannot run on nothing. I<strong><mark class="highlight-red">n other scenarios, you may want to mark this to be True! </mark></strong></p></details></li></ul></li></ol><ol type="1" id="136fe7cb-165d-4350-8294-8d721a30b2af" class="numbered-list" start="2"><li>time_sent: The collected date and time of submission.<ul id="6f353aeb-edf8-4f8a-bdb5-6ff4aec0d681" class="toggle"><li><details open=""><summary>Additional Info</summary><p id="91e3d189-0dc9-4a12-a93b-1bf40a14eb0b" class="">We’ll set <mark class="highlight-blue">auto_now_add</mark> as True, which means that every time the text field is entered and sent, the Django application will also automatically collect the date/time information for us. Be careful, you <strong><strong><strong><strong><strong><strong>CANNOT</strong></strong></strong></strong></strong></strong> override this in submission, so read up and decide if this what you want should you choose to use this field. </p></details></li></ul></li></ol><pre id="5bf060df-db5f-4763-a8dd-f80d51645859" class="code"><code>from django.db import models
+
+class Text(models.Model):
+	text = models.CharField(max_length = 500, blank = False)
+	time_sent = models.DateTimeField(auto_now_add = True) </code></pre><p id="127153a5-f921-4514-827c-163529d0b23a" class="">Now, as admin, we can now register this model on an admin level, meaning we can manage all functions of the model. Navigate to <code>admin.py</code> and add the following lines:</p><pre id="4a6c09ee-ddcb-4f6b-8695-e896394d98df" class="code"><code>from django.contrib import admin
+from .models import Text
+
+admin.site.register(Text) </code></pre><p id="6dbbffd5-b218-4040-a7ea-3c980c6d7ec4" class="">Now that we have a registered model, let’s migrate our changes to our database! Run the following commands inside your command line tool inside your project directory at the same level as <code>manage.py</code>: </p><pre id="53b7a8f6-a43e-4785-a9c9-d3197de75fd3" class="code"><code>python manage.py makemigrations
+python manage.py migrate </code></pre><p id="e308108b-da73-4aef-ac3a-f9d55c6fdce3" class="">Your terminal should spit out some information about changes being added, and now we’re all good to go! </p><h3 id="690e8b46-c261-4415-a8af-e521bef18358" class="">Additional Resources</h3><figure id="0e1176b3-d08a-4c24-be8e-d973d737702f" class="link-to-page"><a href="The%20Django%20Dictionary%200e1176b3d08a4c24be8ed973d737702f.html"><span class="icon">📑</span>The Django Dictionary</a></figure><figure id="278b6827-4172-49f9-870b-8185e5186dfb" class="link-to-page"><a href="Migrations%20278b6827417249f9870b8185e5186dfb.html"><span class="icon">🐘</span>Migrations</a></figure><h3 id="f6c219cb-b970-4579-b12a-a964827251e0" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e48bd3fb-4dfe-45ce-9ae9-a2069c643eb1"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong><strong>[Action Item] Add the Text model to </strong></strong><code><strong><strong>models.py</strong></strong></code><strong><strong>, and then migrate those changes over to the database. </strong></strong></div></figure><p id="e9bcbb31-e53a-4aa7-a71e-141898e1b1cb" class="">Every time you make a change to a model (add, edit, delete, etc.), you will need to make those migrations reflect by running the two commands above! Keep that in mind as you develop your own Django app. </p><h2 id="fdc03e99-b7cd-4857-a7a8-4bd4be58096b" class="">👷‍♂️ Step 4: Building your App!</h2><p id="31031af0-2364-4e59-9da1-1cea75189263" class="">Now, let’s step away from Django for a second, and build out the actual summarizer, where we’ll use OpenAI’s GPT-3 language model to handle text. </p><p id="dd8d0eb1-1f41-408f-a560-cda08966753d" class="">Let’s create a folder at the same level as <code>manage.py</code> called “summarizer” and place the following code block inside a “<code>summarizer.py</code>” file within that new folder. </p><pre id="c6aa5209-a2ec-4ed8-8003-e41bc48352e5" class="code"><code># import library
+import openai
+
+# configure openai to your account 
+openai.api_key = ########
+
+def summarize(text):
+	
+	# create prompt
+	prompt = &quot;Write a concise summary of the following content: \n&quot;
+	prompt += text
+	
+	# ping model and generate a response
+	response = openai.Completion.create(
+			engine = &quot;text-davinci-003&quot;,
+			prompt = prompt,
+			...,
+			...,
+			...
+	)
+	
+	# clean up response to just the actual String value and return 
+	answer = response[&quot;choices&quot;][0][&quot;text&quot;].strip()
+	return answer 
+
+########################################################
+# you can tinker even further with model settings.     #
+# read about your options here                         #
+########################################################</code></pre><p id="747739c4-2b42-4a2a-88cb-cdfc815a780b" class="">Afterwards, you should have a file structure like so: </p><figure id="b530c2a1-f611-4b8b-a96d-0380d4c72e36" class="image"><a href="Screenshot_2023-01-19_at_5.06.01_PM.png"><img style="width:240px" src="Screenshot_2023-01-19_at_5.06.01_PM.png"/></a></figure><h3 id="29acbc8b-d3c6-4523-a700-a7157e8743a6" class="">Additional Resources</h3><figure id="8f607e0c-8251-4fba-a2f9-e5237b2508bc" class="link-to-page"><a href="Environment%20Variables%20in%20Python%208f607e0c82514fbaa2f9e5237b2508bc.html"><span class="icon">🤫</span>Environment Variables in Python</a></figure><h3 id="3273b8d5-52e0-447c-b90d-c93e1fdb56ae" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b9e27728-c9ea-46b3-a852-ce3812a5a315"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong><strong><strong><strong><strong>[Action Item] Create an extra directory to hold your summarizer, and add in the relevant code to a new .py file inside that. 
+
+[Discussion] Change up the prompt! Create a different prompt, and share it with your group! </strong></strong></strong></strong></strong></div></figure><h2 id="8332c101-6db7-49f9-8871-d2f7db90b5e9" class="">🥸 Step 5: Views </h2><p id="62a56a03-d290-446b-8d25-58a6c7cb0938" class="">Up till this point, we’ve built:</p><ul id="683b4bf5-4f9f-4ed3-85d7-7e66ae1b2475" class="bulleted-list"><li style="list-style-type:disc">Model, which tells us what the inputted data should look like</li></ul><ul id="21f41912-812e-4ee4-8cd2-583ec1391c11" class="bulleted-list"><li style="list-style-type:disc">Summarizer, which is how we handle the data </li></ul><p id="479a107e-ffab-4052-b83c-867a27aed482" class="">But now, the question becomes how do we get the data from the Text model into the summarizer and back? We’ll now use Django’s <strong><strong><strong><strong><strong>views</strong></strong></strong></strong></strong> to accomplish this. </p><p id="e169ac5d-0c7e-4308-a7d8-8e5c54a50ee8" class="">Navigate to <code>views.py</code> and include the following lines:</p><pre id="0e1b4247-b80a-4ce5-bd9b-6457bba9f29c" class="code"><code>from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import Text
+
+from summarizer.summary import * 
+
+# says that this function can do handle POST requests
+@api_view([&quot;POST&quot;])
+def summarize_view(request):
+	
+	# handle data inputs
+	if request.method == &quot;POST&quot;:
+		
+		# get the data and provide No value if not given
+		text = request.data.get(&quot;text&quot;, None)
+		
+		# add it to the database and save
+		new_addition = Text(text=text)
+		new_addition.save()
+
+		# pull the text and summarize it
+		summary = summarize(new_addition.text)
+		
+		# return answer &amp; status 200 (meaning everything worked!) 
+		return Response(summary, status=200)
+		</code></pre><h3 id="e414b762-45f3-4a22-bd23-66922ce71e31" class="">Additional Resources</h3><figure id="0e1176b3-d08a-4c24-be8e-d973d737702f" class="link-to-page"><a href="The%20Django%20Dictionary%200e1176b3d08a4c24be8ed973d737702f.html"><span class="icon">📑</span>The Django Dictionary</a></figure><h3 id="28c3ade6-63ca-4179-97da-45e7abcc3473" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="dff6bf8c-2f75-49bc-b2bb-eff457f86012"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong>[Action Item] Add a view to </strong><code>views.py</code><strong> that can handle both POST and GET requests. 
+
+[Discussion] Create an additional view to handle your text data in a different manner. Send your new view into the specific Discord chat.  </strong></div></figure><h2 id="23fdd60d-23a7-4ad6-8816-cbc045245773" class="">🌐 Step 6: URLs</h2><p id="6fc3d5fd-bc86-4163-8bb0-ece20b442f1a" class="">Up till this point, we have gotten a working backend that can, in theory, take some text, store it inside a database, and if desired, run a summarization function on it. But how do we actually put this into action? We’ll need to use Django URLs to create a pathway for a user to input data and see a response. URLs are like a “table of contents” for your application, telling us where we can go in our web app to get specific tasks completed. </p><p id="e08f602f-ec90-43ee-9125-8438a0d4cf11" class="">Navigate to <code>urls.py</code>  and include the following:</p><pre id="b695bc0a-3b64-4004-8889-ed71735a5eea" class="code"><code>from my_app.views import *
+
+urlpatterns = [
+	...,
+	path(&quot;/summary&quot;, summarize_view),
+	...,
+]</code></pre><p id="c3c4fed1-0739-454f-abb9-dc5b57f75de9" class="">This tells the Django application that when the server swaps to localhost:8000/summary, it should run the view we wrote earlier to handle web requests. In other words, when a user sends some text data to our application, we can go to that URL to see its summary. </p><h3 id="706bf4ea-0666-4c33-a43a-d40fd57a29ef" class="">Additional Resources</h3><figure id="fd2fb76e-8f5d-4a87-9889-c232d9b81600" class="link-to-page"><a href="URL%20Pathways%20fd2fb76e8f5d4a879889c232d9b81600.html"><span class="icon">📶</span>URL Pathways</a></figure><h3 id="88a2e101-3bcc-4b5c-af9b-1abca497e608" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="10f4af5e-946e-4c17-8a38-2a7191d1e78c"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong>[Action Item] Add a URL pathway to </strong><code>urls.py</code><strong> that links back to the view(s) you wrote in Step 5.</strong></div></figure><h2 id="f6a08608-4ac1-4798-ac17-11275eab326d" class="">🔬 Step 7: Trialing Your Application!</h2><p id="f7a5881a-b2fe-44a8-9ad5-e34a4325e7de" class="">Up till this point, we’ve just been writing some code to handle our desired behavior, but now, let’s actually try to use what we’ve built to verify it works as intended. </p><p id="147dcef0-b91d-4dd7-a237-d28ae6fb746a" class="">Rerun the server, using the command from <mark class="highlight-blue"><a href="Django%20Project%20Walkthrough%200cf5b67991f04b6a984c094f31209a62.html">above</a></mark>, and navigate to <mark class="highlight-blue"><a href="http://localhost:8000/summary">localhost:8000/summary</a></mark> and you should have an output page like so:</p><figure id="95d96218-6892-48b9-9523-d606122c1d98" class="image"><a href="Screenshot_2023-01-28_at_5.03.10_PM.png"><img style="width:720px" src="Screenshot_2023-01-28_at_5.03.10_PM.png"/></a><figcaption>Note that it says <code>“Method \GET\ not allowed.”</code> - Why do you think that is? What are POST vs GET requests doing here? </figcaption></figure><p id="b219e7c7-9e79-4483-8982-bb52ebe133c8" class="">Now, let’s send some data to be summarized. In the “Content” box, enter some text in the following format:</p><pre id="21503cd8-0d1c-466a-9cc2-6aba95475639" class="code"><code>{
+	&quot;text&quot;: &quot;Some text to be summarized!&quot; 
+}</code></pre><p id="7f7ea05c-f1a8-4cda-9879-ba15d32001ef" class="">After choosing your input text, hit the big <mark class="highlight-blue_background">POST</mark> button to send the data to our backend. After a few seconds, the page should reload and you can see your summarized output like below:</p><figure id="f86d6c51-f808-4dce-83b2-5d41ea3a7a2a" class="image"><a href="Screenshot_2023-01-28_at_5.09.49_PM.png"><img style="width:672px" src="Screenshot_2023-01-28_at_5.09.49_PM.png"/></a></figure><p id="f26feb8a-e7c8-41fb-9cc1-04d1e42d86b3" class="">Ta-da! 🥳 We’ve sent some text data to our Django app, and it summarized it and sent it back to us! Note that the output is not perfect, and the summarizer will definitely need to be tweaked with, but you have written your first Django application with POST/GET requests, databases, and URL pathing 🔥 Congratulations! Try out some more text inputs and see what kind of outputs you can get. Can you tweak <code>summarizer.py</code> to be better? </p><h3 id="b787ee82-e921-4a90-a772-72256fa11cd4" class="">Additional Resources</h3><figure id="b2979e0b-22d9-4a3e-ab24-199cc4a1d1aa" class="link-to-page"><a href="Admin%20b2979e0b22d94a3eab24199cc4a1d1aa.html"><img class="icon" src="https://www.notion.so/icons/suit_gray.svg"/>Admin</a></figure><h3 id="7737a404-cdc7-4ce8-a832-9e4ab6858b5c" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3a683c30-4962-4763-8e95-e687a4f47f86"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong>[Action Item] Launch your server, send some text data through, and verify that an output summary comes back at the correct path. 
+
+[Discussion] For your prompt, what input gave you the best output? Find that text and share it with your team. </strong></div></figure><h2 id="56e584ef-3b3e-428a-a7bc-4e48babe0bdd" class="">🏹 Step 8: Creating a GitHub Repository</h2><p id="e11adde1-e535-43ff-b6be-98b32cba0c3a" class="">Now it’s time to upload our code to GitHub, where we can collaborate with others as well as keep track of our changes. Follow this guide to create a local repository from your code and push to a remote repository in GitHub! </p><figure id="95777f5b-c4ee-487a-9f60-efb3f49681a5" class="link-to-page"><a href="https://www.notion.so/Git-Github-Crash-Course-95777f5bc4ee487a9f60efb3f49681a5"><img class="icon" src="GitHub-Mark.png"/>Git &amp; Github Crash Course</a></figure><h3 id="4149ac82-053c-47b3-bbd2-ed28f5202956" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1d58d986-114c-43c6-b7df-534640f892c5"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong>[Action Item] Create a Git repository from your Django project, and push it to your remote repository on GitHub.
+
+[Discussion] Add a .gitignore file to your Django project following the Git Crash Course. Once you’ve added, commited, and pushed your changes, take a screenshot of your GitHub repo and send it in your team discord channel!</strong></div></figure><h2 id="00758620-db8e-4461-b8d5-df5d46773360" class="">👻 Step 9: Connect to Frontend </h2><p id="92adbc17-15b8-4e8b-8a8a-ea6d85ac1f77" class="">Try and connect your Django application to a React frontend by following this given guide! 🤩</p><h3 id="276309b3-e9d1-4fa6-993b-41187ffe0b1c" class="">Action Item</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e4a876ec-08cb-4af4-b76d-f3d0f38819b5"><div style="font-size:1.5em"><span class="icon">💫</span></div><div style="width:100%"><strong><strong>[Action Item] Complete the following guide </strong></strong><figure id="a78ea844-8d6a-4a1f-948d-f35ae18c16da" class="link-to-page"><a href="Connecting%20to%20React%20a78ea8448d6a4a1f948df35ae18c16da.html"><span class="icon">🖇️</span>Connecting to React</a></figure><p id="32b6bbbd-5cf1-4ebf-b2d2-43800045c6d1" class="">
+</p><p id="d2f36a8b-8929-4467-8996-618c1a4a26bf" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>[Discussion] Record a Loom video of your locally-run connected app and send the video to your team over Discord! </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p></div></figure><h2 id="1866f0a9-d858-4795-82a9-4f4b78000076" class="">💥 Extra Challenge 1! Deploy the App!</h2><p id="60ce7140-36f6-42c2-b8c4-e96029f48e3e" class="">Open your app to public online access by deploying it via an easy deployment tool in Railway! 🤩</p><figure id="a0b00f8c-c92a-4ff4-89fc-c744bd5c9667" class="link-to-page"><a href="Deployment%20(Railway)%20a0b00f8cc92a4ff489fcc744bd5c9667.html"><img class="icon" src="railway.png"/>Deployment (Railway)</a></figure><h2 id="b7c39928-578e-4de7-8db0-48c91c7297e4" class="">🤔 Closing Thoughts</h2><p id="c13d8d52-33b6-4753-bebb-519cf46dfa07" class="">You’ve now completed the Django crash course, but you likely will have tons of unanswered questions! That’s great! Now that you have a little more understanding into how Django works, continue exploring and building and using more pieces, especially areas we did not cover here:</p><ul id="29afe28b-4708-42c6-8c96-8507176a31d6" class="bulleted-list"><li style="list-style-type:disc">Testing your application’s behavior with <code>test.py</code></li></ul><ul id="34be2155-2ad0-4442-9efa-258b6c4abfa4" class="bulleted-list"><li style="list-style-type:disc">Exploring class-based options in <code>views.py</code></li></ul><ul id="af37867a-dabf-48bb-b4c0-dbbc14d712e4" class="bulleted-list"><li style="list-style-type:disc">Using different Django libraries! </li></ul><p id="c9e8a3b6-6218-4811-a5f0-767de3035320" class="">As you build your apps, keep looking up what resources are available online, and never hesitate to ask questions when you need to!</p><p id="0c18814d-769f-4f8e-9702-e180903d9d61" class="">Additional resources, tips, and guides can be found <mark class="highlight-blue"><a href="Common%20Django%20Topics%20&amp;%20Issues%20f9fb8ff96f4744e1937a64c94fa49d8d.html">here</a></mark> as well. </p><p id="723acefb-8129-465f-a58a-72a192c21f98" class="">Happy building! 🔨 🔨</p></div></article></body></html>

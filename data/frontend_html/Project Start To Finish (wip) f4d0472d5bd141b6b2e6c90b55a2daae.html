@@ -1,0 +1,677 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Project Start To Finish (wip)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f4d0472d-5bd1-41b6-b2e6-c90b55a2daae" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1543357480-6b56f2525605?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">⛰️</span></div><h1 class="page-title">Project Start To Finish (wip)</h1></header><div class="page-body"><hr id="cc69d830-b48d-497e-8227-cf547223d6bc"/><h2 id="04f7072e-dd21-42a2-900a-caf4fa993f84" class="">Philosophy</h2><p id="38d1a844-9a6c-4bbb-b594-77feff2bc733" class="">This guide is a walkthrough on the steps towards developing your own application using a basic React SPA as an example.</p><p id="b4937f3e-12d3-4a6f-93a5-bae2752462f4" class="">It seeks to provide a specific example that can be used to base your project on while also providing resources for you to explore alternatives.</p><p id="26cd89b7-5f5b-4423-a9da-bea3e58692be" class="">Do recognize that nothing mentioned is absolute and that there are numerous paths towards approaching an app, none exactly better than the other.</p><p id="fbffdca3-e0c3-4471-9c47-e084c37dd506" class="">If you at any point feel confused, know that professional web developers feel the same as well, and definitely do not feel afraid or ashamed to ask others for help or clarification. </p><p id="7e6940b1-f3de-4dbd-b4e7-a62a4845daf8" class="">Otherwise I hope this guide provides all the necessary knowledge you need to kickstart your journey and wish you all the best in your endeavors. </p><p id="b76f6655-b428-4cfe-8e69-4d1be7af6d66" class="">
+</p><hr id="801c0889-9a74-4d06-8ff6-2910e54b949d"/><nav id="40a6e8f4-6df7-407e-b9d6-7b9472f2a42f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#04f7072e-dd21-42a2-900a-caf4fa993f84">Philosophy</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9de77024-10f4-48f9-abd3-f1b1baaceace">1. Preparation 🛠️</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5333cc07-3666-4291-9760-fe1eac38eb0f">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#42c92fe4-300e-48fc-884d-206a8ac8ce82">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3bc06174-5c60-4bd3-9e87-635a9caa3d61">2. Choosing the UI and Style tools 🤔</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ca3a5b80-2642-4953-841c-f81f5dfbc519">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#de10fa88-5ba6-4f84-a576-56d4a538e546">Share</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ead9a43c-9b20-4fd5-94c3-e962700f3983">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#74703e65-a747-4634-ade9-1510e0069ec8">3. Picking a Tool Chain 🔗</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#93bfd6a8-5dca-4799-9db6-e540f50e34b3">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d03401ac-2c17-4152-addd-30eb4216ea2d">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6cfabb3e-bc05-499c-97cd-c3c9ae59a9d5">4. Initializing the Project ⛳</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3899f5ce-e850-4df7-ab60-67745c4d0746">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#34df5755-4968-4ece-8e5e-5d5c41b27cf6">Share</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#11d73ea1-dd7c-44b6-9db8-7b3f25fde86d">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d2b76d43-0ba8-4c2c-8784-431f2bec2df0">5. Adding in your Style Tool and Linter ⚙️</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#54533c38-30e4-4add-b8ce-c1b72cc05a0e">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2d42d733-ce11-463f-8cf4-c2dbcb81be91">Share</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2b34ec01-ec3b-4c3b-8c71-a5a4207b3eaa">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#18888bf5-5cb6-4c22-b2fa-8e3c0d180d93">5.5.  Design Addendum 🎨</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#de07677b-ccb2-4d0b-a128-6fa38b4ebc26">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#da3b0d77-e536-4158-80af-e10cf5bac030">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8a8c783e-9186-4773-b030-7ee6550a2399">6. Developing your App 💻</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f4e7eba-12bf-45a2-8bce-cae5053fd5fd">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d7cacf15-0986-4520-89a4-b15c5a41b635">Share</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#014aa92c-ec71-455f-8bf5-346e34d9ebec">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#001fba21-32a8-4f53-b587-abfc0caeded2">7. Building your code 🏗️</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fd555106-6913-478b-b0ac-980b1ca98e78">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92230181-d5cd-410c-939c-f6d831821ff8">Relevant Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#698bd812-79e9-44a2-b214-2c26108fcf1b">8. Deploying your App 🚀</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#971ac266-1b55-440d-9cbf-82c4ee094fbe">New Quest</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4e847fb2-3e78-4cec-9441-e2690d5505ff">Share</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#73d935e4-23b8-4840-9e8a-96ca4107d15a">Relevant Resources</a></div></nav><h1 id="9de77024-10f4-48f9-abd3-f1b1baaceace" class="">1. Preparation 🛠️</h1><p id="6b5ba365-054c-4d27-a57e-194a3763e99f" class="">You’re probably prepared already for the journey ahead, but just in case, refreshing on the basics might be helpful.</p><h3 id="5333cc07-3666-4291-9760-fe1eac38eb0f" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f3fae64b-e972-4f19-ba60-6d3d1595b07b"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Check out the <code>Relevant Resources</code>.</div></figure><h3 id="42c92fe4-300e-48fc-884d-206a8ac8ce82" class="">Relevant Resources</h3><figure id="3cbb9d72-b266-4787-892c-b5f53f39d8d0" class="link-to-page"><a href="What%20is%20%E2%80%9CFrontend%E2%80%9D%203cbb9d72b2664787892cb5f53f39d8d0.html"><span class="icon">🥐</span>What is “Frontend”?</a></figure><figure id="b2fca7bc-3f87-4cde-b889-f45c1f4bad03" class="link-to-page"><a href="Building%20Blocks%20of%20a%20Webpage%20b2fca7bc3f874cdeb889f45c1f4bad03.html"><span class="icon">🧩</span>Building Blocks of a Webpage</a></figure><figure id="0a3ed29c-3ab0-4445-b694-a6a1c0e7e6bf" class="link-to-page"><a href="Frontend%20Lingo%200a3ed29c3ab04445b694a6a1c0e7e6bf.html"><span class="icon">💬</span>Frontend Lingo</a></figure><p id="999029ac-d8ee-4d80-bdd2-a5a39e448e10" class="">
+</p><h1 id="3bc06174-5c60-4bd3-9e87-635a9caa3d61" class="">2. Choosing the UI and Style tools 🤔</h1><p id="79292697-e9ad-4de1-817f-bcc514bfd47b" class="">Using a UI (User Interface) Framework is not always necessary, but it will very likely be helpful for creating a robust project. The same can be said for style libraries and tools.</p><p id="2a390808-0c2c-4836-ba3a-e363b05b0f43" class="">There are many different frameworks and libraries that you can use for your project. For the purposes of providing a step-by-step guide, we will be using the <code>React</code> and <code>Tailwind</code> frameworks to build an example project called <code>Hello World</code>.</p><p id="d5487f8d-0186-4f5f-9963-de50549d7775" class="">While following the example is recommended, definitely feel free to use a different UI Framework, rendering strategy, meta framework, style library, etc. if you want to challenge yourself, though you will have to figure things out on your own using its documentation and other online resources.</p><h3 id="ca3a5b80-2642-4953-841c-f81f5dfbc519" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="470be9f1-b165-40fd-8260-b56bb92002c9"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Research what UI and Styling tools to use for your project. </div></figure><h3 id="de10fa88-5ba6-4f84-a576-56d4a538e546" class="">Share</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="757644e5-2dbb-477f-8b12-8f96b192fd9b"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%">Which tools did you end up picking? Why? Share your findings with your team members!</div></figure><h3 id="ead9a43c-9b20-4fd5-94c3-e962700f3983" class="">Relevant Resources</h3><figure id="3aaf9b90-aa4c-4502-976d-7301e62aa00c" class="link-to-page"><a href="UI%20Frameworks%20(&amp;%20Libraries)%203aaf9b90aa4c4502976d7301e62aa00c.html"><span class="icon">🛤️</span>UI Frameworks (&amp; Libraries)</a></figure><figure id="74f2891a-e037-4e84-84bf-2b44897b9a60" class="link-to-page"><a href="Styling%20Libraries,%20Enhancements,%20and%20Frameworks%2074f2891ae0374e8484bf2b44897b9a60.html"><span class="icon">🧥</span>Styling Libraries, Enhancements, and Frameworks</a></figure><p id="be0541dd-1637-46b9-80c9-1a892a7ee9cd" class="">
+</p><h1 id="74703e65-a747-4634-ade9-1510e0069ec8" class="">3. Picking a Tool Chain 🔗</h1><p id="762504e2-5192-46c8-ada2-a7e0f81f582a" class="">By now you should have picked a UI Framework to use (<code>React</code>, <code>Svelte</code>, etc.). However, you will also need to decide on the tool chain that can compile your app into a production-ready build. </p><p id="81ebeb4a-ace3-4d57-9005-52c60a22ccc0" class="">On top of deciding the tool chain, you should also consider the <code>rendering strategy</code> for your app, since each tool chain supports different rendering strategies.</p><p id="92dfaf6c-7be2-404f-b52e-6178680a74cf" class="">The <code>Hello World</code> example will use <code>Vite</code> as its tool chain and <code>SPA</code> as its rendering strategy. </p><p id="e46c44a7-092b-47cd-a10b-8527c157c6a4" class="">As mentioned above, you can choose to use different tool chains and rendering strategies if you are feeling up for the challenge.</p><h3 id="93bfd6a8-5dca-4799-9db6-e540f50e34b3" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2046047e-b8d6-426d-a7bb-a7c1f3abe3fd"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Research what Tool Chain to use for your project. Discuss your findings with your team for additional input.</div></figure><h3 id="d03401ac-2c17-4152-addd-30eb4216ea2d" class="">Relevant Resources</h3><p id="f6a6a5fe-1a63-4d96-86e6-0a901716e811" class="">General</p><figure id="047be332-5441-4f97-9c2a-69644f31cd3f" class="link-to-page"><a href="Bundlers%20047be33254414f979c2a69644f31cd3f.html"><span class="icon">📦</span>Bundlers</a></figure><figure id="b0916dd8-6bd9-4e05-9d2b-c9a85762debc" class="link-to-page"><a href="Package%20Managers%20b0916dd86bd94e059d2bc9a85762debc.html"><span class="icon">🚚</span>Package Managers</a></figure><figure id="2f46434c-9de3-4ab0-a0f4-f77e49722562" class="link-to-page"><a href="Tool%20Chains%202f46434c9de34ab0a0f4f77e49722562.html"><span class="icon">🔗</span>Tool Chains</a></figure><figure id="3b572635-aef4-40bd-ad55-cc0e5fe807ba" class="link-to-page"><a href="Rendering%20Strategies%20in%20Production%203b572635aef440bdad55cc0e5fe807ba.html"><span class="icon">🎥</span>Rendering Strategies in Production</a></figure><p id="5957767f-1e03-45f8-a8ff-495cc0fe3ab0" class="">React-Specific</p><figure id="022e728e-cf84-472e-8f35-c9b1edb76497" class="link-to-page"><a href="Picking%20The%20Right%20Starting%20Tool%20022e728ecf84472e8f35c9b1edb76497.html"><span class="icon">🤔</span>Picking The Right Starting Tool</a></figure><p id="42536e24-6f68-4ed7-b09a-d88395bc3ffc" class="">
+</p><h1 id="6cfabb3e-bc05-499c-97cd-c3c9ae59a9d5" class="">4. Initializing the Project ⛳</h1><p id="fa671092-7382-4c7d-9384-f17fa9e0d368" class="">Now that you have done the research and picked the tools for your project, you can now proceed towards setting up the boilerplate code for the frontend.</p><p id="d20f0362-2bdd-47d5-87b6-5127728f549a" class="">Most tool chains should have <code>npm</code> commands that automatically setup a fresh new project for you. </p><p id="a8400b23-97c1-4382-af41-640227183816" class="">Below is <code>Hello World</code>&#x27;s setup example.</p><figure id="f1a36f72-c79a-4964-85c8-c4f1fc0ea508" class="link-to-page"><a href="HW%20Project%20Init%20f1a36f72c79a496485c8c4f1fc0ea508.html"><span class="icon">☀️</span>HW: Project Init</a></figure><h3 id="3899f5ce-e850-4df7-ab60-67745c4d0746" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="affbe4bf-88b4-4366-8b22-ebdde537eb39"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Reference your tool chain’s documentation to initialize the frontend code. </div></figure><h3 id="34df5755-4968-4ece-8e5e-5d5c41b27cf6" class="">Share</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f8d5ddbe-d251-4b0a-8dea-ac0734511f5c"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%">Showcase the initial project to your team! Take a screenshot or recording of the default app working in your browser and demo it to your team!</div></figure><h3 id="11d73ea1-dd7c-44b6-9db8-7b3f25fde86d" class="">Relevant Resources</h3><figure id="10a0ab59-4b08-456c-922e-77ba6017a00c" class="link-to-page"><a href="Typescript%2010a0ab594b08456c922e77ba6017a00c.html"><span class="icon">🔒</span>Typescript</a></figure><p id="5439b8fa-0592-42a3-b9c6-6235a3e1cd77" class="">
+</p><h1 id="d2b76d43-0ba8-4c2c-8784-431f2bec2df0" class="">5. Adding in your Style Tool and Linter ⚙️</h1><p id="1ce20ef5-a634-467b-a7f2-87bd614e0815" class="">With the boilerplate setup, you now have a basic app that you could deploy right now if you wanted to. Of course it probably wouldn’t do much, but it’s a start 🙃.</p><p id="c5438a2d-1dfa-4e64-9258-2835f78bea8e" class="">Before you go and develop however, you’ll likely also want to add on your styling tools and a <strong>linter</strong> to keep your code nice and tidy as well. </p><p id="7d4840c9-1b2c-4e0d-92cc-67331a71e0c1" class="">Below is <code>Hello World</code>&#x27;s setup for Tailwind and ESLint.</p><figure id="e9620f1d-7c0e-42ec-8e17-756a4f1f6d5c" class="link-to-page"><a href="HW%20Adding%20Tailwind%20e9620f1d7c0e42ec8e17756a4f1f6d5c.html"><span class="icon">🌀</span>HW: Adding Tailwind</a></figure><figure id="f4380023-6d79-4c10-8cbe-8507b3b482bd" class="link-to-page"><a href="HW%20Adding%20ESLint%20f43800236d794c108cbe8507b3b482bd.html"><span class="icon">🧹</span>HW: Adding ESLint</a></figure><h3 id="54533c38-30e4-4add-b8ce-c1b72cc05a0e" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="fecf0995-06fa-4012-81cd-37f7defba6e4"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Setup the additional tools you will need for the frontend.</div></figure><h3 id="2d42d733-ce11-463f-8cf4-c2dbcb81be91" class="">Share</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="de65b51a-4785-45f8-a6eb-6a68765d6c3b"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%">Now that you’ve added in a style framework or library, spend a minute or two personalizing the default app! Try making a dark-mode or light-mode version, or maybe something as simple as changing all text to forest green. Don’t forget to share the final art piece with your team 😊</div></figure><h3 id="2b34ec01-ec3b-4c3b-8c71-a5a4207b3eaa" class="">Relevant Resources</h3><figure id="62ce6b95-6bba-411c-a7a7-4b27a218dedf" class="link-to-page"><a href="Linters%2062ce6b956bba411ca7a74b27a218dedf.html"><span class="icon">🧹</span>Linters</a></figure><p id="be654549-3c81-4516-98ec-457ae4a2fe11" class="">Previously mentioned:</p><figure id="74f2891a-e037-4e84-84bf-2b44897b9a60" class="link-to-page"><a href="Styling%20Libraries,%20Enhancements,%20and%20Frameworks%2074f2891ae0374e8484bf2b44897b9a60.html"><span class="icon">🧥</span>Styling Libraries, Enhancements, and Frameworks</a></figure><p id="2a0e0c41-85ae-408d-a4aa-bb6e4b45576b" class="">
+</p><h1 id="18888bf5-5cb6-4c22-b2fa-8e3c0d180d93" class="">5.5.  Design Addendum 🎨</h1><p id="077ced58-f74c-40df-a848-365c4a7700b8" class="">Frontend encompasses a broad focus on connecting a user to a service or application. One major part of that is designing the interactions, appearance, or in other words, the overall experience of the product you are providing. Thinking in Design is more than just finding pretty colors but also optimizing how your app will be used, communicating with users, and much more that could make or break the user experience. A functional app is un-functional if no one wants to use it. </p><p id="573ac518-0485-4e99-ab43-6694b06077d1" class="">
+</p><p id="5b3cfce3-2a55-4e96-bfc1-efdc55be8bbb" class="">While it is certainly passable to have a bare-bone interface for this project, perhaps some default Bootstrap styling, making a decent effort towards the presentation and user experience of your application can go a long way towards attracting new users and wow-ing others. </p><p id="f50a106f-9ef8-4d59-b1f1-2545f80001c7" class="">
+</p><p id="369bd886-4fe7-4f3d-a82f-747aca97476b" class="">The relevant resources lists some basic design guides and overviews. If you plan to go into design or have some interest, you should definitely go through the Design Crash Course as well, which has many more in-depth guides and walkthroughs. </p><figure id="db079f98-2fdc-49fd-8c14-26eb2e94b889" class="link-to-page"><a href="https://www.notion.so/Design-Crash-Course-db079f982fdc49fd8c1426eb2e94b889"><span class="icon">🎨</span>Design Crash Course</a></figure><h3 id="de07677b-ccb2-4d0b-a128-6fa38b4ebc26" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d764794b-6c32-4b39-af8e-e2404a8d0dc3"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Think about how you want the final App to look like. Maybe draft some rough sketches using tools like <a href="https://www.figma.com/">Figma</a> 🖌️ to share with your team.</div></figure><h3 id="da3b0d77-e536-4158-80af-e10cf5bac030" class="">Relevant Resources</h3><figure id="b69e88c9-03a1-41c0-941e-2ca3122884f6" class="link-to-page"><a href="https://www.notion.so/What-is-Design-b69e88c903a141c0941e2ca3122884f6"><span class="icon">💫</span>What is “Design”?</a></figure><figure id="cd852eef-8400-4350-a54f-01e9b19927bc" class="link-to-page"><a href="https://www.notion.so/Figma-cd852eef84004350a54f01e9b19927bc"><span class="icon">🏞️</span>Figma</a></figure><figure id="88b4bcae-7ab3-4ee1-b347-8283e3491936" class="link-to-page"><a href="https://www.notion.so/Organization-Design-Crash-Course-88b4bcae7ab34ee1b3478283e3491936"><span class="icon">📎</span>Organization - Design Crash Course</a></figure><h1 id="8a8c783e-9186-4773-b030-7ee6550a2399" class="">6. Developing your App 💻</h1><p id="988cf474-93d3-4771-9725-4cced2c98dd1" class="">Now that you have everything setup, it’s time to develop your app 🎉. This will likely the most time-consuming and difficult stage of the journey. You will likely face many challenges, but you will surely learn just as much as you will suffer. It is by <em><em><em><em><em>doing</em></em></em></em></em> that most people learn their development skills, and it is likely the same for you as well. </p><p id="8a1c26a1-6b9a-4da1-97c6-4447a6399b16" class="">Always remember to communicate in your respective Discord channel for updates, blockers, difficulties, and more. If you’re faced with a difficult challenge, try breaking it into smaller chunks and searching online for solutions. If you tried your best but still couldn’t make progress, definitely don’t be afraid to reach out to other people and seek assistance. </p><p id="2261f8aa-f627-4c1a-95ef-a55018421321" class="">Below is a basic example of adding pages and a router to the <code>Hello World</code> app (part 1) and communicating with a backend API server (part 2). <code>Relevant Resources</code> also lists various guides and docs for you to reference in a rough order of most important to least important. </p><figure id="2afc11f4-a984-473a-b49d-030d85656d33" class="link-to-page"><a href="HW%20Development%20pt%201%202afc11f4a984473ab49d030d85656d33.html"><span class="icon">🌊</span>HW: Development pt. 1</a></figure><figure id="ce94cc0d-f03a-4f4f-91a1-f9033434c9e4" class="link-to-page"><a href="HW%20Development%20pt%202%20ce94cc0df03a4f4f91a1f9033434c9e4.html"><span class="icon">🪢</span>HW: Development pt. 2</a></figure><p id="c7f7375b-55b2-4955-935e-4a77e508a0d3" class="">While you’re at it, create a local Git repository from your Hello World project, and push it to your remote repository on GitHub. Be sure to add .gitignore file to your project following the Git Crash Course. Once you’ve added, committed, and pushed your changes, take a screenshot of your GitHub repo and send it in your team discord channel!</p><figure id="95777f5b-c4ee-487a-9f60-efb3f49681a5" class="link-to-page"><a href="https://www.notion.so/Git-Github-Crash-Course-95777f5bc4ee487a9f60efb3f49681a5"><img class="icon" src="GitHub-Mark.png"/>Git &amp; Github Crash Course</a></figure><h3 id="4f4e7eba-12bf-45a2-8bce-cae5053fd5fd" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="4312a84f-2e8b-40d7-96f4-835361679a5c"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Time to develop your app!</div></figure><h3 id="d7cacf15-0986-4520-89a4-b15c5a41b635" class="">Share</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c49134f6-6eb5-4963-9ea1-0a075656e55e"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%">Showcase the app you made from the Hello World tutorial with your team! Maybe try a funny prompt for the summarizer 👀</div></figure><h3 id="014aa92c-ec71-455f-8bf5-346e34d9ebec" class="">Relevant Resources</h3><figure id="6e61d398-f17b-43e5-84f6-95deba264d67" class="link-to-page"><a href="Javascript%206e61d398f17b43e584f695deba264d67.html"><span class="icon">💪</span>Javascript</a></figure><figure id="51aa1700-70ff-46ab-83c9-a541f8c31667" class="link-to-page"><a href="CSS%2051aa170070ff46ab83c9a541f8c31667.html"><span class="icon">🙂</span>CSS</a></figure><figure id="3b2c4b07-84d0-4fa8-ad2c-33f31166d819" class="link-to-page"><a href="HTML%203b2c4b0784d04fa8ad2c33f31166d819.html"><span class="icon">💀</span>HTML</a></figure><figure id="158298af-faed-40d3-84a0-ccaceb4015dd" class="link-to-page"><a href="APIs%20158298affaed40d384a0ccaceb4015dd.html"><span class="icon">🛎️</span>APIs</a></figure><figure id="fc189d56-df05-42f9-a379-e5aec2decf50" class="link-to-page"><a href="React%20fc189d56df0542f9a379e5aec2decf50.html"><span class="icon">📘</span>React</a></figure><figure id="9066c9e6-4d24-4d40-bd5a-ce0420e71eb0" class="link-to-page"><a href="MVC,%20Decoupling,%20&amp;%20More%209066c9e64d244d40bd5ace0420e71eb0.html"><span class="icon">🔗</span>MVC, Decoupling, &amp; More</a></figure><figure id="66ff6a6b-7835-43a6-9343-ea3d9d5f1fdf" class="link-to-page"><a href="Security%20&amp;%20Secrets%2066ff6a6b783543a69343ea3d9d5f1fdf.html"><span class="icon">⚔️</span>Security &amp; Secrets</a></figure><figure id="cc69f343-a714-46bd-b4da-3aa03dde0b07" class="link-to-page"><a href="Validation%20cc69f343a71446bdb4da3aa03dde0b07.html"><span class="icon">✅</span>Validation</a></figure><figure id="3767fa2f-c82e-42f8-b76e-ae40ea40f9ef" class="link-to-page"><a href="Browser%20DevTools%203767fa2fc82e42f8b76eae40ea40f9ef.html"><span class="icon">🔧</span>Browser DevTools</a></figure><figure id="e92d1cab-5b49-41e1-bf3c-eee124b2eb3a" class="link-to-page"><a href="Postman%20e92d1cab5b4941e1bf3ceee124b2eb3a.html"><span class="icon">📮</span>Postman</a></figure><figure id="11794a10-7f19-469e-a2aa-c46c95264e94" class="link-to-page"><a href="Browser%20Support%2011794a107f19469ea2aac46c95264e94.html"><span class="icon">🐌</span>Browser Support</a></figure><figure id="386a7dd1-548f-45c9-9c3b-41acb6e86138" class="link-to-page"><a href="Basic%20SEO%20and%20Accessibility%20386a7dd1548f45c99c3b41acb6e86138.html"><span class="icon">🔎</span>Basic SEO and Accessibility</a></figure><figure id="202f5288-3a28-47ce-973f-a021a35db216" class="link-to-page"><a href="Page%20Load%20&amp;%20Compression%20202f52883a2847ce973fa021a35db216.html"><span class="icon">🪨</span>Page Load &amp; Compression</a></figure><figure id="f57bcc62-bb93-4b73-90bb-a7c413c9ee25" class="link-to-page"><a href="OGP%20(Open%20Graph%20Protocol)%20f57bcc62bb934b7390bba7c413c9ee25.html"><span class="icon">🕸️</span>OGP (Open Graph Protocol)</a></figure><h1 id="001fba21-32a8-4f53-b587-abfc0caeded2" class="">7. Building your code 🏗️</h1><p id="8ecb4c49-cff8-4c2a-91ad-60a57dfd97d1" class="">It’s amazing to see that you’ve finished developing your app and are prepared to deploy it 🙂! Before you do so however, you’ll likely want to compile all of your code into a production-ready bundle to make sure everything works properly. Definitely refer to your toolchain’s documentation for instructions. Usually there should already be a <code>build</code> npm command in package.json that you can just call. </p><p id="3860c664-4039-47d1-b523-597c7f040ef9" class="">As always the walkthrough is linked below for the <code>Hello World</code> example:</p><figure id="59e2d40f-9154-45d2-8a2a-424a0715615d" class="link-to-page"><a href="HW%20Code%20Building%2059e2d40f915445d28a2a424a0715615d.html"><span class="icon">📦</span>HW: Code Building</a></figure><h3 id="fd555106-6913-478b-b0ac-980b1ca98e78" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f96a2a8a-bb67-4d13-9681-6bfdde62b7ab"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Build your app!</div></figure><h3 id="92230181-d5cd-410c-939c-f6d831821ff8" class="">Relevant Resources</h3><p id="0ce1f497-d0f1-4834-9214-8929bc847345" class="">Previously mentioned:</p><figure id="047be332-5441-4f97-9c2a-69644f31cd3f" class="link-to-page"><a href="Bundlers%20047be33254414f979c2a69644f31cd3f.html"><span class="icon">📦</span>Bundlers</a></figure><h1 id="698bd812-79e9-44a2-b214-2c26108fcf1b" class="">8. Deploying your App 🚀</h1><p id="fb3da329-f1ac-417b-b8b9-7c401f0f640c" class="">You’re at the final step of your journey. After hours and hours of development, you’re now prepared to share your app to the world. </p><p id="5685bffe-3384-42e3-9df0-44dc20eaf8dd" class="">For the <code>Hello World</code> app, we’ll be deploying it in a <code>decoupled</code> setup to <code>Railway</code> using a <code>Node</code> <code>Docker</code> image with <code>Fastify</code> as the frontend server. </p><p id="d91fe746-b6f8-40fb-bc34-9e6351defeb7" class="">Otherwise for <code>SPA</code>s, you simply want to have a server that serves the build directory files as static assets and a catch-all GET endpoint that sends <code>index.html</code> . </p><p id="a45f1ba7-565d-4814-a80e-35a03fdccb53" class="">Deployment becomes more tricky if you use a different rendering strategy like <code>SSG</code> or <code>SSR</code> where there are more requirements.  </p><figure id="c1465c9d-0b05-40fd-8a65-df1b5951a7b3" class="link-to-page"><a href="HW%20Deploying%20to%20Railway%20c1465c9d0b0540fd8a65df1b5951a7b3.html"><span class="icon">🚀</span>HW: Deploying to Railway</a></figure><h3 id="971ac266-1b55-440d-9cbf-82c4ee094fbe" class="">New Quest</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="bd991bb7-3b12-4d6e-b5da-2b484fc7c846"><div style="font-size:1.5em"><span class="icon">⚡</span></div><div style="width:100%">Deploy your app!</div></figure><h3 id="4e847fb2-3e78-4cec-9441-e2690d5505ff" class="">Share</h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="41110f61-2ab4-49d9-9a2b-3a5456e51dcc"><div style="font-size:1.5em"><span class="icon">💬</span></div><div style="width:100%">You’ve done it! You’ve just started, developed, and deployed an app from A to Z😎 Share the link with your teammates and have them try it out on the web!</div></figure><h3 id="73d935e4-23b8-4840-9e8a-96ca4107d15a" class="">Relevant Resources</h3><figure id="f232352a-ad15-4860-a890-83fb5f6799a6" class="link-to-page"><a href="Deploying%20to%20Production%20(wip)%20f232352aad154860a89083fb5f6799a6.html"><span class="icon">🚀</span>Deploying to Production (wip)</a></figure></div></article></body></html>

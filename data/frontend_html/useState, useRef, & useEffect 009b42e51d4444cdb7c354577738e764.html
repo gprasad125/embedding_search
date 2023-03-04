@@ -1,0 +1,792 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>useState, useRef, &amp; useEffect</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="009b42e5-1d44-44cd-b7c3-54577738e764" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🎩</span></div><h1 class="page-title">useState, useRef, &amp; useEffect</h1></header><div class="page-body"><blockquote id="7810c90d-03a4-4fb5-8d0f-b158d9a96450" class="">Hooks aren’t as confusing as you think</blockquote><hr id="04c1e3d1-f757-4964-93c2-d16e8c0d39e9"/><nav id="56f0368d-58ef-432c-8e53-e4d68a52b2a2" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#edda5a0f-1eaf-42ef-acf9-091fcde5cf67">Intro</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#52d91501-4ce0-4043-b4a5-6905935c6a90">useState</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6abcb075-1115-4047-9f01-0acf484e0cda">useEffect</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f2ceef57-9c3e-467d-a34d-c51ca24bcd7c">useRef</a></div></nav><h1 id="edda5a0f-1eaf-42ef-acf9-091fcde5cf67" class="">Intro</h1><p id="272ac31a-b051-48b8-8adb-086775d1c07f" class="">React hooks are a relatively new thing for React. They are simple, yet powerful. Getting used to them however can be difficult for some. This doc aims to give basic explanations and cover the normal usage of the main React hooks you will be using</p><p id="4128505e-0794-4dc4-b84a-65158573a704" class="">
+</p><h1 id="52d91501-4ce0-4043-b4a5-6905935c6a90" class="">useState</h1><p id="e0f50432-cbc0-487b-a17d-1d72f9d444fd" class="">In a nutshell, <code>state</code> is like a variable for the component. You can set it to whatever you want, and it helps keep track of various data. Normal variables do not persist between <code>re-renders</code> since they are redeclared every <code>re-render</code>. <code>state</code> on the other hand persists. </p><pre id="9cc4fd98-0abd-4cf5-a1e1-a5988bf11c62" class="code"><code>function SomeComponent() {
+	// this is a local variable that stays as &#x27;hello world&#x27; on every rerender
+	let text = &#x27;hello world&#x27;;
+	// this state stays the same between rerenders unless changed using the set function
+	const { number, setNumber } = useState(13);
+	
+	return (
+		&lt;p&gt;{text}&lt;/p&gt;
+		&lt;p&gt;{number}&lt;/p&gt;
+	);
+}</code></pre><p id="48a724ba-6d9e-40b7-a132-d52dbd2eaadd" class="">
+</p><p id="5f2573a2-2af4-46f8-8e21-4b0104cdfde7" class="">You can create a <code>state</code> with <code>useState</code>. Calling <code>useState</code> returns two values. The first is a variable containing the value of the <code>state</code>, and the second is a method to set the <code>state</code> to a new value. </p><pre id="6c574bd8-cf73-40f0-aa9a-c5acc1ad9579" class="code"><code>const { stateValue, setStateValue } = useState(&#x27;some-string&#x27;);
+
+console.log(stateValue); // &#x27;some-string&#x27;
+
+setStateValue(&#x27;some-other-string&#x27;);</code></pre><p id="79754106-79e2-490d-bdba-8b8b4216a2a4" class="">
+</p><p id="6702d602-6e31-4e3b-b9dd-09fa3e164d28" class="">The main point of importance though, is that every time you change a <code>state</code>, the components that rely on that <code>state</code> are <code>re-rendered</code>. </p><p id="6475807b-6cd3-4248-9983-a0da78f5cb2f" class="">
+</p><p id="e10758e0-6ebb-4f3e-a9f4-f6b169cb5e63" class="">Note that the value of the <code>state</code> that <code>useState</code> provides does not update automatically. In fact, it only reflects the new values when the component <code>re-renders</code> and reruns the entire component’s function. In other words, calling <code>setState</code> methods does not immediately reflect changes in the current scope:</p><pre id="864857ae-be2e-44ea-9855-ad871f420a0d" class="code"><code>const { stateValue, setStateValue } = useState(&#x27;some-string&#x27;);
+
+console.log(stateValue); // &#x27;some-string&#x27;
+
+setStateValue(&#x27;some-other-string&#x27;);
+
+console.log(stateValue); // still &#x27;some-string&#x27;
+// setStateValue does not immediately update stateValue</code></pre><p id="bb56132e-30e4-4e2a-a6a2-7b7a26382457" class="">
+</p><h1 id="6abcb075-1115-4047-9f01-0acf484e0cda" class="">useEffect</h1><p id="e02120ec-9e5f-4e34-8cf0-f64d1caf013b" class=""><code>useEffect</code> is the hook that lets you run code during certain steps of the component’s lifecycle. It takes a function that is run when the lifecycle requirements are met, and an optional array of <code>dependencies</code>, which are basically values that mean “only run the function code if these values change”. If any variable in the dependency array changes, then the function supplied as the first argument is run again. Not providing a dependency array causes <code>useEffect</code> to run on every <code>re-render</code>, and providing an empty dependency array (<code>[]</code>) causes <code>useEffect</code> to only run once when the component is first rendered. </p><pre id="875634b8-e029-4382-99f5-efe05a3fe4a6" class="code"><code>// the following is just an example to demonstrate how useEffect behaves.
+// this is actually not very good practice and should be generally avoided.
+// for information on better ways to do this, refer to the React beta docs
+// https://beta.reactjs.org/learn/you-might-not-need-an-effect
+
+// For this example specifically, it would be better to console.log directly
+// when count is updated, instead of having a useEffect listen in from the side.
+// This results in more understandable statements that don&#x27;t need to be connected
+// together mentally. 
+
+const { count, setCount } = useState(0);
+const { other, setOther } = useState(&#x27;irrelevant value&#x27;);
+
+// this logs whenever count changes
+useEffect(() =&gt; {
+	console.log(count * 2);
+}, [count]); // dependency array with count
+
+// this only logs one time, when the component is initially rendered (mounted)
+useEffect(() =&gt; {
+	console.log(count * 2);
+}, []); // empty dependency array
+
+// this logs whenever any state changes (essentially whenever the component 
+// rerenders).
+// so if &quot;other&quot; is updated, this would also rerun regardless 
+// of whether count changed.
+useEffect(() =&gt; {
+	console.log(count * 2);
+}); // no depedency array
+
+// this loops infinitely because it runs on every state change, and when it runs, 
+// it updates state, causing it to trigger itself again. 
+useEffect(() =&gt; {
+	setCount(count * 2); // setCount causes state update
+}); // no depedency array</code></pre><p id="18622fb0-19ee-4c99-84c9-163bd9c5b241" class="">
+</p><p id="e2bfc835-8b41-46ef-be5a-bd11ecd2789e" class="">You can also return another function inside the <code>useEffect</code> function, which will be run when the component <code>unmounts</code>. This is particularly useful for clearing <code>intervals</code> when they’re not needed anymore to prevent memory leaks.</p><pre id="b2681d2c-005b-4a4a-928b-372d6fc79dbd" class="code"><code>const interval = useRef(); // ignore this for now, explained in next section
+
+// this useEffect only runs once when component mounts
+useEffect(() =&gt; {
+	// create interval to log &#x27;hello&#x27; every second
+	// and store interval in reference
+	interval.current = setInterval(() =&gt; console.log(&#x27;hello&#x27;), 1000);
+	
+	// this code is run when the component unmounts.
+	// here we just delete the interval since we don&#x27;t want it anymore. 
+	return () =&gt; {
+		clearInterval(interval.current);
+	};
+}, []);</code></pre><p id="6690dc7a-e78c-4113-9107-d6cc194c6697" class="">
+</p><p id="da1b3ed9-07a6-458b-865a-1ae14c7476e6" class="">In addition, be careful about what dependencies you add to the array. How often do you think the useEffect will run in the example below?</p><pre id="ff391681-f579-4b3f-81a9-fea2190039c3" class="code"><code>function SomeComponent() {
+	const doSomethingOnMount = () =&gt; { 
+		console.log(&#x27;hello world&#x27;);
+	};
+	
+	// does this only run once, on mount?
+	useEffect(() =&gt; {
+		doSomethingOnMount();
+
+	}, [doSomethingOnMount]);
+
+	return (
+		// ...
+	);
+}</code></pre><p id="855e78e9-8a0c-413f-b4d2-302fb3fdf51e" class="">The answer is that it will run on <em><em><em><em><em><em><em><em>every </em></em></em></em></em></em></em></em>rerender. <code>doSomethingOnMount</code> is redeclared on every rerender, making its object reference change on ever rerender. As a result, when React checks that the dependencies are still the same, it will find that <code>doSomethingOnMount</code> has changed, causing the <code>useEffect</code> to trigger again. Be careful of this when you add dependencies to a <code>useEffect</code> that is only supposed to run once on component mount. Ways to solve the above problem is to either declare the function outside of the component function or to use <code>useCallback</code> or <code>useRef</code> as explained in the following section. </p><p id="b26e5c74-044b-4a06-b524-a0f2d7305099" class="">
+</p><p id="b75bd7cf-1aa6-4939-958f-0e34ab0a4b69" class="">Another important thing to be on the lookout for is that, when developing in React strict mode (which is by default on for most if not all projects), React mounts components <em><em><em><em><em>twice</em></em></em></em></em> every time, causing useEffect to run two times at a minimum. This behavior will not happen in production, but when developing it could be a pain when stuff you want running only once executes twice. For your purposes, you can probably just ignore this, but if you really dislike this, you can reference the <a href="https://beta.reactjs.org/learn/synchronizing-with-effects#how-to-handle-the-effect-firing-twice-in-development">beta docs on ways to counter this</a>.</p><p id="264f124f-4c44-4533-b8b7-75afa801bd9c" class="">
+</p><h1 id="f2ceef57-9c3e-467d-a34d-c51ca24bcd7c" class="">useRef</h1><p id="1bf1cb7d-566d-4cac-a554-ffaa981e9c17" class=""><code>useRef</code> is almost the same as <code>useState</code>. Just like <code>useState</code>, you can think of it as a variable for the component that persists between <code>re-renders</code>. </p><p id="23fefbb5-0833-4715-bdf1-c2d3bcf5ffcb" class="">
+</p><p id="8f12d986-b00e-4a02-ade7-ef62229a4ead" class="">The main difference from <code>useState</code> however is that changing a <code>reference</code> does not trigger a <code>rerender</code>. This makes it useful for storing values that you want to persist between <code>re-renders</code>. </p><p id="4abe48dd-7555-4564-996a-95a64f62719c" class="">
+</p><p id="bb90e09d-c9ea-4c5f-b992-2219d54367bf" class="">When you create a new <code>reference</code>, it has a <code>.current</code> property where you can access or update the <code>reference</code> value. Note that unlike <code>useState</code>, updates are immediate. </p><pre id="9a5e01aa-ab08-43c8-a2ff-9d2fdfe54085" class="code"><code>const someReference = useRef();
+
+console.log(someReference.current); // null
+
+someReference.current = &#x27;cheese&#x27;;
+
+console.log(someReference.current); // &#x27;cheese&#x27;</code></pre><p id="ae5c3808-530b-47d2-92e4-f43386500961" class="">
+</p><p id="02dea54e-a0c6-48aa-b70f-981f3272382a" class="">You likely won’t need to use it much, but it does come in handy when you do. </p><p id="dfe04429-a9b5-4435-9231-8d24e982a2b7" class="">For example, it is used to store the <code>interval</code> in the <code>useEffect</code> example above. Another use is a shorter substitute for the <code>useCallback</code> hook, where you create a persistent reference for an object declared inside the component so that <code>useEffect</code> doesn’t unintentionally trigger on <code>re-renders</code>. </p><pre id="5eca0b9a-3067-4d35-a42b-d11567eb562e" class="code"><code>const someFunc = () =&gt; {
+	console.log(&#x27;hello world&#x27;);
+};
+
+// this triggers on every rerender because someFunc is redeclared every rerender
+// since someFunc is redeclared, its reference changes, causing useEffect
+// to trigger again. 
+useEffect(() =&gt; {
+	someFunc();
+}, [someFunc]);
+
+
+const someOtherFunc = useRef(() =&gt; {
+	console.log(&#x27;hello world&#x27;);
+}).current; // note the .current here to immediately access the ref value
+
+// this triggers only once on component mount
+// since someOtherFunc is stored with a persistent reference
+// that won&#x27;t change between rerenders
+useEffect(() =&gt; {
+	someOtherFunc();
+}, [someOtherFunc]);</code></pre><p id="6a204d01-d0cd-498c-ba49-70ea8a0ae652" class="">
+</p></div></article></body></html>

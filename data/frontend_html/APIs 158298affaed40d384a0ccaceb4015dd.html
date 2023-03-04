@@ -1,0 +1,694 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>APIs</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="158298af-faed-40d3-84a0-ccaceb4015dd" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🛎️</span></div><h1 class="page-title">APIs</h1></header><div class="page-body"><blockquote id="865680fd-8cd8-4081-8de2-7828705b2aaf" class="">The possibilities are endless</blockquote><hr id="4ec88b78-6e56-42b4-9e83-1f99259c3475"/><nav id="a9ba608c-63a0-455d-b8a2-6c682683f40c" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#73bc12b3-7f83-4e85-9122-b9be3ae82b2c">Intro</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b1d8e4d5-503c-4ae3-bd76-6902f5e9e48b">The Basics</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#043434bb-36b5-468d-bfe5-066c8b980a86">Endpoints</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5d6a3fca-6968-4dcf-9c8e-da7b06fa4689">Requests</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#333795c3-c179-4cc9-ada6-6b52f9e48b9d">Responses</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#dca39748-9bf1-49a1-89c6-dc0950d16e36">Dynamic Endpoints</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#16bfbf71-d0fc-4e33-b4da-97be4010de28">RESTful Routing</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#da100dcc-64f2-4efa-96c3-fb10bb2aee41">Query Parameters</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4b7c5bb0-22f9-49f8-bb72-d715f7ba206e">Request Body Encoding Types</a></div></nav><h1 id="73bc12b3-7f83-4e85-9122-b9be3ae82b2c" class="">Intro</h1><p id="ec70ab60-b9b2-494f-97ef-41a9319bc8b2" class="">Hopefully you already have an idea of what an API is at this point. If not, feel free to checkout a brief description in </p><figure id="0a3ed29c-3ab0-4445-b694-a6a1c0e7e6bf" class="link-to-page"><a href="Frontend%20Lingo%200a3ed29c3ab04445b694a6a1c0e7e6bf.html"><span class="icon">💬</span>Frontend Lingo</a></figure><p id="2036ec0d-c8f7-4876-8c53-70edecfdcf54" class="">
+</p><p id="d9c87100-f2a7-4087-ab14-75e8aa692497" class="">Essentially, its purpose is to provide a consistent system to interact with a service or program. With Twitter as a service for example, you might use the Twitter API to get a list of the latest tweets. APIs sort of form a language that different services and programs can use to communicate with each other, enabling some amazing possibilities. </p><p id="816ba6a7-5d54-411e-bd4a-6d95217eba37" class="">
+</p><p id="ab195651-e14d-483e-8a5f-396c7e7e9b06" class="">For example, <a href="https://www.youtube.com/watch?v=USKD3vPD6ZA&amp;ab_channel=MichaelReeves">you can use Reddit’s API to get the latest posts from </a><a href="https://www.youtube.com/watch?v=USKD3vPD6ZA&amp;ab_channel=MichaelReeves"><code>r/wallstreetbets</code></a><a href="https://www.youtube.com/watch?v=USKD3vPD6ZA&amp;ab_channel=MichaelReeves">, train a sentiment analysis model to evaluate stock picks, use a stock trading platform’s API to automatically buy and sell shares, and pit it against a similar trading bot based on the spatial location of a goldfish</a>. </p><p id="b05c3a4b-5e19-4c3d-9602-cc0ab823985a" class="">Or maybe something as simple as <a href="https://www.youtube.com/watch?v=BxV14h0kFs0&amp;ab_channel=TomScott">updating a youtube video’s title to reflect the up-to-date view count, making it seem like you’re a seer</a>. </p><p id="a8605303-1e58-4b64-b1ae-d04f8499dd30" class="">
+</p><p id="bc906c5f-0979-4159-b7a8-a6ceac87548a" class="">The rest of this doc will mainly focus on REST APIs, one of the many types of APIs, because they are the most used and typically the only one you really need. However, the concepts discussed should be applicable for other types of APIs as well to a certain extent. </p><p id="3a28eeb2-9b4e-47ed-b09f-d3999e07621e" class="">
+</p><h1 id="b1d8e4d5-503c-4ae3-bd76-6902f5e9e48b" class="">The Basics</h1><p id="c8334de8-ad49-447a-bfbf-6bfa148901d7" class="">At the bare minimum, an API has an <code>endpoint</code> that accepts <code>requests</code>, does some magic, and returns a <code>response</code>. </p><p id="5a3fb0cb-5132-46f5-a2d8-293fd3bbcc32" class="">
+</p><h3 id="043434bb-36b5-468d-bfe5-066c8b980a86" class="">Endpoints</h3><p id="e90160f7-fdb3-4a80-aeee-1105bab74ac7" class=""><code>Endpoints</code> or <code>routes</code> are selected <code>urls</code> intended for a certain purpose. For example, if I have a domain of <code>bread.com</code> for my bakery business, I might select <code>bread.com/buy</code> to be the <code>endpoint</code> for customers to purchase bread. This is completely arbitrary, and I could even select <code>bread.com/come/by/this/very-absolutely-delicious/bread-ready-hotfromtheoven</code> if I really wanted to. </p><p id="0181850e-6daa-4aca-b479-1d0de7d2bc35" class="">However, it’s good practice to make them consistent and reasonable, and REST APIs have a general standard to picking your <code>routes</code> that we’ll be looking at later. </p><p id="d4064243-c6d0-4732-8501-365b3b4eb401" class="">
+</p><p id="b7cb28c4-b455-461b-ac36-5685ef6fd4d4" class=""><code>Endpoints</code> also have special verbs, the most relevant of which are <code>POST</code>, <code>GET</code>, <code>PATCH</code>, <code>PUT</code>, <code>DELETE</code>. Each verb carries a certain semantic meaning or intent, and each <code>endpoint</code> accepts and handles a certain selection of these verbs (usually it’s just <code>GET</code> and <code>POST</code>).</p><table id="edf4a7b6-46e9-4db3-881d-40a238d60aaf" class="simple-table"><thead class="simple-table-header"><tr id="9cd9d2a6-f610-44f9-a467-4a09f9bd8e51"><th id="j&gt;nf" class="simple-table-header-color simple-table-header" style="width:85px">Verb</th><th id="c[Mw" class="simple-table-header-color simple-table-header" style="width:351px">Use</th><th id="bLwM" class="simple-table-header-color simple-table-header" style="width:488px">Example</th></tr></thead><tbody><tr id="ffc553bc-1edb-4060-816e-016d230f55b0"><td id="j&gt;nf" class="" style="width:85px"><code>GET</code></td><td id="c[Mw" class="" style="width:351px">retrieving information.</td><td id="bLwM" class="" style="width:488px">Whenever you search something on Google, you are making a <code>GET</code> to one of Google’s endpoints for making searches.</td></tr><tr id="67d17c97-b0dd-41ac-8902-6938eaaa9904"><td id="j&gt;nf" class="" style="width:85px"><code>POST</code></td><td id="c[Mw" class="" style="width:351px">creating information or sending information to the API</td><td id="bLwM" class="" style="width:488px">Whenever you login or signup to Google, you are making a <code>POST</code> with your username and password. </td></tr><tr id="da870c8e-4b0a-4c4c-bd43-0ed5fb6f357f"><td id="j&gt;nf" class="" style="width:85px"><code>PATCH</code> / <code>PUT</code></td><td id="c[Mw" class="" style="width:351px">updating existing information</td><td id="bLwM" class="" style="width:488px">Whenever you change your Google username, you are making a <code>PATCH</code> with the new username you want to change to.
+The difference between <code>PUT</code> and <code>PATCH</code>, is that <code>PUT</code> is when you are replacing all of the information with a new record, and <code>PATCH</code> is when you are only modifying a piece of it. Either works honestly for updating information, and you shouldn’t sweat too much about this detail. </td></tr><tr id="93da5657-0310-49ad-9549-d7a9354d64db"><td id="j&gt;nf" class="" style="width:85px"><code>DELETE</code></td><td id="c[Mw" class="" style="width:351px">deleting information</td><td id="bLwM" class="" style="width:488px">When you delete your Google account, you are making a <code>DELETE</code>. </td></tr></tbody></table><p id="ab60037c-e5e4-4d69-8c10-f42cdb84e1ec" class="">
+</p><p id="94bf6e6f-d4ef-4b2f-8849-fc0202e6f1f1" class="">Using the bakery business as an example, for the <code>bread.com/buy</code> endpoint I might accept <code>GET</code> and <code>POST</code>. <code>GET</code> returns a list of available bread in the store, and <code>POST</code> creates a new order for a certain type of bread. </p><p id="85253a27-14f9-4650-a9bb-9f27e05f0a48" class="">Note that these verbs are mostly arbitrary in use, and some verbs may be used for things not exactly aligned with their semantic meaning. For example, <code>POST</code> is often used for updating information as well, and <code>GET</code> can also pass information to the API as well through certain means (e.g. filtering a list with custom filters). You can have a <code>DELETE</code> endpoint to create a new user.</p><p id="50a6c19a-7e0c-4409-bbb8-a7dca73aad65" class="">Of course, it is best to not make things confusing. </p><p id="d23b501c-4360-4380-ba3b-738b39ce1f4d" class="">
+</p><h3 id="5d6a3fca-6968-4dcf-9c8e-da7b06fa4689" class="">Requests</h3><p id="5babe052-f610-4491-b3fc-d05824756dae" class=""><code>Requests</code> are a structured message sent to an API <code>endpoint</code>. It has three main parts: the <code>header</code>, the <code>body</code>, and the <code>method</code>. </p><p id="e974eff7-2f97-407d-8e2b-301f1ff7dfe7" class="">
+</p><p id="a1dc1074-9998-4a70-8423-2a845158fb37" class="">The <code>header</code> is similar to the <code>head</code> of an HTML document. It contains meta-data about the <code>request</code>, such as the browser used to send the <code>request</code>, which <code>url</code> the user came from, and more (this is one of the sources for sneaky data collection). They are like a Javascript Object or Python dictionary, where each <code>header</code> has a corresponding <code>key</code> and <code>value</code>. For example, setting <code>Content-Type: application/json</code> specifies that the information in the <code>body</code> is in JSON encoding. A lot of people also use “auth headers” to pass authentication data to the backend with headers. </p><p id="91488178-026d-4584-83c5-7464caf39b16" class="">
+</p><p id="bf0cec7f-3120-4817-956c-a129d21b3fed" class="">The <code>method</code> is the verb (<code>GET</code>, <code>POST</code>, etc.) that you want to use for the <code>endpoint</code>. </p><p id="b839497a-044d-459e-89e0-6cab0038c904" class="">
+</p><p id="acdac00d-3f9b-4c49-be5e-f16ad64faadc" class="">The <code>body</code> is where you can include any data for the API <code>endpoint</code> to receive. An <code>endpoint</code> that signs up a new user for example might require you to have the username and password stored inside the <code>body</code>. For most APIs, it is usually stored as a JSON string. </p><p id="e4e0f40e-d347-4077-b1b7-0067b5bcc5a5" class="">
+</p><h3 id="333795c3-c179-4cc9-ada6-6b52f9e48b9d" class="">Responses</h3><p id="36606de5-5858-4d96-ba5b-6e196d97b64c" class=""><code>Responses</code> are a structured message sent back by the API in response to a <code>request</code>. It also has three main parts: the <code>header</code>, the <code>body</code>, and the <code>status code</code>. </p><p id="2977815f-2b95-4ec3-8f79-d269c13c8851" class="">
+</p><p id="5947e8aa-a271-4b8e-9349-9ffa0bfe5d31" class="">The response <code>header</code> is similar to the request <code>header</code>. However it does have some additional functionality. When a website gives your browser a cookie for example, it’s through the <code>set-cookie</code> response <code>header</code>. </p><p id="610f228e-4845-4dbd-8187-1d05396c54e2" class="">
+</p><p id="0ab9d6e8-ba5c-41de-aa0b-ae9daa5c7693" class="">The <code>body</code> contains any information or content returned by the <code>endpoint</code>. When you navigate to a website in your browser for example, it is sending a <code>GET</code> request to the website’s url address, and the website’s backend returns a HTML document in the <code>response</code> that your browser subsequently renders and turns into the webpage you view. Usually with APIs however, it’s JSON encoded data. </p><p id="85e414f6-47af-4b8a-8fd7-617fe1d1467a" class="">
+</p><p id="73bd5138-50cb-49c6-9c5b-58bf749f8640" class="">The <code>status code</code> is a 3-digit number that communicates the status of the <code>request</code>. Numbers that start with 2 mean that things were successful and went as expected. Numbers that start with 4 means that something about the <code>request</code> was unsatisfactory (i.e. bad data, not logged in, etc.). Numbers that start with 5 usually mean that something went wrong on the backend handling the <code>request</code>. The basic ones you should know are listed below.</p><table id="1eba6f57-c669-4aa5-8e24-d1f243c8632f" class="simple-table"><thead class="simple-table-header"><tr id="44336399-d38b-461c-b777-3dc71988cb04"><th id="bYiU" class="simple-table-header-color simple-table-header">Status Code</th><th id="birz" class="simple-table-header-color simple-table-header" style="width:588px">Meaning</th></tr></thead><tbody><tr id="a6d80f54-31f7-42c3-af9c-2d2778096cf0"><td id="bYiU" class="">200</td><td id="birz" class="" style="width:588px">OK, success.</td></tr><tr id="d6e7a81f-4da7-419a-8d3e-7d511c76ef82"><td id="bYiU" class="">400</td><td id="birz" class="" style="width:588px">Bad request. Usually invalid data was provided (e.g. a nonexistent email, etc.)</td></tr><tr id="ca7a84c7-26f2-4ff2-b81d-e4d204422561"><td id="bYiU" class="">401</td><td id="birz" class="" style="width:588px">Unauthorized. Need to be logged in or have permissions to access.</td></tr><tr id="5b53b682-621b-4697-9781-6c7ea08296d8"><td id="bYiU" class="">404</td><td id="birz" class="" style="width:588px">Not found. Resource requested does not exist or could not be found.</td></tr><tr id="256b4b5b-e6e1-417c-b28d-f4a9bf2bde20"><td id="bYiU" class="">500</td><td id="birz" class="" style="width:588px">Internal server error. Server errored while handling the request.</td></tr></tbody></table><p id="3ed5b873-9015-4bcc-b279-fc1b09f678bf" class="">As with other things discussed before, there is no law requiring you to use one over the other, but it’s best to follow general convention. </p><p id="764c358c-17b6-4f09-8af3-04c5617620a9" class="">
+</p><h1 id="dca39748-9bf1-49a1-89c6-dc0950d16e36" class="">Dynamic Endpoints</h1><p id="74af42f7-5f10-46cf-b1bb-16433698b3ab" class="">So far the routes and endpoints given as examples are static, meaning that they are always the exact same. However, this may not be what we want. </p><p id="4c27264c-bedf-4cce-968d-2d63bbe3a549" class="">Take the scenario of updating a user’s username. The client, or the frontend, needs to tell the backend through an API that a specific user wants to change their name from A to B. But let’s say that there are hundreds of users in the database, each with their own unique ID. How would the backend know which user needs to have their name changed? </p><p id="35142881-5c40-4c73-9ef1-603dc47b0812" class="">One possible solution is to include the user’s ID in the request <code>body</code>. That way the backend knows which user to find and can change the name accordingly. </p><p id="ad2e1cbc-eefb-4b28-92d4-4d8c5c5c21e0" class="">
+</p><p id="ff12468a-1b1f-42b7-b816-85bf9c4f7914" class="">What if you could convey that information in the endpoint instead? So instead of some endpoint like <code>/user/update</code>, you could have <code>/user/&lt;some_id&gt;/update</code>. With this, assuming the user has an ID of 1, the client would be able to <code>POST</code> to <code>/user/1/update</code>, and the backend will be able to parse the ID from the url, obviating the need to include it in the request body. </p><p id="12bc3b0a-843e-4e3f-b0fb-bf332785c455" class="">This is in fact what most APIs do, and most if not all backend server frameworks support dynamic routes. Usually, a parameter in a route is represented by <code>:</code> followed by the parameter name. So the previous example could be formally written as <code>/user/:userId/update</code>. </p><p id="4d90e84c-2952-4f20-95ba-b485d228dea2" class="">
+</p><p id="2d30f1f1-1109-4fbe-865f-1a1bb146d346" class="">Again, there is nothing stopping you from using the first solution of putting the ID in the body, and it is perfectly fine to do so. However, putting it in the route url is just the agreed-upon organization of information by the community. </p><p id="314ade5e-9132-4524-a1ac-5659ec85e470" class="">
+</p><h1 id="16bfbf71-d0fc-4e33-b4da-97be4010de28" class="">RESTful Routing</h1><p id="381d2277-0ca6-4c16-b82c-88fbe77da804" class="">As foreshadowed previously, there is a general standard to specifying your endpoints. Below is an example with blogs, but you can definitely substitute it with whatever objects your API uses. </p><figure id="df27ae71-e6b1-4b4b-89c0-1d555cd5e2f4" class="image"><a href="Untitled.png"><img style="width:1314px" src="Untitled.png"/></a></figure><p id="f400149e-7f39-4fd5-9395-41c03feb8d61" class="">Here, you can see the verbs and dynamic route parameters being used to distinguish between different intentions and keep the url straightforward and simple. </p><p id="37f4b21e-9de7-4a54-b080-aaa2640963a9" class="">This convention should cover most of the functionality needed by your API. If not, you can build on top of it for any need you see fit. If I wanted to have an endpoint to download a blog for example, I could add a new <code>/blogs/:id/download</code> <code>POST</code> endpoint. </p><p id="f1be786c-7510-4e7d-8fca-105a16628fc8" class="">As long as no endpoints share the same url and verb, and they make reasonable sense, you are fine. </p><p id="eabfe606-c5ae-4ed4-8e20-c7561da961a6" class="">
+</p><p id="ae21a814-88ba-43e4-8253-e6fac2e147d0" class="">Your app might not even deal with any RESTful routing. A machine learning project may only need a <code>/</code> <code>GET</code> endpoint for the home page (commonly called the root endpoint) and a <code>/inference</code> <code>POST</code> endpoint for running a machine learning model on data sent via the request body. </p><p id="643d2997-8fcd-43d6-8b47-30fbc55282c7" class="">
+</p><h1 id="da100dcc-64f2-4efa-96c3-fb10bb2aee41" class="">Query Parameters</h1><p id="4513c7eb-be02-479c-bf96-c7a93a86bfc0" class="">In addition to dynamic route parameters, you can also pass information via the url with query parameters (also called query strings). This is particularly useful for filtering lists, where you cannot pass information via a <code>body</code> for <code>GET</code>, but still want to give the user the ability to set custom filters. You probably won’t be needing to use it often, but it’s good to know just in case.</p><p id="d60c07fa-e3c1-48a8-b1a0-ea55667bb3d9" class="">The general structure is something like this</p><pre id="92b53fb0-6406-40ac-9a67-7bfb09b61102" class="code"><code>https://some-domain.com/route?query1=some-query&amp;query2=another-query</code></pre><p id="fb1f58a3-7b74-45a9-819a-aa40b86633a2" class="">The <code>?</code> of the url denotes the point at which the query string starts, and the <code>&amp;</code> separates query parameters from each other. Here we have a parameter <code>query1</code> with a value of <code>some-query</code> and a <code>query2</code> with a value of <code>another-query</code>. </p><p id="ff3cabc4-7bae-4997-8622-c23586300246" class="">Like dynamic route parameters, the backend server will need to parse the url to extract the parameters and their values. With <code>Django</code> for example, they are typically made available in the <code>request.GET</code> object.</p><p id="a39cbf36-dd3f-47e0-b756-09a27ad39af5" class="">You’ll also notice that query parameters are only strings. You will need to store numbers and other datatypes in the query as strings, and you can even store complex Javascript objects after turning them into JSON strings. </p><p id="e5e6c719-8327-4bc3-be9c-d8f323885675" class="">
+</p><p id="e2c2e2ea-0b0e-40d5-8d9f-246685ce9f6b" class="">Do note that since it is part of the url, you will need to encode special characters (like <code>/</code> and non-english characters) to prevent them from messing up the url. With Javascript, this can easily be done with the <code>encodeURIComponent</code> method. Usually, backend frameworks like <code>Django</code> automatically decode encoded query parameters, but it’s good to double check just in case. </p><p id="1879f707-8729-452c-9972-42a351fa5418" class="">
+</p><h1 id="4b7c5bb0-22f9-49f8-bb72-d715f7ba206e" class="">Request Body Encoding Types</h1><p id="1fc772f5-4ae0-4fa5-96dc-0a8c74d46d6e" class="">This is just a small side note for those that might need it.</p><p id="295a601b-03ac-484a-b458-907056fe5343" class="">When you’re sending data with request bodies, you have several options for what format to send the data as. </p><p id="796822c7-a599-45da-9c1c-456ee9eee608" class=""><code>JSON</code> is the most straightforward. All data is sent as a string in Javascript Object syntax. It’s very flexible for most needs and is the most used. </p><p id="9d444981-8006-407f-90fe-0781e3768230" class="">
+</p><p id="dd068403-ad17-4518-a3fa-7c77f35a9ed0" class=""><code>multipart/form-data</code> is when you need to send files such as images. Since JSON sends string data, it’s better to use a different encoding for files instead of hacking together a JSON file encoding system. </p><p id="8baa96fc-f961-4761-8c6a-2d09334d2c06" class="">You can refer to online guides on how to use this encoding with Javascript fetch, such as <a href="https://stackoverflow.com/questions/35192841/how-do-i-post-with-multipart-form-data-using-fetch">this stackoverflow post.</a> The backend framework should also have its own syntax for handling it. </p></div></article></body></html>

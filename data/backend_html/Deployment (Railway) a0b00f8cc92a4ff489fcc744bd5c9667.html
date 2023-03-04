@@ -1,0 +1,716 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Deployment (Railway)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a0b00f8c-c92a-4ff4-89fc-c744bd5c9667" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 80.42%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="railway.png"/></div><h1 class="page-title">Deployment (Railway)</h1></header><div class="page-body"><p id="834a873d-71c8-412b-903b-2c5a5d590050" class="">You’ve written a great Django app, it runs smoothly and serves as a solid backend to your overall program. But, now what? How do we get this application deployed? Look no further than the ease provided by <mark class="highlight-blue"><a href="https://railway.app">Railway</a></mark>! </p><nav id="8c52003e-84e9-430d-a4fc-91d9b0bb5732" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a3ef5952-cc8c-41c6-b2e7-5ca1ed84b472">🐳 Step 1: Dockerizing the Backend</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7f57253d-19e3-4f7d-953e-a81dba2e915f">Additional Resources:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a830d3cc-1343-4800-b072-4a6bc53450b3">🌲 Step 2: Project Requirements</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#90d05f13-3c10-4528-a96c-89e18a509579">Additional Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f6cb1992-46b3-4f2d-9704-b703c81f0b61">👨‍💻 Step 3: Set Up Railway</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#86e7dd8c-4939-48f0-aca5-934f94a75b20">🎾 Step 4: Advanced Railway Settings</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ddbe81ed-46dc-42b5-ba5a-1e27712081e4">👊 Step 5: Using the App</a></div></nav><hr id="37d44f7c-5d8e-45fb-8a3f-b15a3fe02b44"/><p id="ce0bc127-e6d6-4c94-ab3b-8bbb05498d23" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Note: As you deploy and edit settings on Railway, your deployment may fail before you complete the tutorial! Do not worry — your deployment will restart once you make changes each time, so finish this tutorial before checking the availability of your deployment! </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><hr id="23e808e3-248e-4115-bf98-ff9853d250cb"/><h2 id="a3ef5952-cc8c-41c6-b2e7-5ca1ed84b472" class="">🐳 Step 1: Dockerizing the Backend</h2><p id="d4a635e2-0dd9-4a84-b9ba-0dddb5b416dc" class=""><strong>Docker </strong>is a tool that makes it easier to share code and run programs across different computers. </p><ul id="f73a9323-a40e-4be8-ad8b-0542ee68bdf0" class="toggle"><li><details open=""><summary>What is Docker? </summary><p id="a8a18277-4641-4cde-88fe-7ea84a8a6153" class="">By using Docker, you can package up your code, its environment, and all the dependencies needed to run the code in one package. This package can then be shared with others, who can easily run the code without having to worry about setting up their own environment or having the same versions of the dependencies that you have. </p></details></li></ul><p id="c59af2b5-8516-44ad-bb5f-6e3afdfc7448" class="">We will first need to create a <strong>Dockerfile</strong> in the root directory of our backend. Open a new file called <code>Dockerfile</code> with no extension in the same level as <code>my_project</code> and include the following lines:</p><pre id="97faa64e-13ac-41ef-af2d-c963a8347357" class="code"><code>FROM python:3.8.13-bullseye
+
+ARG secret_key
+ARG api_key
+
+WORKDIR /my_project
+
+COPY . .
+
+RUN pip install --upgrade pip 
+RUN pip install -r requirements.txt
+
+EXPOSE 8000
+
+CMD [&quot;python&quot;, &quot;manage.py&quot;, &quot;runserver&quot;, &quot;0.0.0.0:8000&quot;]</code></pre><ul id="45722c28-0ba1-4f00-9fb5-0e6dc988313e" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Reading the Dockerfile</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></summary><p id="baaefd19-722f-4a44-9043-afd14acd9cf9" class="">The <code>Dockerfile</code> is a collection of step-by-step instructions for Railway to read in order to run our particular project. Let’s understand that piece-by-piece:</p><pre id="a17feea3-567a-428a-b9cd-1d3f00a2ab97" class="code"><code>FROM python:3.8.13-bullseye</code></pre><p id="5a3cf16f-9030-4081-b921-cc0706cde48f" class="">This is where we tell Docker which base image  of Python we are using. In this particular case, Python 3.9, although you can change this based on your project requirements. </p><pre id="b5883f4e-c5d9-4084-b0e9-98c9e8803c8d" class="code"><code>ARG secret_key
+ARG api_key</code></pre><p id="2cef8b3d-7bd9-4e37-9fde-3d29096ef2df" class="">This is where we tell Docker what variables to use during the “build” phase. Essentially, we are telling it to expect two variables, <code>secret_key</code> and <code>api_key</code>, that will get their values from an <code>.env</code> file.  </p><pre id="2162b33f-d554-4fec-b71b-e4eb4645072b" class="code"><code>WORKDIR /my_project
+COPY . .</code></pre><p id="d0a20e22-9bd8-4066-9511-364fb8d36959" class="">We then tell Docker that all further commands will run relative to our first my_project directory, so we can get access to <code>manage.py</code>, <code>requirements.txt</code>, and other necessary files. We then copy all the contents of the subdirectory. </p><ul id="0ff0bece-a2d3-473e-950d-f99dad768643" class="toggle"><li><details open=""><summary>Why do we use the <code>COPY</code> command?</summary><p id="24287df4-91ae-469b-9779-f1a4d935f262" class="">This is necessary because containers run isolated from the host file system, so any files or dependencies needed by the application must be included within the container. The <code><strong>COPY</strong></code>
+ command allows you to include your application code, configuration files, scripts, and other required files into the container, so that the application can run in an isolated environment with everything it needs.</p></details></li></ul><pre id="59bc2677-b9d3-49c8-a15c-ec3138541c25" class="code"><code>RUN pip install --upgrade pip 
+RUN pip install -r requirements.txt</code></pre><p id="9a0a7a99-a2a4-40ca-bcff-c55199f52696" class="">Once we have access to all the files, we can run two commands:</p><ul id="31451f6d-2ebe-43c6-9498-3c573d4992e6" class="bulleted-list"><li style="list-style-type:disc">Upgrade the base <code>pip</code> package that we have if possible</li></ul><ul id="82f21316-1166-4135-9807-576a34f69f51" class="bulleted-list"><li style="list-style-type:disc">Install all Python dependencies from our <code>requirements</code> file </li></ul><pre id="9755641c-d2e4-49f4-966d-59b047b36452" class="code"><code>EXPOSE 8000
+CMD [&quot;python&quot;, &quot;manage.py&quot;, &quot;runserver&quot;, &quot;0.0.0.0:8000&quot;]</code></pre><p id="b93f9fef-8e08-4a28-a79e-101d0514a6f8" class="">We then expose the 8000 port, and then run our Django server. </p></details></li></ul><h3 id="7f57253d-19e3-4f7d-953e-a81dba2e915f" class="">Additional Resources:</h3><p id="0cc46a47-0bd5-41f3-93c3-650ed4fc8982" class=""><mark class="highlight-blue"><a href="https://www.docker.com/101-tutorial/"><strong>🐋 Why Docker? </strong></a></mark></p><h2 id="a830d3cc-1343-4800-b072-4a6bc53450b3" class="">🌲 Step 2: Project Requirements</h2><p id="003678ba-1809-4951-ad22-f8225be8d48f" class="">We’ll also need to install some libraries / edit some files to prep for deployment on Railway. </p><p id="bcea1411-4458-438b-aa74-7a57ea277b93" class="">Firstly, we need the packages to help us with connecting to PostgreSQL, a cloud database option to replace SQLite, the database we’ve been using for local development in Django. </p><pre id="316f6cf0-0cb0-47e9-875d-b1314ea979c6" class="code"><code>pip install psycopg2 </code></pre><ul id="49339248-d170-4f82-bbfd-2111c35e766b" class="toggle"><li><details open=""><summary>Failed to install?</summary><p id="abb59ecc-09a6-484f-aa4a-faa8b44852e3" class="">First, remove any other dependencies by running</p><pre id="ee534042-faa6-413f-ae43-9afd103f5479" class="code"><code>pip uninstall psycopg2 psycopg2-binary</code></pre><p id="18caf318-6286-43e8-8389-553eb726c51b" class="">Then run</p><pre id="3ed360d5-b28e-4bef-97c8-618518651573" class="code"><code>pip install psycopg2-binary</code></pre></details></li></ul><p id="c590e15d-3549-4693-be32-5f35bef08bfd" class="">The <code>pyscopg2</code> package is Python adapter for using PostgreSQL databases. </p><p id="e94b5cc7-6049-49b9-910a-bc84b03814b6" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>REMEMBER TO ADD IT TO YOUR </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>requirements.txt</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> FILE !! </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><p id="0a933a0a-be15-4607-84e8-aa362b0ae403" class="">Next, navigate to the <code>.env</code> file and include the following line. This is a variable that will only be included in our local <code>.env</code> file, and not in the Railway-specific variables (i.e., if we see <code>DEBUG = &quot;True&quot;</code> in the file, that means we are running on localhost, not deployed). </p><pre id="2364d413-e0cf-40d2-9b2d-08fb3381e6ef" class="code"><code>DEBUG=&quot;True&quot;</code></pre><p id="936ebfb4-e388-4cea-958a-2a690d9dcdc6" class="">We also need to tell Django two things:</p><ol type="1" id="e5ce0a7b-181a-4b96-89ef-47d9b6d01ad2" class="numbered-list" start="1"><li>the <code>DEBUG</code> variable should be equivalent to <code>True</code> if it is present in the environment variables, otherwise False. </li></ol><ol type="1" id="ef06dfae-ddef-4356-9be8-9453d6df1d60" class="numbered-list" start="2"><li>This app can run on other hosts beyond local deployment </li></ol><p id="bc9442d4-b451-4c75-9675-e2da5c165b0b" class="">To accomplish this, navigate over to <code>settings.py</code> and add the following information:</p><pre id="2a6eb4f8-9ba0-454d-9bc4-5ea91d945471" class="code"><code>DEBUG = True if os.environ.get(&quot;DEBUG&quot;) else False
+ALLOWED_HOSTS = [&quot;*&quot;]</code></pre><ul id="974a15b3-6991-4b93-a9eb-5145d2f12fa6" class="toggle"><li><details open=""><summary>Why do we need <code>DEBUG = “True”</code></summary><p id="e7006dc9-ef51-408a-9ba6-839e1555e635" class="">When we are deployed, we’ll be using a PostgreSQL database to store our data. However, we don’t want to clutter that database with test data we might use when we are developing locally. Therefore, we need a way to tell Django whether or not we are running locally, and the presence of a DEBUG variable serves to do just that. By <strong><strong><strong>NOT</strong></strong></strong> including this later on in Step 3, DEBUG will be False, and therefore NOT running locally! </p></details></li></ul><h3 id="90d05f13-3c10-4528-a96c-89e18a509579" class="">Additional Resources</h3><p id="58dbcc97-a1c5-4fba-b7b4-d83ed72cef6d" class=""><mark class="highlight-blue"><strong><a href="https://www.databasestar.com/why-use-postgresql/">⚡Why PostgreSQL?</a></strong></mark></p><ul id="8058017d-b7a7-45bd-8f9d-f60b4e1e034c" class="toggle"><li><details open=""><summary>Keep in Mind</summary><p id="fa2eb3b5-3ed6-4700-9c4e-92b5956b458f" class="">This is a SQL-based look into why PostgreSQL is a great database management, so if you do not have prior SQL experience, you may not understand all of the article. However, it is a good overall discussion as to why Railway would offer PostgreSQL databases.</p></details></li></ul><h2 id="f6cb1992-46b3-4f2d-9704-b703c81f0b61" class="">👨‍💻 Step 3: Set Up Railway</h2><p id="4f0fa22e-f8bd-41b4-bdd1-55fc0b4a36ec" class="">Create an account @ <mark class="highlight-blue"><a href="https://railway.app">Railway</a></mark>, and navigate to the <a href="http://railway.app/dashboard"><mark class="highlight-blue">Dashboard</mark></a>. You should see something like below, although you won’t have any Projects yet up. </p><figure id="2dff0590-2c03-4abf-a90c-39bb6e123414" class="image"><a href="Screenshot_2023-01-22_at_12.21.05_PM.png"><img style="width:1261px" src="Screenshot_2023-01-22_at_12.21.05_PM.png"/></a></figure><p id="8ad2e5d0-dbf1-470b-9fd7-d7eb596e49ec" class="">Click the “New Project” button, and select the option to deploy from a GitHub repository. Add your repository that contains the backend code like so: </p><figure id="3562111c-ccec-41fc-b2ac-222e27678a3e" class="image"><a href="Screenshot_2023-01-29_at_1.00.20_PM.png"><img style="width:1312px" src="Screenshot_2023-01-29_at_1.00.20_PM.png"/></a></figure><p id="f9b72875-9359-4b4f-9289-5f5c1dd6816c" class="">Then, select “Add Variables” to add the necessary tokens / keys for your app, and you should come across the following screen. </p><ul id="34d5af2b-4986-4a16-8d66-0fd3a78367ee" class="toggle"><li><details open=""><summary>Following the Django Project Walkthrough?</summary><p id="ddee77cd-1a53-4652-a69e-49a3c59949ff" class="">If you were following the Django project walkthrough crash course, this would be:</p><ul id="0cc2c2bb-c2a6-4dfd-8c76-9ace8ac922fc" class="bulleted-list"><li style="list-style-type:disc">Django Secret Key</li></ul><ul id="0ff412c5-d715-4e4e-8e64-694366271b2f" class="bulleted-list"><li style="list-style-type:disc">OpenAI GPT-3 API Key</li></ul><p id="dc18361b-6b4c-46b8-8a62-084405b6fd21" class="">
+</p></details></li></ul><figure id="f508bcf2-816e-4ab1-8ba2-8b610cb4abc7" class="image"><a href="Screenshot_2023-01-29_at_1.03.38_PM.png"><img style="width:1038px" src="Screenshot_2023-01-29_at_1.03.38_PM.png"/></a></figure><p id="dd6f8b34-1771-4c02-be58-1a3fa1a06090" class="">Click <strong>Raw Editor</strong>, and paste in the same information from the <code>.env</code> file in your local repository (Remember, our <code>.gitignore</code> ignores our <code>.env</code> file so we need to manually add them to Railway!). </p><p id="669acf26-557c-4f1b-9188-ce5286357b90" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>DO NOT INCLUDE </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>DEBUG=”True”</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></code><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong> !! We want Django to know when it’s being deployed.</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><figure id="fbf154ac-a99f-4b49-bfc4-59589c8afcf2" class="image"><a href="Screenshot_2023-01-29_at_1.13.56_PM.png"><img style="width:480px" src="Screenshot_2023-01-29_at_1.13.56_PM.png"/></a></figure><p id="69fedf85-8bcb-40a7-b536-86626164f16e" class="">Select Update Variables. Your build will start deploying, but do not pay this much attention — there are still other things we need to adjust for before the deployment will successfully work. </p><h2 id="86e7dd8c-4939-48f0-aca5-934f94a75b20" class="">🎾 Step 4: Advanced Railway Settings</h2><p id="79c14bc7-589d-4674-a5e1-861682838223" class="">Click Settings, and edit the Root Directory to be the folder containing your application, <code>Dockerfile</code>, <code>requirements.txt</code> file, etc. </p><figure id="31155234-7573-40f3-ad8e-0202b4b25c65" class="image"><a href="Screenshot_2023-02-01_at_10.31.10_AM.png"><img style="width:925px" src="Screenshot_2023-02-01_at_10.31.10_AM.png"/></a></figure><p id="4b1b2b63-753d-45bb-9683-4d5fff3784f9" class="">Next, we have to expose our application to the internet, so scroll up and select “Generate a Domain” to create a custom Railway-based URL to your Django application! (Remember, we set <code>ALLOWED_HOSTS</code> to be any value in Step 1!) </p><figure id="e679792b-3f06-4431-a9c8-30d07bbb5b5d" class="image"><a href="Screenshot_2023-02-01_at_10.50.44_AM.png"><img style="width:643px" src="Screenshot_2023-02-01_at_10.50.44_AM.png"/></a></figure><p id="92138ef7-d41e-4e69-9d12-6429d0db72e4" class="">Now step out of the Settings page, and select “New” —&gt; “Add Database” and select PostgreSQL from the following options: </p><figure id="96432590-ac0d-4ea0-8a84-fc78971f5d7e" class="image"><a href="Screenshot_2023-02-01_at_2.10.58_PM.png"><img style="width:502px" src="Screenshot_2023-02-01_at_2.10.58_PM.png"/></a></figure><p id="043bfe15-92cf-4a7e-8451-f24d56719f05" class="">Click on the spun-up database, click “Connect”, copy the PSQL URL in the first bar, which will automatically connect the PostgreSQL database to our Django app! </p><figure id="45b990f6-0ea5-43a0-b632-a276ec04fdb9" class="image"><a href="Screenshot_2023-02-02_at_1.45.25_PM.png"><img style="width:956px" src="Screenshot_2023-02-02_at_1.45.25_PM.png"/></a></figure><p id="318def0f-e01e-4162-8d9c-205421e9b59a" class="">However, now we’ll have to reflect these changes for our Django app as well. Click on the “Variables” tab in the PostgreSQL database and copy each variable over to the local <code>.env</code> file in your project directory. </p><pre id="9b4a5245-0093-4ecc-b178-7ef8e1ae2606" class="code"><code>secret_key=...
+openai_api=...
+PGHOST=...
+PGPASSWORD=...
+PGPORT=...
+PGUSER=...</code></pre><p id="76ca5b52-3da1-435a-a009-8e90bf08ab22" class="">Then, navigate to <code>settings.py</code> and modify the DATABASES information to look like the following code. We use local SQLite3 if developing locally (<code>DEBUG = True</code>) and PostgreSQL in production (<code>DEBUG = False</code>)</p><pre id="e77976f0-1888-49bb-9543-30ed2c098d93" class="code"><code>if DEBUG:
+    DATABASES = {
+        &#x27;default&#x27;: {
+            &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;,
+            &#x27;NAME&#x27;: BASE_DIR / &#x27;db.sqlite3&#x27;,
+        }
+    }
+else:
+    DATABASES = {
+        &#x27;default&#x27;: {
+            &#x27;ENGINE&#x27;: &#x27;django.db.backends.postgresql_psycopg2&#x27;,
+            &#x27;NAME&#x27;: os.environ.get(&#x27;PGDATABASE&#x27;),
+            &#x27;USER&#x27;: os.environ.get(&#x27;PGUSER&#x27;),
+            &#x27;PASSWORD&#x27;: os.environ.get(&#x27;PGPASSWORD&#x27;),
+            &#x27;HOST&#x27;: os.environ.get(&#x27;PGHOST&#x27;),
+            &#x27;PORT&#x27;: os.environ.get(&#x27;PGPORT&#x27;),
+        }
+    }</code></pre><p id="264ddeeb-3f30-4db7-b8e2-e61aa6a55a7b" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>MAKE SURE TO MIGRATE YOUR CHANGES!! </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>Run the following line to migrate your database modifications to PostgreSQL:</p><pre id="8798e957-bd78-45b5-931f-ab31635dcc0c" class="code"><code>python manage.py migrate</code></pre><p id="49b1fb82-1d87-4a16-9234-1a4ba3e228eb" class="">Verify that these changes are reflected by clicking on your new database and seeing your information automatically added like so: </p><figure id="43c01fe9-f821-4e4b-b439-82cca67f1e9c" class="image"><a href="Screenshot_2023-02-04_at_1.08.39_PM.png"><img style="width:963px" src="Screenshot_2023-02-04_at_1.08.39_PM.png"/></a></figure><p id="991ddc3e-bbc3-4abd-b93a-4f0004627aa0" class="">
+</p><p id="dc77a17d-763a-499e-aa39-69f0160f26ee" class="">Commit and push all changes to your GitHub repository, and jump back to Railway, and let’s test our app!</p><h2 id="ddbe81ed-46dc-42b5-ba5a-1e27712081e4" class="">👊 Step 5: Using the App</h2><p id="91ac7845-290e-4b8e-9c9c-865060b4141f" class="">When you click on your deployment link after the GitHub push redeploys, you’ll likely come across the following screen. Why do you think this is? How does URL pathing work in Django? </p><figure id="a59b5a56-6141-4a34-85c0-4c7f1aaf0d66" class="image"><a href="Screenshot_2023-02-04_at_12.38.46_PM.png"><img style="width:997px" src="Screenshot_2023-02-04_at_12.38.46_PM.png"/></a></figure><p id="eccd89df-070f-4b33-b942-8124f0ab14e1" class="">Next, navigate to the link + “/summary” and you should see the same Summary API page like so: </p><figure id="965ceaa7-1af8-4147-a6d0-c731b9ccfa3f" class="image"><a href="Screenshot_2023-02-04_at_12.41.10_PM.png"><img style="width:1232px" src="Screenshot_2023-02-04_at_12.41.10_PM.png"/></a></figure><p id="5832a924-ccc7-4374-a4b4-ef85c617c8ab" class="">Paste in some JSON Formatted text like we had done locally, and click POST. Wait for a brief time, and your data should return summarized! </p><pre id="5ef5ecd3-d6a2-4dcf-9fbc-05c989f350a3" class="code"><code>{
+&quot;text&quot;: &quot;to be summarized&quot; 
+}</code></pre><p id="7db08a74-3915-48fd-b260-8898455214cb" class="">Finally, navigate to your PostgreSQL database, select the table you’re manipulating, and you should see everything that you’ve added! 🥳</p><figure id="ee1f8b63-81b1-4b0a-b7c4-ed3a12dfc5ed" class="image"><a href="Screenshot_2023-02-04_at_1.16.01_PM.png"><img style="width:958px" src="Screenshot_2023-02-04_at_1.16.01_PM.png"/></a></figure><p id="a445b575-e885-4a72-b7cf-b41b54c9fb8c" class="">Woohoo! You’ve now deployed your application with a PostgreSQL database to a publicly-accessible URL that anybody can use 🔥 Continue exploring with Railway’s various options and see how far you can take your app! Happy coding 😁 </p><p id="182c8745-41a2-43b0-8587-9874974f3cc1" class="">
+</p></div></article></body></html>

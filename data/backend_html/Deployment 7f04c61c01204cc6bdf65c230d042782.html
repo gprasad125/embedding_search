@@ -1,0 +1,674 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Deployment </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7f04c61c-0120-4cc6-bdf6-5c230d042782" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 45.550000000000004%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🌏</span></div><h1 class="page-title">Deployment </h1></header><div class="page-body"><p id="90da6753-33b8-4d01-ad90-c2c79706c958" class="">In the Django Project Walkthrough, you learned how to deploy your backend API onto Railway with the ease provided by Docker. While Railway is an excellent option for deployment, it is far from the only one available to you. Here, we’ll go through some of the most popular options so you come out a more informed developer. </p><p id="fef499e1-15f6-4e3f-bf66-55434960048a" class="">
+</p><nav id="e8484fd2-fd4c-41af-ac10-2e1dcd9b92ed" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e7ef0c8-cc64-4488-b3ae-ca45989d75a7">Railway</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#23da2525-38a0-4965-8b44-ab5acf8404fb">Pros</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#526c06c6-1cd3-49f9-bab5-ff462d2237a0">Cons</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#56c41378-5846-4e1b-91e3-1c728e2e929a">Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ac00a3fc-9e0f-44a9-89ef-f2a872661c09">DigitalOcean</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ee8ccfc9-c87a-48b6-83da-15f874dc012f">Pros</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#57d0b218-1853-459c-ad34-ac8ace130568">Cons</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f21a6661-1b96-4c70-812a-d725f01f8b92">Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8990f5b0-7543-4ae8-a8b4-29be874a64f6">Heroku</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c846e3f4-2c9e-4f9e-9361-c5ecb7f91845">Pros</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e3a6636b-7f1d-4898-b16c-48eb1c06b78c">Cons</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#46364675-53d6-47cc-bbc1-f216916256f1">Resources</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b4bd371a-e4df-4433-b9a9-87a56bf17a1b">AWS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c0b043d9-38e7-41df-ae3c-400d888ce154">Pros</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5ab3d6dd-11ac-4e45-81f4-f15f94b88b62">Cons</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5df6da81-55b0-4e26-8356-a67ff1ea5bd0">Resources</a></div></nav><hr id="277c61a8-25cb-4159-93d4-bf3e5f0a3f71"/><h2 id="8e7ef0c8-cc64-4488-b3ae-ca45989d75a7" class="">Railway</h2><h3 id="23da2525-38a0-4965-8b44-ab5acf8404fb" class="">Pros</h3><ul id="c355d645-9955-4aa4-884e-a72f7f6380b4" class="bulleted-list"><li style="list-style-type:disc">Easy to use &amp; set up</li></ul><ul id="a3c129f1-9fdb-4ecb-ba4b-fd65263a12af" class="bulleted-list"><li style="list-style-type:disc">User-friendly interface for managing your apps </li></ul><ul id="272a5b61-f8c8-4140-8c80-e03cb11a90d3" class="bulleted-list"><li style="list-style-type:disc">Integrates quickly with Git, PostgreSQL, Redis, etc.</li></ul><ul id="6ef0c370-0122-46bc-8f4f-f873df94aa61" class="bulleted-list"><li style="list-style-type:disc">Free plan for small projects</li></ul><h3 id="526c06c6-1cd3-49f9-bab5-ff462d2237a0" class="">Cons</h3><ul id="7c07e1f2-4309-4917-bafa-a17225e53686" class="bulleted-list"><li style="list-style-type:disc">More expensive for larger projects</li></ul><ul id="bf53231a-03f0-44a1-a409-3dc0f52825de" class="bulleted-list"><li style="list-style-type:disc">Little control over underlying infrastructure of deployment</li></ul><ul id="e76ae85d-3993-4a3c-9e8f-8f69df2f157e" class="bulleted-list"><li style="list-style-type:disc">Fewer customization options</li></ul><h3 id="56c41378-5846-4e1b-91e3-1c728e2e929a" class="">Resources</h3><p id="1c100de8-fde4-4281-8dcc-ee837bad6a4a" class=""><mark class="highlight-blue"><a href="https://www.railway.app">📌 Official Website</a></mark></p><figure id="a0b00f8c-c92a-4ff4-89fc-c744bd5c9667" class="link-to-page"><a href="Deployment%20(Railway)%20a0b00f8cc92a4ff489fcc744bd5c9667.html"><img class="icon" src="railway.png"/>Deployment (Railway)</a></figure><p id="9dba0a01-79fd-44d6-8fa1-ca5dda8ea2d4" class="">
+</p><hr id="6003323a-3bb3-4c59-ba32-4a8218d3a1f2"/><h2 id="ac00a3fc-9e0f-44a9-89ef-f2a872661c09" class="">DigitalOcean</h2><h3 id="ee8ccfc9-c87a-48b6-83da-15f874dc012f" class="">Pros</h3><ul id="11057fcd-103c-490b-ba37-99357be31fc0" class="bulleted-list"><li style="list-style-type:disc">Full control over the underlying infrastructure</li></ul><ul id="aacdad9d-f8dc-4d82-bdb3-850344390f40" class="bulleted-list"><li style="list-style-type:disc">Lower cost compared to other options for large projects</li></ul><ul id="83009e01-06be-46d9-9776-5e9fa663cc50" class="bulleted-list"><li style="list-style-type:disc">Provides a wide range of customization options</li></ul><ul id="cd71cd50-cd05-48c3-bce0-4637f62cfa24" class="bulleted-list"><li style="list-style-type:disc">Offers various tools and services for managing and deploying Django applications, including Git, PostgreSQL, and Redis</li></ul><ul id="38ef6da1-af7c-4d2e-bb95-d0a7e62ddb74" class="bulleted-list"><li style="list-style-type:disc">Provides a community-driven marketplace for finding and deploying apps and services</li></ul><h3 id="57d0b218-1853-459c-ad34-ac8ace130568" class="">Cons</h3><ul id="9d6be824-6437-48d5-a5d1-107dfc11b37d" class="bulleted-list"><li style="list-style-type:disc">Steep learning curve for beginners</li></ul><ul id="a94dbe8b-3101-4eb7-82d7-abc3a9f6ae3e" class="bulleted-list"><li style="list-style-type:disc">Requires more technical knowledge to set up and manage compared to other options</li></ul><ul id="f5817d5e-4c43-4817-bb00-149895513b0b" class="bulleted-list"><li style="list-style-type:disc">May require additional resources for managing and maintaining the infrastructure</li></ul><h3 id="f21a6661-1b96-4c70-812a-d725f01f8b92" class="">Resources</h3><p id="ea26f2c6-3b1c-4214-9df1-6f8590711670" class=""><a href="https://www.digitalocean.com"><mark class="highlight-blue">📌 Official Website</mark></a></p><p id="908c5269-c473-4100-9f6a-e60e6a365867" class=""><mark class="highlight-blue"><a href="https://docs.digitalocean.com/tutorials/app-deploy-django-app/">📎 Tutorial</a></mark></p><p id="63d28c1e-1972-44ce-8031-38fa3cacdfdf" class="">
+</p><hr id="9002bae7-723f-489b-8c89-e48fd8be9b11"/><h2 id="8990f5b0-7543-4ae8-a8b4-29be874a64f6" class="">Heroku</h2><h3 id="c846e3f4-2c9e-4f9e-9361-c5ecb7f91845" class="">Pros</h3><ul id="21b35b10-b0c2-4616-9d47-26a123ded1d9" class="bulleted-list"><li style="list-style-type:disc">Easy to use and set up</li></ul><ul id="87e11e4d-a4b2-49e4-8aa8-0e65b0906307" class="bulleted-list"><li style="list-style-type:disc">Provides a user-friendly interface for managing and deploying Django applications</li></ul><ul id="9ea42460-5dec-44cd-98b3-8cc594d9060b" class="bulleted-list"><li style="list-style-type:disc">Offers a free plan for small projects</li></ul><ul id="de8374d3-72b0-4bea-9e49-6a888c08365b" class="bulleted-list"><li style="list-style-type:disc">Provides scalable infrastructure for growing projects</li></ul><ul id="929ca48a-1fd4-4da4-a402-9961b43ddbaf" class="bulleted-list"><li style="list-style-type:disc">Integrates with various tools and services, such as Git, PostgreSQL, and Redis</li></ul><h3 id="e3a6636b-7f1d-4898-b16c-48eb1c06b78c" class="">Cons</h3><ul id="946e17fc-c556-4963-8de5-73365d052e7e" class="bulleted-list"><li style="list-style-type:disc">Limited control over the underlying infrastructure</li></ul><ul id="20160e71-05b9-48ae-b852-ff7c8c4a72ec" class="bulleted-list"><li style="list-style-type:disc">Higher cost compared to other options for larger projects</li></ul><ul id="fa6052ba-8c57-49f8-9660-e530cadba474" class="bulleted-list"><li style="list-style-type:disc">Fewer customization options than other platforms</li></ul><h3 id="46364675-53d6-47cc-bbc1-f216916256f1" class="">Resources</h3><p id="9d0531e0-58cb-44fa-b76b-229502ca1032" class=""><a href="https://www.heroku.com"><mark class="highlight-blue">📌 Official Website</mark></a></p><p id="82b0710d-3517-47b7-83d6-3fbdf7581a11" class=""><a href="https://devcenter.heroku.com/articles/deploying-python"><mark class="highlight-blue">📎 Tutorial</mark></a></p><p id="dabd0a1e-b984-4e1a-898d-e0ece05272a3" class="">
+</p><p id="13b066f7-de2d-41b4-859b-215cd429fed9" class="">
+</p><hr id="fd812477-166b-4396-8b37-960cc6755333"/><h2 id="b4bd371a-e4df-4433-b9a9-87a56bf17a1b" class="">AWS</h2><h3 id="c0b043d9-38e7-41df-ae3c-400d888ce154" class="">Pros</h3><ul id="ecb6d06a-2c48-47cf-a3da-e529e2b72482" class="bulleted-list"><li style="list-style-type:disc">Offers a wide range of services and tools for deploying, managing, and scaling Django applications</li></ul><ul id="70f00de9-08a0-4693-920c-42e271ac095d" class="bulleted-list"><li style="list-style-type:disc">Provides full control over the underlying infrastructure</li></ul><ul id="364a4258-6206-45e0-8d1e-d2c86a49ef23" class="bulleted-list"><li style="list-style-type:disc">Scalable infrastructure to handle growing projects</li></ul><ul id="003ec6b4-e051-481d-b9e1-6238aaa2c93c" class="bulleted-list"><li style="list-style-type:disc">Wide range of customization options</li></ul><ul id="bf894344-25e5-452b-bc91-14b2c54eae40" class="bulleted-list"><li style="list-style-type:disc">Integrates with other AWS services, such as Amazon RDS, Amazon S3, and Amazon ELB</li></ul><h3 id="5ab3d6dd-11ac-4e45-81f4-f15f94b88b62" class="">Cons</h3><ul id="01ff8f38-4fcb-4e2c-8605-19cfb064cb1f" class="bulleted-list"><li style="list-style-type:disc">Steep learning curve for beginners</li></ul><ul id="3a2626fa-ada1-4854-9570-401dc20a7ad5" class="bulleted-list"><li style="list-style-type:disc">Requires more technical knowledge to set up and manage compared to other options</li></ul><ul id="f1371afc-89c1-483a-8430-5cf55fe8d452" class="bulleted-list"><li style="list-style-type:disc">Higher cost compared to other options for smaller projects</li></ul><ul id="0bbb5fa6-ed4c-4516-884b-5a9067d82683" class="bulleted-list"><li style="list-style-type:disc">Complex pricing model, which can make it difficult to predict costs</li></ul><ul id="fc7233bf-7de3-4523-965d-e19018a5c6f3" class="bulleted-list"><li style="list-style-type:disc">Can be overwhelming due to the large number of services and options available</li></ul><h3 id="5df6da81-55b0-4e26-8356-a67ff1ea5bd0" class="">Resources</h3><p id="eee6889c-1147-4078-89ce-70c15966ece8" class=""><a href="https://aws.amazon.com"><mark class="highlight-blue">📌 Official Website</mark></a></p><p id="2d191c3d-fdcd-42c1-b1cb-48ae90da9a27" class=""><a href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html"><mark class="highlight-blue">📎 Tutorial</mark></a></p></div></article></body></html>

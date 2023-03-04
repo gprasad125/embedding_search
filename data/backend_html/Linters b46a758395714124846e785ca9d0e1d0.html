@@ -1,0 +1,674 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Linters</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b46a7583-9571-4124-846e-785ca9d0e1d0" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_eagle_in_lunar_orbit.jpg" style="object-position:center 40%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🛋️</span></div><h1 class="page-title">Linters</h1></header><div class="page-body"><p id="9a4bd7bc-1fb3-4b9a-ba73-a79813753ae1" class="">Linting is an important part of writing good Python code. It is a tool that helps you detect potential errors in your code, as well as identify coding conventions that could make your code easier for others to read and understand. </p><ul id="62707031-55db-4beb-9771-6f9160f2a684" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Why do we lint? </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></summary><p id="d7271179-33b0-4280-bb04-bd6c6bbcaa34" class="">Linting can help you find typos in your code, such as misspelled variable names or incorrect indentation. It can also point out when you are using features of the language that are not recommended, or even deprecated. This can help you write code that is more consistent and error-free. In addition, linting can help you enforce coding conventions such as spacing and indentation. These conventions can make it easier for other people to read and understand your code. This is especially important when you are working with a team of developers, as it helps make sure that everyone is following the same coding style.</p></details></li></ul><p id="cee56a1e-e965-4856-aa46-9dec098040e4" class="">
+</p><hr id="48af4a54-d00a-48c6-9e1c-aa4623cf3363"/><h2 id="18834613-2144-4ea0-9817-72c0158502f4" class="">IDE-based Linting</h2><p id="0cbd4c5e-c0d7-4275-9a07-cc49e6f85178" class="">If you are using VSCode, you’re in luck! The IDE supports in-client linting for Python code, making the process of finding issues that much easier 👊</p><p id="b9fd72fa-946e-4d7d-b397-f6f52ed9abb9" class=""><mark class="highlight-blue"><a href="https://code.visualstudio.com/docs/python/linting">💾 Linting in VSCode Tutorial</a></mark> </p><h2 id="9fd379cd-e213-47f6-b1a1-038aa5a0c0f6" class="">Package-based Linting</h2><p id="38c4df95-5471-4842-a726-dbfa41fab982" class="">Several Python packages have been developed to help clean up your code and conform to industry-best standards. Here’s a few you may find useful:</p><ul id="3c1b7400-f4c5-4742-9eed-a7415643b6f7" class="toggle"><li><details open=""><summary><code>pylint</code></summary><p id="7ec349ab-6a02-4271-bc69-cb2c35676719" class="">Install the <code>pylint</code> package like so:</p><pre id="ccc0e626-3291-4749-8471-71107b0efe21" class="code"><code>pip install pylint</code></pre><p id="7bb3be36-3316-4128-8db3-13aed68b8af6" class=""><code>pylint</code> scores your file out of 10 in terms of code cleanliness. You can set lower bound values, and for files that fall below that threshold, an error will be thrown, letting you know which files to look into.</p><pre id="2e024a91-b1f7-493b-b4d9-91dc1312529c" class="code"><code>pylint --fail-under=VALUE file_name.py</code></pre><p id="df45f8f8-b3c7-4318-ba9a-7ebbfe0ead81" class=""><strong><strong><strong><strong><strong><strong>Resources:</strong></strong></strong></strong></strong></strong></p><p id="b23d0cfc-2086-473e-915a-77469d5472bf" class=""><mark class="highlight-blue"><a href="https://pypi.org/project/pylint/">✍️ pylint @ Pypi</a></mark><mark class="highlight-blue"> </mark></p></details></li></ul><ul id="44d12dc5-f56e-4817-920e-219c4ec25473" class="toggle"><li><details open=""><summary><code>black</code></summary><p id="a6938020-f53b-419c-9ec9-926514cdc0d8" class=""><code>black</code> is an auto-formatter package that reshapes your Python code to be more readable. It also supports formatting for Jupyter notebooks. You install it like so:</p><div id="b6aa4309-88af-430f-bba7-d8055cff3710" class="column-list"><div id="be6885a6-0313-4c26-afdb-ed0ca27dea8d" style="width:100%" class="column"><p id="ec688955-54ba-470f-a3a1-2ff6f3496966" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>For Python:</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="72e3d340-c9ec-419e-a96a-301f4ac3dd64" class="code"><code>pip install black</code></pre></div><div id="c1f766f3-61ea-4a2b-98a7-4fadc352feeb" style="width:100%" class="column"><p id="5a0091e9-f45d-417d-84cd-688d76772c34" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>For Jupyter:</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><pre id="55a6a193-837d-494e-a7cd-d1ef39295964" class="code"><code>pip install &#x27;black[jupyter]&#x27;</code></pre></div></div><p id="26e1b931-89fe-4c4a-8a68-4755f8d4b7d7" class="">You can run it as its own command or as a module on your files like so:</p><div id="78c6e180-2588-4f3c-bfcc-73297b470486" class="column-list"><div id="f07a85ef-a3e4-4229-b82d-d452d99d8cb8" style="width:100%" class="column"><p id="0be0b5b4-5124-4b6f-a484-fa9a24f9d58e" class=""><strong><strong><strong><strong><strong><strong><strong>Command:</strong></strong></strong></strong></strong></strong></strong></p><pre id="f5c57d62-5ae3-4877-9dd8-4db15e9baa6a" class="code"><code>black file_name.py</code></pre></div><div id="107a7d79-4b29-4023-bdd8-132f8f22975f" style="width:100%" class="column"><p id="980c1bd1-9760-425e-bca3-6762a8c85ffb" class=""><strong><strong><strong><strong><strong><strong>Module</strong></strong></strong></strong></strong></strong></p><pre id="42b62133-cdd0-4fd3-86a5-793fb5e752f0" class="code"><code>python -m black file_name.py</code></pre></div></div><p id="df4a0edf-7af1-4ca0-9b8e-e3b25558bd38" class="">If you would like to <strong><strong><strong><strong><strong>avoid </strong></strong></strong></strong></strong>auto-formatting and just see what changes <strong><strong><strong><strong><strong><strong>should</strong></strong></strong></strong></strong></strong> be made, simply append <code>diff</code> to your call like so:</p><pre id="c08cddab-f4a2-499c-bda1-09937b0a91a9" class="code"><code>black file_name.py --diff</code></pre><p id="8ff842dd-3cc9-449c-9bc1-a8ebd6d69e03" class="">
+</p><p id="c736d4a3-089b-42db-a3eb-cbc4669b37e7" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Resources:</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><p id="be4d9c79-183d-4090-8821-438072b61b86" class=""><mark class="highlight-blue"><a href="https://pypi.org/project/black/">✍️ black @ pypi</a></mark></p></details></li></ul><ul id="6c0a6d8c-d1ba-4f40-9fca-5ebabdef60e5" class="toggle"><li><details open=""><summary><code>isort</code></summary><p id="d87c730d-9f47-4480-891a-0c55e970b552" class="">Import statements should follow pep8 rules, which state that imports should be grouped like:</p><ol type="1" id="d993de58-2670-4f83-b9d5-9c6389bb6bb7" class="numbered-list" start="1"><li>Standard libraries</li></ol><ol type="1" id="96fe6b19-6cdc-4d9e-b88d-74d1df9fdce2" class="numbered-list" start="2"><li>Third-party imports</li></ol><ol type="1" id="50e7f906-f018-4959-8c26-6e543c28279d" class="numbered-list" start="3"><li>Local modules, etc. </li></ol><p id="e71c92bb-3769-4612-9778-7ad2bb3ff39b" class="">If you come across files that do not follow this and don’t want to manually edit them, you can use the <code>isort</code> package to auto-format your import statements. </p><p id="cc243a5a-8e07-4b8d-b713-a380833995e2" class="">Install it like so:</p><pre id="0cb6c033-75f9-4598-8a1a-bb207584dc6d" class="code"><code>pip install isort</code></pre><p id="5e7984ac-a659-4e0c-9215-fc03c62d2af8" class="">Run it on your files:</p><pre id="cb350455-1201-4aef-af92-0f753e131774" class="code"><code>isort file_name.py </code></pre><p id="cde38c91-c97f-4da9-9779-67afdcbb81e4" class=""><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Resources:</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p><p id="9265d52a-aa96-4430-a0d8-d7267419df3b" class=""><a href="https://pypi.org/project/isort/"><mark class="highlight-blue">✍️ isort @ pypi</mark></a></p><p id="4c700830-6278-4943-bac6-65db5a762ebd" class="">
+</p></details></li></ul><p id="fcfbe0c8-6ba4-4e91-96df-15d68169a591" class="">These are far from the only packages that can help you write good Python code! </p><p id="e126ca82-7bd9-459a-9813-92e00bd52a1c" class=""><mark class="highlight-blue"><a href="https://www.realpythonproject.com/how-to-automate-formatting-and-linting-in-python/">🌐 Other Python Linters</a></mark></p><p id="640c2685-0ba7-4399-883a-27244c1153f4" class="">
+</p><hr id="ff6d6a11-06f3-4587-92b6-077dcebe7c99"/><p id="260665ed-a5d1-4a22-b7c1-8b2f0494c6a7" class="">Writing in JavaScript? You can read about JavaScript linters here:</p><figure id="62ce6b95-6bba-411c-a7a7-4b27a218dedf" class="link-to-page"><a href="https://www.notion.so/Linters-62ce6b956bba411ca7a74b27a218dedf"><span class="icon">🧹</span>Linters</a></figure><p id="3c392233-6b59-4235-8e8f-23c3079c50fa" class="">
+</p></div></article></body></html>

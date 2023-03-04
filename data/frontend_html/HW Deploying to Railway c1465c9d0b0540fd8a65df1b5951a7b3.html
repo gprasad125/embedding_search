@@ -1,0 +1,803 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HW: Deploying to Railway</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c1465c9d-0b05-40fd-8a65-df1b5951a7b3" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1610296669228-602fa827fc1f?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🚀</span></div><h1 class="page-title">HW: Deploying to Railway</h1></header><div class="page-body"><hr id="12bf884f-82d4-4798-93c1-e70a5fa94d72"/><p id="2e328fa8-540d-48de-8bbf-5fafcdf021fb" class="">This doc covers the steps to deploy the <code>Hello World</code> example to Railway. </p><hr id="fe891fe2-ee8d-4c3e-8bd2-c2e0907af5d5"/><nav id="9cfc011f-fd87-4793-9ef8-3f7370e0b416" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#910c3ec5-3855-4750-b65b-510cfb6ce2f8">1. Setup the frontend server</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e3d8a9ab-f723-4a3e-8182-7e3e9a914348">1.1. Splitting the repo</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4845b0bc-4470-4efa-8b4e-7933a4b28052">1.2. Move <code>.gitignore</code> to root</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#866a0a00-761b-4f98-96f5-b0b77516bbe8">1.3. Create <code>server</code> directory</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#90bb4f6d-b9e9-4774-944d-57255cc2acc3">1.4. Initialize <code>npm</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ddcfab40-ebd2-4ec3-81a8-43d650bd0bee">1.5. Install dependencies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#aa333d87-79d7-46f4-a3d9-1c9c365643c5">1.6. Create <code>server.js</code> </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#94ed41d8-cf10-4781-9559-9c9a9efa253c">2. Configure <code>Vite</code> base</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b1f8ea2-772c-4129-95b3-9aa65a0bae01">3. Setup Docker</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c5101f34-3e42-451e-b106-8c3f63c248fc">3.1. Create <code>Dockerfile</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2ecdd50a-4c94-47e6-a713-d72cb55b92a2">3.2. Create <code>.dockerignore</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#002c58a8-0f81-461c-8a7e-ae999867fb12">4. Setup Railway</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4a8c8d9f-4a40-406e-ba0a-c5d0cf9e11f5">4.1. Signup or Login to Railway</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4fe2ee26-3b8f-4839-9351-2194c2c7ecf5">4.2. Create a new Railway project</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4531964b-5d61-40f7-bef3-c29d00a678eb">4.3. Install the Railway CLI</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b103bb68-febd-4451-b631-aa5556ee26df">4.4. Login to the CLI</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07c50bbe-6cfa-4e30-97ab-65706d2b5137">5. Deploy to Railway</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3f326022-0766-4130-8a8c-eec3047b0e4a">5.1. Link the Railway project</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0d4cd785-0baa-4f67-a92b-3416b68eab58">5.2. Deploy</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7802e3e1-6a4e-4b58-a77b-6ca5168464dc">5.3. Add a domain</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7b9905ad-b45f-4f6a-8807-733b5b00a12a">5.4. Final Notes</a></div></nav><h1 id="910c3ec5-3855-4750-b65b-510cfb6ce2f8" class="">1. Setup the frontend server</h1><p id="d2563b6f-3078-4e6c-a7f3-3ac664c59959" class="">Since we’re using a decoupled setup, we will need to setup a basic server to serve the frontend assets. We’ll use the FastifyJS server framework with NodeJS for this. </p><p id="f16c88a8-5055-4288-92b3-847c65904d3b" class="">
+</p><h3 id="e3d8a9ab-f723-4a3e-8182-7e3e9a914348" class="">1.1. Splitting the repo</h3><p id="50d9f677-be5b-4f46-a80d-d7a164cf7d62" class="">We will be setting up the Fastify server code in the same directory as the frontend app. </p><p id="9ed8aa5b-3be8-4d0d-98e8-1229017aa49f" class="">If all of your frontend assets are in the root of the Github Repository, you will want to move it into a directory to keep it separate from the server. So the repository should look something like this:</p><hr id="0b97586d-7ade-4b45-8c98-59b205617021"/><ul id="7b52a446-f29e-4f54-b616-33e51104cd70" class="toggle"><li><details open=""><summary>📁 Repository Root Directory</summary><ul id="65faad30-b770-4e30-aef7-272fd28ec64a" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">📁 app</mark></summary><ul id="a8c22fa0-67db-4f9f-80d7-173e86c0d166" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="52b44f00-2016-4b2d-858c-47117fa587f2" class="toggle"><li><details open=""><summary>📁 public</summary></details></li></ul><ul id="7342e096-4635-4afd-b9fe-ebfa32a113b6" class="toggle"><li><details open=""><summary>📁 src</summary><ul id="982f89de-b732-47e2-8185-10054722af0e" class="toggle"><li><details open=""><summary>📁 components</summary></details></li></ul><ul id="4145169c-8ae2-46df-bd72-1b8722ef20a9" class="toggle"><li><details open=""><summary>📁 pages</summary></details></li></ul><ul id="1518698f-8985-4c7e-8a0d-93483096aabc" class="toggle"><li><details open=""><summary>📎 App.css</summary></details></li></ul><ul id="42a5084f-f4cf-499a-9ac2-797180dee532" class="toggle"><li><details open=""><summary>📎 App.tsx</summary></details></li></ul><ul id="b0815a2a-6c1e-4247-bd5c-13bd419383ce" class="toggle"><li><details open=""><summary>📎 index.css</summary></details></li></ul><ul id="8988e0b4-0b0d-44e4-93d2-9ab9e55238bd" class="toggle"><li><details open=""><summary>📎 main.tsx</summary></details></li></ul></details></li></ul><ul id="2b6cf5ce-e21b-4aa6-bc9f-30e834a58c65" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="da8b9831-37cc-42a7-b88a-b5a83ac115eb" class="toggle"><li><details open=""><summary>📎 .gitignore</summary></details></li></ul><ul id="542e5e1c-3205-404b-8119-42f8c1e0140d" class="toggle"><li><details open=""><summary>📎 vite.config.cjs</summary></details></li></ul><ul id="f982cf58-6bfb-4f40-9236-4212e6fca893" class="toggle"><li><details open=""><summary>and more …</summary></details></li></ul></details></li></ul></details></li></ul><hr id="bfc067e7-6454-42cd-8bbc-1e782be775ac"/><p id="f94a5349-0a10-46c6-9dab-b04dc011ee2c" class="">
+</p><h3 id="4845b0bc-4470-4efa-8b4e-7933a4b28052" class="">1.2. Move <code>.gitignore</code> to root</h3><p id="44a07f4d-731c-4fef-8d6e-0e9745d9686d" class="">Once everything has been organized as above, you’ll want to keep the <code>.gitignore</code> in the root directory so that git can find it.</p><hr id="8f2d68a2-6459-4b79-a488-84b69f6c4a57"/><ul id="9d4f8c1e-76a9-4e35-9815-312a89c66b7d" class="toggle"><li><details open=""><summary>📁 Repository Root Directory</summary><ul id="0f9bb9ca-251b-4de3-8721-04abe574ce43" class="toggle"><li><details open=""><summary>📁 app</summary><ul id="b2a98eac-b8ea-4314-a8f2-bb5f90c40ced" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="fe871de1-1b53-49e7-a04b-41b0620ce452" class="toggle"><li><details open=""><summary>📁 public</summary></details></li></ul><ul id="c05cc22b-5b8b-45bc-9792-e6392097182a" class="toggle"><li><details open=""><summary>📁 src</summary><ul id="ef38e71f-1f16-4f83-8308-533853844eca" class="toggle"><li><details open=""><summary>📁 components</summary></details></li></ul><ul id="342b1765-6f8e-493f-a72a-05020630b16e" class="toggle"><li><details open=""><summary>📁 pages</summary></details></li></ul><ul id="ecb5d302-fcea-48f4-9246-9f14fbe35e99" class="toggle"><li><details open=""><summary>📎 App.css</summary></details></li></ul><ul id="f30e43d6-72f3-4636-9452-0d6fef8870e4" class="toggle"><li><details open=""><summary>📎 App.tsx</summary></details></li></ul><ul id="8d583b1c-4386-4cbe-92e0-7a78c8809895" class="toggle"><li><details open=""><summary>📎 index.css</summary></details></li></ul><ul id="d75205f4-0161-4634-b630-c8bf599834fe" class="toggle"><li><details open=""><summary>📎 main.tsx</summary></details></li></ul></details></li></ul><ul id="9506d13a-62c6-4240-9d83-f369b788353b" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="4156d9b1-2d9d-4668-a7b9-80c08f4f4e74" class="toggle"><li><details open=""><summary>📎 vite.config.cjs</summary></details></li></ul><ul id="494fe259-4b08-4697-9926-8d51e6787ff1" class="toggle"><li><details open=""><summary>and more …</summary></details></li></ul></details></li></ul><ul id="7cdf6cbb-24c5-450b-b64d-7720c45308d0" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">📎 .gitignore</mark></summary></details></li></ul></details></li></ul><hr id="811f8493-b2f7-44ad-a0cd-8debd89e0f2f"/><p id="14ff0ed4-7113-4374-991e-5915a63d8ded" class="">
+</p><h3 id="866a0a00-761b-4f98-96f5-b0b77516bbe8" class="">1.3. Create <code>server</code> directory</h3><p id="4dbb1f74-a05a-4022-b6ff-3e3d148d29bd" class="">Next, create the <code>server</code> directory in the project root where we’ll be keeping the server code.</p><hr id="575c3e1b-3006-4049-9069-a1054998be86"/><ul id="1fd8b1b5-e2b0-4699-9985-8e445843aeac" class="toggle"><li><details open=""><summary>📁 Repository Root Directory</summary><ul id="48a9e979-42d3-42cb-b3be-11646f9e03db" class="toggle"><li><details open=""><summary>📁 app</summary><ul id="7051a1f7-b913-4cd2-ab04-c366768bcafb" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="3e1465ee-08f1-4c76-85cc-75a00f7d9574" class="toggle"><li><details open=""><summary>📁 public</summary></details></li></ul><ul id="61e3bee0-6fb0-4b5b-8c91-c3c7942ea11f" class="toggle"><li><details open=""><summary>📁 src</summary><ul id="d95f2d90-00ab-4355-8624-c6cc53e5ab2d" class="toggle"><li><details open=""><summary>📁 components</summary></details></li></ul><ul id="6301a1fe-bb7e-41a7-974e-c91e88cd5569" class="toggle"><li><details open=""><summary>📁 pages</summary></details></li></ul><ul id="ac4b2b73-ee5a-47c7-8569-e5fe6953c7c3" class="toggle"><li><details open=""><summary>📎 App.css</summary></details></li></ul><ul id="5a8ca1bf-046b-477e-9586-ea7675956b8f" class="toggle"><li><details open=""><summary>📎 App.tsx</summary></details></li></ul><ul id="9dca6d91-ecb5-4648-8a72-cf77e6670322" class="toggle"><li><details open=""><summary>📎 index.css</summary></details></li></ul><ul id="93235329-a120-4652-af18-fd0ce13ba774" class="toggle"><li><details open=""><summary>📎 main.tsx</summary></details></li></ul></details></li></ul><ul id="8e109c6b-56a9-42a8-ab4c-abd9db4eed02" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="c6c5cbc6-ea61-4da8-a198-c4a7f36daaaa" class="toggle"><li><details open=""><summary>📎 vite.config.cjs</summary></details></li></ul><ul id="9a6c8e1a-3304-4be6-b651-4b543de594ae" class="toggle"><li><details open=""><summary>and more …</summary></details></li></ul></details></li></ul><ul id="1c137f8d-a76f-4196-8d1c-17b24dbac04f" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">📁 server</mark></summary></details></li></ul><ul id="4e44e84f-7a79-474f-8fce-d656bbdca7da" class="toggle"><li><details open=""><summary>📎 .gitignore</summary></details></li></ul></details></li></ul><hr id="1f307307-c21a-42e9-b6fe-4d3c733e18a7"/><p id="0d687957-a917-4110-860a-7d609db306a3" class="">
+</p><h3 id="90bb4f6d-b9e9-4774-944d-57255cc2acc3" class="">1.4. Initialize <code>npm</code></h3><p id="81dfd950-3f06-4d7c-b562-03bb309d5963" class="">Initialize <code>npm</code> in the <code>server</code> directory.</p><pre id="70f6fdac-d4b9-455c-83ac-d5afe16f1d33" class="code"><code>cd server
+
+npm init -y</code></pre><p id="6178dac1-5634-4fd9-9bf5-ad4e1a03fe2b" class="">
+</p><h3 id="ddcfab40-ebd2-4ec3-81a8-43d650bd0bee" class="">1.5. Install dependencies</h3><p id="ce800f05-e936-4feb-a561-716f3dee2068" class="">We will be using the following libraries.</p><pre id="939a60a0-82c5-4b81-afc3-3c1f1c179313" class="code"><code># npm
+npm install --save fastify @fastify/compress @fastify/static
+
+# yarn
+yarn add fastify @fastify/compress @fastify/static</code></pre><p id="80a0b010-6259-4e32-9ef7-662aafa8b114" class="">
+</p><h3 id="aa333d87-79d7-46f4-a3d9-1c9c365643c5" class="">1.6. Create <code>server.js</code> </h3><p id="d2b5572e-6965-4f8a-b16e-35bb8c7579c6" class="">Create the file where we will setup the frontend server and paste the following code into it.</p><hr id="a69de1c2-fd35-4b0b-9956-c2ee3ca26945"/><ul id="b26b4f32-a65b-4b0e-98c8-ad10d93e08a8" class="toggle"><li><details open=""><summary>📁 Repository Root Directory</summary><ul id="0f8d6a93-46af-4e47-8d01-359edd3fdd99" class="toggle"><li><details open=""><summary>📁 app</summary><ul id="4ea6d419-ee35-4a1e-a90c-34aaa27ba68d" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="519328da-de72-4d06-8073-35f0a2c06284" class="toggle"><li><details open=""><summary>📁 public</summary></details></li></ul><ul id="209f043b-3428-4ce0-bbb7-834046de0cbd" class="toggle"><li><details open=""><summary>📁 src</summary><ul id="fed0fa6b-98ca-415c-87b0-e014419de5e6" class="toggle"><li><details open=""><summary>📁 components</summary></details></li></ul><ul id="ae155d03-a961-4009-82ba-2a8b05104944" class="toggle"><li><details open=""><summary>📁 pages</summary></details></li></ul><ul id="27f964be-9c9f-449e-b443-45c2d4d1c351" class="toggle"><li><details open=""><summary>📎 App.css</summary></details></li></ul><ul id="e6f9f453-e2c9-4d04-964d-9d8c41e8c67f" class="toggle"><li><details open=""><summary>📎 App.tsx</summary></details></li></ul><ul id="892d0da4-e8e7-4446-839d-b5b255b5ff79" class="toggle"><li><details open=""><summary>📎 index.css</summary></details></li></ul><ul id="25b3a745-9c1a-4a3e-9946-a6a9ac6991d5" class="toggle"><li><details open=""><summary>📎 main.tsx</summary></details></li></ul></details></li></ul><ul id="61ef3fbc-bfbf-4f98-af26-f933baa6ed1c" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="be765067-7c80-4e4e-bded-0aa93ae4cd17" class="toggle"><li><details open=""><summary>📎 vite.config.cjs</summary></details></li></ul><ul id="5b046366-9af2-43ed-afe3-88ae38856f35" class="toggle"><li><details open=""><summary>and more …</summary></details></li></ul></details></li></ul><ul id="d57ab396-ab51-4648-ac31-1a876fd21378" class="toggle"><li><details open=""><summary>📁 server</summary><ul id="e9382656-9632-40fe-87b3-097009501c18" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="fd4cc6e9-2076-4b3f-8afc-0940b56e51d2" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">📎 server.js</mark></summary></details></li></ul><ul id="3bb4546f-5aa1-4391-ad4b-b9324942c3e6" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="59d5e1d6-08f4-4cd2-b625-32117747a788" class="toggle"><li><details open=""><summary>📎 package-lock.json <code>or</code> yarn.lock </summary></details></li></ul></details></li></ul><ul id="ddcc4a2b-fd38-4c09-84e0-a03b564eb6ad" class="toggle"><li><details open=""><summary>📎 .gitignore</summary></details></li></ul></details></li></ul><hr id="2cf4e61c-7fa7-4846-87bf-cdc802f9d90d"/><pre id="3d080f63-65f8-4816-a2d5-74412fbeee3e" class="code"><code>// server.js
+
+// require libraries
+const fastify = require(&#x27;fastify&#x27;)();
+const fastifyStatic = require(&#x27;@fastify/static&#x27;);
+const fastifyCompress = require(&#x27;@fastify/compress&#x27;);
+const path = require(&#x27;path&#x27;);
+// store PORT env variable with default to 3000
+const PORT = process.env.PORT || 3000;
+
+// add compression plugin
+fastify.register(fastifyCompress);
+// add static file serving plugin
+fastify.register(fastifyStatic, {
+    root: path.join(__dirname, &#x27;dist&#x27;),
+    prefix: &#x27;/public/&#x27;
+});
+
+// create catch-all route that serves index.html of app
+fastify.get(&#x27;*&#x27;, (req, reply) =&gt; {
+    return reply.sendFile(&#x27;index.html&#x27;);
+});
+
+// start server
+fastify.listen({ port: PORT, host: &#x27;0.0.0.0&#x27; }, (err) =&gt; {
+    if (err) throw err;
+    console.log(&#x27;Server listening at port &#x27; + PORT);
+});</code></pre><p id="2c0175cd-2936-4b73-bf44-669b4e972b84" class="">
+</p><p id="71f42b52-3f2f-4ae0-bdc0-500aa0d126de" class="">
+</p><h1 id="94ed41d8-cf10-4781-9559-9c9a9efa253c" class="">2. Configure <code>Vite</code> base</h1><p id="301c4725-74f0-4f7d-9151-c54350136dfc" class="">The <code>Fastify</code> server above is configured to serve static assets at the <code>/public/</code> url. This will require us to update <code>Vite</code>&#x27;s configuration to map the asset urls correctly. Modify <code>app/vite.config.cjs</code> as follows:</p><pre id="bac520de-293a-4c3a-8861-2d5c07fea186" class="code"><code>import { defineConfig } from &#x27;vite&#x27;
+import react from &#x27;@vitejs/plugin-react&#x27;
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  // ...
+  base: &#x27;/public&#x27; // set host-base to &quot;/public&quot;
+})</code></pre><p id="08cf63e7-6437-4ce2-a52a-6e777c8e8f48" class="">
+</p><h1 id="9b1f8ea2-772c-4129-95b3-9aa65a0bae01" class="">3. Setup Docker</h1><p id="8d63dec0-54e2-47e5-af66-63f19313e09e" class="">We will be using Docker to containerize the frontend and make deploying the Railway easy.</p><p id="1bca2bc9-38a3-4096-b1a8-c821335a683c" class="">
+</p><h3 id="c5101f34-3e42-451e-b106-8c3f63c248fc" class="">3.1. Create <code>Dockerfile</code></h3><p id="13efb8d4-56a4-4cad-aed0-718ce49a3638" class="">In the repository root, create a new file named as <code>Dockerfile</code>.</p><hr id="7031a58a-b9f8-42cd-ac50-fa46c404ee03"/><ul id="255b8d2f-223a-4019-b6b0-bd52e73c7213" class="toggle"><li><details open=""><summary>📁 Repository Root Directory</summary><ul id="a84ccfce-497c-4b58-b6ce-ee7d925d60e9" class="toggle"><li><details open=""><summary>📁 app</summary><ul id="86e63a14-f8c8-4357-953f-561d2e1a48e2" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="91d3bc5c-ef27-4d73-a3e7-585e14d71faf" class="toggle"><li><details open=""><summary>📁 public</summary></details></li></ul><ul id="a953592b-5ac3-4e8a-842a-9ccd622e2060" class="toggle"><li><details open=""><summary>📁 src</summary><ul id="53f48ade-7d81-4933-a431-bcd14c6ce7cd" class="toggle"><li><details open=""><summary>📁 components</summary></details></li></ul><ul id="d9112db7-6f22-4965-b626-417ccdde860d" class="toggle"><li><details open=""><summary>📁 pages</summary></details></li></ul><ul id="bc018770-8262-44cc-99ef-3e05a94711c3" class="toggle"><li><details open=""><summary>📎 App.css</summary></details></li></ul><ul id="6b1914e8-39b6-4378-ba6c-94af04b6741a" class="toggle"><li><details open=""><summary>📎 App.tsx</summary></details></li></ul><ul id="c23bea60-eb82-450f-9962-3922ca13295a" class="toggle"><li><details open=""><summary>📎 index.css</summary></details></li></ul><ul id="0f2294da-9f97-452f-b1f3-48783a1a6cf5" class="toggle"><li><details open=""><summary>📎 main.tsx</summary></details></li></ul></details></li></ul><ul id="877aaa6d-a64e-4244-81db-103cd6a28751" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="05ad0343-0bc3-41b5-af94-06473ac68291" class="toggle"><li><details open=""><summary>📎 vite.config.cjs</summary></details></li></ul><ul id="18117748-ec21-4514-ab3b-e93070c332b5" class="toggle"><li><details open=""><summary>and more …</summary></details></li></ul></details></li></ul><ul id="7ad63c62-7da7-4a61-a250-d50b818c51ac" class="toggle"><li><details open=""><summary>📁 server</summary><ul id="6a19a1e7-6d77-448a-8ddc-706fcb32a27b" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="0dfeb017-a65c-44ee-a868-dc0967afdb41" class="toggle"><li><details open=""><summary>📎 server.js</summary></details></li></ul><ul id="f975e48c-40e6-4598-8759-82990561eef7" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="a1365c2e-6dd9-426d-b660-4c13a4455fef" class="toggle"><li><details open=""><summary>📎 package-lock.json <code>or</code> yarn.lock </summary></details></li></ul></details></li></ul><ul id="fb53f9ab-c40e-49a7-9693-ed929bc9ee6f" class="toggle"><li><details open=""><summary>📎 .gitignore</summary></details></li></ul><ul id="ce9ea825-97c5-4135-82ac-f07e37f87a2e" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">📎 Dockerfile</mark></summary></details></li></ul></details></li></ul><hr id="3079f82c-597b-4b1a-911b-4d365d78b44a"/><pre id="78796b79-8d66-4c9f-9a1f-9dd69342c3be" class="code"><code>ARG PORT
+
+# work on top of node image
+FROM node:18 
+# specifiy working directory
+WORKDIR /frontend
+# make port argument available as environment variable
+ENV PORT=$PORT
+
+# init directories
+RUN mkdir server &amp;&amp; mkdir app
+
+# install pm2
+RUN npm install -g pm2
+
+# ========================
+# Server Setup
+# ========================
+# copy dependency files to docker image
+COPY server/package.json server/
+COPY server/yarn.lock server/
+# install dependencies
+RUN cd server &amp;&amp; yarn install
+# copy remaining assests to docker image
+COPY server/ server/
+
+# ========================
+# Frontend Setup
+# ========================
+# copy dependency files to docker image
+COPY app/package.json app/
+COPY app/yarn.lock app/
+# install dependencies
+RUN cd app &amp;&amp; yarn install
+# copy remaining assests to docker image
+COPY app/ app/
+# build frontend code
+RUN cd app &amp;&amp; yarn build
+
+# move static files to server
+RUN mv app/dist server/
+
+# Expose container port
+EXPOSE $PORT
+# set working directory to server
+WORKDIR /frontend/server
+# start server daemon
+CMD [ &quot;pm2-runtime&quot;, &quot;start&quot;, &quot;server.js&quot; ]</code></pre><p id="1aed4b7a-73f3-4c1b-9be3-5eb5f3934308" class="">
+</p><h3 id="2ecdd50a-4c94-47e6-a713-d72cb55b92a2" class="">3.2. Create <code>.dockerignore</code></h3><p id="e8587dd8-79a7-4222-8fd6-b5a493d54060" class="">In the repository root, create a new file named as <code>.dockerignore</code> and copy-paste everything from your <code>.gitignore</code>. Just like with <code>.gitignore</code>, <code>.dockerignore</code> tells Docker what files and folders to ignore when containerizing the app. </p><hr id="a44607f0-0232-47e9-ab6f-d54a2b07ccd1"/><ul id="6b9f0183-3150-42b1-b5fb-df34ea0f54fe" class="toggle"><li><details open=""><summary>📁 Repository Root Directory</summary><ul id="9eb36ed7-fe81-4ceb-a0b2-f63ef29297ce" class="toggle"><li><details open=""><summary>📁 app</summary><ul id="2ca2f761-f116-4dcb-ae1d-c32d69cf1477" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="aba70866-78b3-42af-b03d-c642dd1c4d60" class="toggle"><li><details open=""><summary>📁 public</summary></details></li></ul><ul id="1a51dc0c-5c32-43e9-af9e-31a2d72ce284" class="toggle"><li><details open=""><summary>📁 src</summary><ul id="55ad709e-918a-438e-9537-c54704ee2475" class="toggle"><li><details open=""><summary>📁 components</summary></details></li></ul><ul id="f6a69c17-fcf2-418f-965b-4fd28e8e6087" class="toggle"><li><details open=""><summary>📁 pages</summary></details></li></ul><ul id="12261735-0f23-43aa-926b-732d27c9728e" class="toggle"><li><details open=""><summary>📎 App.css</summary></details></li></ul><ul id="5d125b23-7007-4cf5-9eef-b03fe111d81a" class="toggle"><li><details open=""><summary>📎 App.tsx</summary></details></li></ul><ul id="4beb3450-c860-4649-ab89-a1bc697ecd99" class="toggle"><li><details open=""><summary>📎 index.css</summary></details></li></ul><ul id="6dc4ada3-5b22-4135-b554-ad1b5aef52c1" class="toggle"><li><details open=""><summary>📎 main.tsx</summary></details></li></ul></details></li></ul><ul id="e230b5b5-8fbc-4b0e-bbe1-bc0f4cc431de" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="6f56396d-9abb-42df-b733-c56c1ef69429" class="toggle"><li><details open=""><summary>📎 vite.config.cjs</summary></details></li></ul><ul id="84f81e48-dd28-481f-9242-71fb1390ca07" class="toggle"><li><details open=""><summary>and more …</summary></details></li></ul></details></li></ul><ul id="06008696-78bf-442e-b4c8-346fdc3136d9" class="toggle"><li><details open=""><summary>📁 server</summary><ul id="fcdb7985-a389-4cff-995c-0e166f458cc6" class="toggle"><li><details open=""><summary>📁 node_modules</summary></details></li></ul><ul id="f7c81b33-0d21-4bea-b514-9b3ca452c973" class="toggle"><li><details open=""><summary>📎 server.js</summary></details></li></ul><ul id="d2633769-0aa8-478e-b985-2c11b50dce34" class="toggle"><li><details open=""><summary>📎 package.json</summary></details></li></ul><ul id="2dbf9668-1e10-4ecf-b57d-015257f5f17b" class="toggle"><li><details open=""><summary>📎 package-lock.json <code>or</code> yarn.lock </summary></details></li></ul></details></li></ul><ul id="5acfb7a3-2be0-48b4-a68b-68fed295db36" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">📎 .dockerignore</mark></summary></details></li></ul><ul id="78c68f46-f127-4f07-8b0b-7c7a90a9c966" class="toggle"><li><details open=""><summary>📎 .gitignore</summary></details></li></ul><ul id="4c2feca2-05a6-471e-8c6e-bf5f1cbf1edc" class="toggle"><li><details open=""><summary>📎 Dockerfile</summary></details></li></ul></details></li></ul><hr id="d9c1a0bb-160c-4f1e-a51e-7b4a8d4527c9"/><pre id="7bc66950-5aac-495b-a7c9-dc754425b9e1" class="code"><code># .dockerignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?</code></pre><p id="e38e5fd2-9b61-4f0d-b0e4-1f68f8f7a89c" class="">
+</p><h1 id="002c58a8-0f81-461c-8a7e-ae999867fb12" class="">4. Setup Railway</h1><p id="85f512e2-c4c6-4066-a2d1-18dc6d58f706" class="">Now, it’s time to link your repository to a Railway project. </p><p id="ebbbeb23-ea96-4728-beca-e1d0cedc58dd" class="">
+</p><h3 id="4a8c8d9f-4a40-406e-ba0a-c5d0cf9e11f5" class="">4.1. Signup or Login to Railway</h3><p id="d65360ff-c530-4da3-a63e-c6f1e9f9496a" class="">Go to <a href="https://railway.app/">Railway</a> and create an account. If you already have an account, then simply login.</p><p id="6897f347-cf78-4e0c-9416-fff0d717d6c7" class=""><span style="border-bottom:0.05em solid"><strong>Make sure to signup with your Github account</strong></span> if you don’t want to enter credit card information.</p><p id="e485852d-752a-4dc8-a225-28668c0bd9f7" class="">
+</p><h3 id="4fe2ee26-3b8f-4839-9351-2194c2c7ecf5" class="">4.2. Create a new Railway project</h3><p id="724cab52-d24e-43e6-9786-79a51f393d44" class="">In the <a href="https://railway.app/dashboard">Railway dashboard</a>, create a new project by selecting <code>Empty project</code> at the bottom. </p><figure id="ef90126d-7336-4be9-8e73-8ea175d65114" class="image"><a href="Screenshot_2023-01-21_at_5.25.53_PM.png"><img style="width:791px" src="Screenshot_2023-01-21_at_5.25.53_PM.png"/></a></figure><p id="ff206aec-3ed0-4564-b690-f794534020e2" class="">
+</p><h3 id="4531964b-5d61-40f7-bef3-c29d00a678eb" class="">4.3. Install the Railway CLI</h3><p id="85703af3-e602-4002-aaca-27e2c9c8bd4f" class="">Next, we’ll want to connect the project we just created to our local code using the CLI.</p><p id="c9b1317d-534f-41d3-a000-a7d71b88afdb" class="">Refer to the <a href="https://docs.railway.app/getting-started#install-and-link-the-cli">Getting Started Guide</a> under <code>Install and Link the CLI</code>. </p><p id="617fdb52-8281-46f3-9860-e6d5611f01b5" class="">Should be as simple as</p><pre id="b4b36f86-f568-49b6-81fd-6cde5b674a41" class="code"><code>npm install -g @railway/cli</code></pre><p id="155ae8a3-c5ba-4265-ae27-e2f51a21895b" class="">
+</p><h3 id="b103bb68-febd-4451-b631-aa5556ee26df" class="">4.4. Login to the CLI</h3><p id="708edc95-c310-4a0c-9f66-78a1d3fe31ce" class="">After installing the CLI, run the following command to login.</p><pre id="6634007d-c94f-4c06-9881-f502afca96b0" class="code"><code>railway login</code></pre><p id="e6ceeac2-e930-45ce-88dd-a8f8e257a67a" class="">
+</p><h1 id="07c50bbe-6cfa-4e30-97ab-65706d2b5137" class="">5. Deploy to Railway</h1><p id="894590c1-38fa-4293-9ebf-8285820492fa" class="">Now that everything has been setup, we can proceed with deploying the app. </p><h3 id="3f326022-0766-4130-8a8c-eec3047b0e4a" class="">5.1. Link the Railway project</h3><p id="713ee087-e7d0-412e-b548-e3f3a1e9999b" class="">In the repository root where the <code>Dockerfile</code>, <code>app</code> directory, and <code>server</code> directory are located, run the command</p><pre id="a14895d6-2148-492b-bac8-84698bb064d5" class="code"><code>railway link</code></pre><p id="543f0894-7f90-485b-a785-825c3b56a91d" class="">It will open up an interactive prompt where you should select the project that you created in step <code>4.2.</code>.</p><p id="d04617b3-1944-4d43-9182-6189f869b155" class="">
+</p><h3 id="0d4cd785-0baa-4f67-a92b-3416b68eab58" class="">5.2. Deploy</h3><p id="6cab7329-2e39-439d-a6a6-432653afe772" class="">You can now press the big red button.</p><pre id="be0a83ea-74ad-4e2f-87f6-c518766ef8e9" class="code"><code>railway up</code></pre><p id="66444317-5ae4-403f-8847-50d302f52994" class="">It will give you a link where you can see the deployment logs as Railway builds the Docker image and starts a new Docker container. This process might take a while. </p><p id="b9b97d53-26df-473a-a4da-23a2aa7f6910" class="">It might also <mark class="highlight-red">error</mark>, saying that you are not verified. Simply go to the link the error message provides and verify your account. If you signed up with Github, that would just be agreeing to not use their servers for crypto mining and other dumb things. Otherwise you might also have to add a credit card. Once you’ve finished verification, just rerun the command, and it’s off to the races.</p><p id="daf4c009-ffe1-420e-ba38-9aa69a7b5681" class="">
+</p><h3 id="7802e3e1-6a4e-4b58-a77b-6ca5168464dc" class="">5.3. Add a domain</h3><p id="52fa0756-f1d1-44f7-b030-5fbafd9cff1d" class="">Now return to your Railway project dashboard in your browser and navigate to your project.</p><p id="c0a019a4-2084-49f0-b871-23ee712378f2" class="">Railway does not automatically assign a domain to your project, so you will have to do an additional step to access your app on the web. </p><p id="ec28c1de-5d6d-422b-8e03-eb0dcc5add27" class="">When your project has finished deploying (status has changed from <code>building</code> → <code>active</code>), click on it to access the project settings. Then navigate to <code>Settings</code> and find the <code>Domain</code> section. You might need to wait a few minutes after deployment for Railway to verify that your project can be assigned a domain. Once you find it, you should also see a button to <code>autogenerate domain</code>. You should see a url generated for your project once you click on it.</p><p id="b3ec7a82-99e6-4065-bb15-3de0cd3787d7" class="">Below is an image of an already deployed and later deleted project, but most things should look the same.</p><figure id="e6dcd506-d463-4d93-8746-6d77cda34383" class="image"><a href="Screenshot_2023-01-21_at_5.39.15_PM.png"><img style="width:1520px" src="Screenshot_2023-01-21_at_5.39.15_PM.png"/></a></figure><p id="8f7e1504-d3f5-4968-87e6-459c4421dbeb" class="">
+</p><p id="1225e1e1-d405-419d-af77-74023cb29215" class="">It might take Railway a few minutes to setup the domain. Once it’s ready however, you’ll be able to click on the url and view your app, hopefully fully functional, on the web 🎉.</p><p id="ff60c70e-6c2a-4b54-8a3e-516e7f1109e7" class="">
+</p><h3 id="7b9905ad-b45f-4f6a-8807-733b5b00a12a" class="">5.4. Final Notes</h3><p id="ba0eae55-ce4b-4f33-9f6f-b8e0dc8d5b84" class="">Congrats, you just deployed a decoupled React app to Railway using Docker and Fastify! Unless you upgraded your plan, your account should currently be on the free plan, giving you 500 hours of uptime every month. Your app will likely go to sleep if there is inactivity for some time, and will occasionally have to wake up again once you try to re-access it. </p><p id="93446bc4-c4ef-4568-b324-ab9c39226799" class="">If you want 100% uptime, you will either have to upgrade your plan with money or use another provider that also requires money but may also provide cheaper rates. </p><p id="5ddf5605-0fa0-42ec-96bf-16daf141d18a" class="">
+</p></div></article></body></html>

@@ -1,0 +1,846 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HW: Development pt. 2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ce94cc0d-f03a-4f4f-91a1-f9033434c9e4" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🪢</span></div><h1 class="page-title">HW: Development pt. 2</h1></header><div class="page-body"><hr id="79a279ef-4ddc-4da3-a175-08d6015711a4"/><p id="870af7bc-7668-415e-8563-65a74555aa8c" class="">
+</p><p id="1c458473-7de2-4da7-bef1-e4fecc25817b" class="">In this second section, we’ll go through the specific steps of connecting our current frontend to the example backend via an API. </p><p id="4ef8ee83-2359-43d9-aeeb-0a3a148b59ab" class="">
+</p><hr id="d99e1015-516c-44ec-954e-41c055f5db73"/><nav id="9f60475c-c4d2-4459-8f6f-eca0697056cf" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d4c1901f-977e-47c0-aa68-24f7c7d266a2">1. Setting up the example backend</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1996b8c1-88ce-41f6-bb92-266dd28e013c">1.1. Python requirements</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c6fd4b9f-3c3c-45dc-9da9-1f89a857cbd3">1.2. Clone the repository</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#278ea38b-1fe3-4a4e-a987-6da1674f4935">1.3. Create virtual environment</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#118b95e0-fc42-43bf-a59b-08c122ce098f">1.4. Installing dependencies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#891be2f8-145d-4f5a-8db7-81d6d16a8e66">1.5. Migrating Django</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#58716177-78e0-4f14-967d-09558b03dacb">1.6. Environment variables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1864f030-ea78-4cfc-8d89-c7494f85a7db">1.7. Start the Django server</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8bf41c22-5651-4c20-9c8c-f89272c1d282">2. Adding the API to the frontend</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#60ddc2c7-f9fc-407b-ad02-275a37f7e9d4">2.1. Setup the <code>summarize</code> page</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6c1ef6d8-6c43-48fa-a024-e31a63c1e24e">2.2. Scaffold the component logic</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3dedb57a-8b2b-4447-8666-d9e0bdcf732e">2.3. Add in the API call</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#93c48644-5116-4e5a-a2b0-c6aef597eee7">2.4. Test</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f209091d-20c4-4b67-b4d6-e65e266ec62a">3. Frontend environment variables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#48168c12-e34b-444e-87e0-d14d151c4332">3.1. Create development environment file</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d4b2c322-c4e6-4044-a1a2-17c15c39dd3f">3.2. Create settings file</a></div></nav><h1 id="d4c1901f-977e-47c0-aa68-24f7c7d266a2" class="">1. Setting up the example backend</h1><h3 id="1996b8c1-88ce-41f6-bb92-266dd28e013c" class="">1.1. Python requirements</h3><p id="6b3751d2-c926-44ad-a66e-63f49f104aa3" class="">The backend uses <code>Python 3</code>. Make sure you have version 3.6 or higher on your machine. <code>Pip</code> is also necessary to install all the package requirements. </p><p id="f7a88478-bb61-4345-b857-bfead9ced3d0" class="">You can run</p><pre id="a7d137d3-a458-4d1f-8ba6-e01e06ced6a4" class="code"><code>python3 --version
+pip3 --version</code></pre><p id="038e8ed5-959e-419c-a004-564454849df2" class="">To see the version installed currently on your machine. </p><p id="a6562d3c-ee40-46ec-aac5-bc53507a3bca" class="">
+</p><h3 id="c6fd4b9f-3c3c-45dc-9da9-1f89a857cbd3" class="">1.2. Clone the repository</h3><p id="d25735dd-cf3d-41a1-866e-702071810ace" class="">In the location where you would like to store the backend code, clone the repository using git.</p><pre id="d3f561b3-7f5f-4379-8d29-cabd2c6d48e7" class="code"><code>git clone https://github.com/gprasad125/django_walkthrough.git</code></pre><p id="6a989853-d3cf-42d5-a8e9-73a0139c2758" class="">You should now see a directory called <code>django_walkthrough</code>.</p><p id="89944a99-94b2-4c1c-b4a8-953c2ce18487" class=""><code>cd</code> into it for the next steps</p><pre id="0ce81ae9-c12f-404e-be99-e31c14a8e4cb" class="code"><code>cd django_walkthrough</code></pre><p id="79e5dadd-17b5-44ad-b315-7636066f8ff2" class="">
+</p><h3 id="278ea38b-1fe3-4a4e-a987-6da1674f4935" class="">1.3. Create virtual environment</h3><p id="77105308-a1d8-48fb-8187-025bf312f783" class="">Next you will want to create a python virtual environment so that the dependencies are not installed globally. Refer to <a href="https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments">documentation</a> for more details.</p><pre id="a7d812fc-92e7-43c2-87fe-3709011fd5b8" class="code"><code># for Unix/macOS
+python3 -m venv &lt;DIR&gt;
+source &lt;DIR&gt;/bin/activate
+
+# for Windows
+py -m venv &lt;DIR&gt;
+&lt;DIR&gt;\Scripts\activate</code></pre><p id="66ca4586-f3a2-40ce-a78f-30ba05cf4448" class="">replace <code>&lt;DIR&gt;</code> with the name of what you want to name the environment. Something like <code>python_env</code> will do. </p><p id="094f86ef-7a95-4d07-a358-5abc6b02a27f" class="">
+</p><h3 id="118b95e0-fc42-43bf-a59b-08c122ce098f" class="">1.4. Installing dependencies</h3><p id="1902924a-d271-4ed7-b304-3d1ba3ec850e" class="">Once your environment has been created and activated (refer to previous step), you can now install all the dependencies. </p><pre id="7b56ce1f-3b78-4836-90f1-606dfb18b07c" class="code"><code>pip3 install -r requirements.txt</code></pre><p id="5232ce7f-a1d7-4183-8aea-418991aa88b0" class="">
+</p><h3 id="891be2f8-145d-4f5a-8db7-81d6d16a8e66" class="">1.5. Migrating Django</h3><p id="67bbed8d-03f8-49d0-9958-ef92730caac4" class="">With all dependencies installed, you can now run the Django migrations to sync the database. For this example backend project, it uses a simple sqlite file as the database.</p><p id="bd5c7512-cc64-4836-8389-fc4dc14c0aa8" class="">From <code>django_walkthrough</code>, first <code>cd</code> into the Django project directory</p><pre id="2adf652b-3a66-4a18-951a-abd0d64c1463" class="code"><code>cd my_project</code></pre><p id="0c4999b8-4490-47d6-815d-f33b776295ff" class="">Once you’re in the same directory as the <code>manage.py</code> file, you can now run Django’s management tools.</p><pre id="59264614-35f8-40dc-a599-ea3ea1e1c7dc" class="code"><code>python3 manage.py migrate</code></pre><p id="f2b84f9e-fefe-4cb6-82c2-ab802efde6c9" class="">It should output something like this.</p><figure id="bec3b114-2ef3-4e66-bff6-1609da17c4ed" class="image"><a href="Screenshot_2023-01-28_at_3.54.31_PM.png"><img style="width:498px" src="Screenshot_2023-01-28_at_3.54.31_PM.png"/></a></figure><p id="d20d635b-39f4-45a1-99d0-9d758cf6fc2f" class="">
+</p><h3 id="58716177-78e0-4f14-967d-09558b03dacb" class="">1.6. Environment variables</h3><p id="eb0753ae-e3d9-4cdf-885f-5d468b4c3c03" class="">Environment variables are just key-value variables that you set on your machine. This enables you to use secret values in your project without including them in your public git repository for everybody else to see.  </p><p id="99fcefd7-a1bc-4628-b588-ae7cd290ddd1" class="">The example backend depends two environment variables:<code>secret_key</code> &amp; <code>api_key</code>. The first is a secret that Django uses for encrypting things on the backend. The second is an api key to an OpenAI account to grant access to the summarizer. </p><p id="5c151d81-d737-406d-ba1d-96be5e38f017" class="">First, create a <code>.env</code> file. The project uses the <code>dotenv</code> library to automatically load environment variables from this file.</p><pre id="dc09b32c-1c7f-4f5f-b592-3c088e73495c" class="code"><code>touch .env</code></pre><p id="82db3e46-bca6-4735-aba0-bfe992d1ebe4" class="">Next, add the following to <code>.env</code></p><pre id="bd26b910-8a90-4fac-b4ab-78acf234ffba" class="code"><code>secret_key=&quot;django-insecure-0^ecd1c0z617wah(1((kp*6otvj$kd!4-@kn58705$4xm$b6r8&quot;
+api_key=</code></pre><p id="cc17621f-9bbb-46d4-845a-34e5e4e3b43d" class="">
+</p><p id="090e5b5c-b021-42a1-b40d-ea8a623781d7" class="">You’ll recognize that the <code>api_key</code> variable is blank. For that, you’ll need to create an OpenAI account. </p><p id="b0b945ce-3c55-43d3-a5c6-b7555aca892a" class="">First, signup at <a href="https://beta.openai.com/signup">https://beta.openai.com/signup</a>. If you already have account, login. </p><p id="7a6d9416-7ae9-44bd-a1ca-a455b2ca40c0" class="">Next, at the dashboard when you login, click your profile icon at the top right</p><figure id="d10e4fa7-7e47-4b7a-b5a6-21bc90299bec" class="image"><a href="Screenshot_2023-01-28_at_4.19.36_PM.png"><img style="width:414px" src="Screenshot_2023-01-28_at_4.19.36_PM.png"/></a></figure><p id="c7e9107c-dfa5-42bf-9649-87acb7e2ad4d" class="">Select <code>view api keys</code> in the dropdown. Then click <code>create new secret key</code></p><figure id="de8ab604-b8aa-4f6b-bfc0-54ac3f270316" class="image"><a href="Screenshot_2023-01-28_at_4.21.15_PM.png"><img style="width:985px" src="Screenshot_2023-01-28_at_4.21.15_PM.png"/></a></figure><p id="083808fd-fe56-45ee-8355-41057215255d" class="">It will show a popup with a string of text like <code>sk-8pDhvKS3dsdcMk8RUH3dT3blbkfJiMca3sVrZaIrHSacUUF2</code>. Copy that and save it somewhere since you will never be able to see it again after closing the popup. </p><p id="d0f78ef4-7547-4358-a63a-ad035f53f3b8" class="">
+</p><p id="bd234272-299a-4840-a160-a3365743b922" class="">Finally, add that to <code>.env</code> for <code>api_key</code>.</p><pre id="41d4ee4a-104f-4c7b-b7fc-b8d145e189a6" class="code"><code>secret_key=&quot;django-insecure-0^ecd1c0z617wah(1((kp*6otvj$kd!4-@kn58705$4xm$b6r8&quot;
+api_key=&quot;&lt;your key here&gt;&quot;</code></pre><p id="8f45a7a7-f50d-4416-b60c-92b95d17d143" class="">
+</p><h3 id="1864f030-ea78-4cfc-8d89-c7494f85a7db" class="">1.7. Start the Django server</h3><p id="6a41f2d8-f3e7-4b3a-8a80-5d757d4eb874" class="">Now that you’ve installed dependencies, migrated the database, and setup the environment, you can now start the server</p><pre id="58660842-d664-4fa2-bec4-ba7641a1c143" class="code"><code>python3 manage.py runserver</code></pre><p id="d8171e8e-3250-4bed-899d-b07aeab8bf07" class="">If successful, you should see something like this.</p><figure id="54c24c8f-80c2-4a79-acb7-88eab87017e8" class="image"><a href="Screenshot_2023-01-28_at_3.56.12_PM.png"><img style="width:511px" src="Screenshot_2023-01-28_at_3.56.12_PM.png"/></a></figure><p id="65cfa301-c29c-4ccf-85a1-3cefa4fa9bb5" class="">Now, if you go to <a href="http://localhost:8000/summary/">http://localhost:8000/summary/</a>, you should see this</p><figure id="d84bb7ce-dc4a-4204-b407-2d9051bbdd2f" class="image"><a href="Screenshot_2023-01-28_at_4.35.53_PM.png"><img style="width:1344px" src="Screenshot_2023-01-28_at_4.35.53_PM.png"/></a></figure><p id="ee8975e1-62fe-4470-ba2a-7c67794d32a6" class="">This means that everything has been setup correctly. </p><p id="8d3683b3-7c16-4906-b94d-fa544875d817" class="">To shut down the server, simply enter <code>ctrl + c</code> in the terminal where you ran <code>python3 manage.py runserver</code>. However, you’ll need the server up for the next steps. </p><p id="55cb4607-a8e3-4fa2-8b1b-1a3f86dde262" class="">
+</p><h1 id="8bf41c22-5651-4c20-9c8c-f89272c1d282" class="">2. Adding the API to the frontend</h1><p id="c581bbbf-c7ef-4ae9-86e7-9e328c90f344" class="">Now that the backend server is up and running, we can now setup a page on the frontend to interact with it. </p><p id="7576c5f7-dbbe-4c64-ac90-b5124de837b8" class="">
+</p><h3 id="60ddc2c7-f9fc-407b-ad02-275a37f7e9d4" class="">2.1. Setup the <code>summarize</code> page</h3><pre id="e10690cd-db4a-4773-a87e-78b55147562d" class="code"><code>touch src/pages/summarize.tsx</code></pre><p id="d3657cd5-7bd3-43ba-aff3-1851c0759b4e" class="">Paste the following inside</p><pre id="10750671-e759-4eab-90a7-9f996a23d5bb" class="code"><code>// summarize.tsx
+
+function Summarize() {
+    return (
+        &lt;h1 className=&quot;text-center text-xl font-bold text-slate-600 mt-20&quot;&gt;
+            Summarize
+        &lt;/h1&gt;
+    );
+}
+export default Summarize;</code></pre><p id="aa784d3b-a1e9-42ad-a31b-9fc97fa992fd" class="">
+</p><p id="25ec3fdc-3dde-4dfa-abee-b07741c5fdbd" class="">Then update <code>navbar.tsx</code> and <code>App.tsx</code> with the new page</p><pre id="764de916-e864-4e58-9d7b-c2750e9344cf" class="code"><code>// navbar.tsx
+
+import { Link } from &quot;wouter&quot;;
+
+function Navbar() {
+    return (
+        &lt;nav className=&quot;container mx-auto max-w-3xl text-blue-600 mt-10 px-5&quot;&gt;
+            &lt;Link href=&quot;/&quot; className=&quot;inline-block mr-5 hover:text-blue-400&quot;&gt;
+                Home
+            &lt;/Link&gt;
+						{/* add &quot;mr-5&quot; class to /about link for spacing */}
+            &lt;Link href=&quot;/about&quot; className=&quot;inline-block mr-5 hover:text-blue-400&quot;&gt;
+                About
+            &lt;/Link&gt;
+						{/* add summarize page link */}
+            &lt;Link href=&quot;/summarize&quot; className=&quot;inline-block hover:text-blue-400&quot;&gt;
+                Summarize
+            &lt;/Link&gt;
+        &lt;/nav&gt;
+    );
+}
+export default Navbar;</code></pre><pre id="d6c430eb-26c7-4f77-b426-63b4e4b4ee12" class="code"><code>// App.tsx
+
+import { Route, Switch } from &#x27;wouter&#x27;;
+import About from &#x27;./pages/about&#x27;;
+import Home from &#x27;./pages/home&#x27;;
+import Navbar from &#x27;./components/navbar&#x27;;
+import Summarize from &#x27;./pages/summarize&#x27;; // import page
+import &#x27;./App.css&#x27;;
+
+function App () {
+    return (
+        &lt;&gt;
+            &lt;Navbar /&gt;
+            &lt;Switch&gt;
+                &lt;Route path=&#x27;/&#x27; component={Home} /&gt;
+                &lt;Route path=&#x27;/about&#x27; component={About} /&gt;
+								{/* Set page to route */}
+                &lt;Route path=&#x27;/summarize&#x27; component={Summarize} /&gt;
+            &lt;/Switch&gt;
+        &lt;/&gt;
+    );
+}
+
+export default App;</code></pre><p id="0cf7892f-1676-48a4-83da-2f6a5c890654" class="">
+</p><p id="94c3f6a4-945f-4d75-8535-ae6e667ba495" class="">If you restart the vite dev server, you should see this now when you navigate to <code>Summarize</code>.</p><figure id="fc36c936-e99c-485f-a4df-aeed5c3fd38c" class="image"><a href="Screenshot_2023-01-28_at_5.04.01_PM.png"><img style="width:975px" src="Screenshot_2023-01-28_at_5.04.01_PM.png"/></a></figure><p id="8a711f9e-24e6-47f5-ba08-abb51c88aa27" class="">
+</p><h3 id="6c1ef6d8-6c43-48fa-a024-e31a63c1e24e" class="">2.2. Scaffold the component logic</h3><p id="63a26264-d794-4828-ad9d-acf0842b76b4" class="">First, we’ll setup some of the initial ingredients we’ll need to interact with the backend’s API. Currently, there is a <code>/summary/</code> endpoint that takes a request body attribute of <code>text</code> and runs it through one of OpenAI’s text processing models. </p><p id="99465dc1-cbbe-4d87-b799-9ebbca6a21f9" class="">So essentially, we <code>POST</code> text to the endpoint, and the endpoint will respond with text. For the purposes of this walkthrough, we can just have a text <code>input</code> where users can submit text and see results. </p><p id="8ac1d2cf-e812-404b-a71b-7310cf017efc" class="">Let’s start then:</p><pre id="d92c6dc9-2f0a-45e7-a6f2-b6e7e1a475d3" class="code"><code>// summarize.tsx
+
+import { useState } from &quot;react&quot;;
+
+function Summarize() {
+    const [prompt, setPrompt] = useState(&#x27;&#x27;);
+    const [result, setResult] = useState(&#x27;...&#x27;);
+
+    const onSubmit = () =&gt; {
+        setResult(&#x27;You entered: &#x27; + prompt);
+    };
+
+    return (
+        &lt;div className=&quot;container mx-auto max-w-3xl mt-20 px-5&quot;&gt;
+            &lt;form onSubmit={e =&gt; e.preventDefault()} className=&quot;mb-10&quot;&gt;
+                &lt;label htmlFor=&quot;prompt&quot; className=&quot;block text-2xl font-bold mb-3&quot;&gt;
+                    Enter text to summarize
+                &lt;/label&gt;
+                &lt;input 
+                    type=&quot;text&quot; 
+                    name=&quot;prompt&quot; 
+                    id=&quot;prompt&quot; 
+                    placeholder=&quot;...&quot;
+                    value={prompt}
+                    className=&quot;w-full mb-5 rounded bg-slate-200 p-2&quot;
+                    onChange={e =&gt; setPrompt(e.target.value)}
+                /&gt;
+                &lt;button 
+                    className=&quot;px-5 py-3 rounded bg-slate-600 text-white block ml-auto&quot;
+                    onClick={onSubmit}
+                &gt;
+                    Summarize!
+                &lt;/button&gt;
+            &lt;/form&gt;
+            &lt;h1 className=&quot;text-2xl mb-3 font-bold&quot;&gt;
+                Result
+            &lt;/h1&gt;
+            &lt;p className=&quot;p-2 bg-slate-200 rounded&quot;&gt;
+                {result}
+            &lt;/p&gt;
+        &lt;/div&gt;
+    );
+}
+export default Summarize;</code></pre><p id="20c5e973-f3b9-4ac7-ae82-eee5e5e172c1" class="">Here, we start by setting two states, <code>prompt</code> and <code>result</code>, with default empty values to track the user input and store what we expect to receive from the backend API. </p><p id="44d12706-3b76-4957-aedd-ba42cebb98e4" class="">In the <code>return</code> template, we have a <code>form</code> with an <code>onSubmit</code> function that prevents the default form behavior, since we will be handling everything in the Javascript and do not want the browser to redirect or reload the page when the user submits. </p><p id="a3608aa4-1d2a-40b5-a1eb-eaa002c7d5fb" class="">Inside the <code>form</code>, we have a controlled <code>input</code> that is set to <code>prompt</code> as its value and updates <code>prompt</code> whenever there is a change. </p><p id="e5765b16-0b35-44e1-8254-04d33668d655" class="">Below the <code>input</code> is a <code>button</code> that calls the <code>onSubmit</code> function when clicked, which for now just simply echoes the <code>prompt</code> in the <code>result</code>. </p><p id="afe26ea7-e995-425b-8dff-9e862c019602" class="">Finally, at the bottom is a results section that simply displays <code>result</code>. </p><figure id="b4e220b2-8bb2-4169-9d3a-a3daee631cba" class="image"><a href="Screenshot_2023-01-28_at_5.31.00_PM.png"><img style="width:987px" src="Screenshot_2023-01-28_at_5.31.00_PM.png"/></a></figure><p id="ca197d52-b95d-4041-9630-c94974c2af86" class="">
+</p><h3 id="3dedb57a-8b2b-4447-8666-d9e0bdcf732e" class="">2.3. Add in the API call</h3><p id="565b4f19-5fb0-4148-8e97-6ca79227f0b5" class="">Now that all the logic is mostly there, we just need to insert the API calls to complete the connection. </p><p id="6fa410ce-31ae-456a-a841-522598cd1725" class="">Above and outside the <code>Summarize</code> component, we’ll create a new function that uses Javascript’s <code>fetch</code> method to send a http request to the backend:</p><pre id="10387a5b-d6d0-432e-8c42-98cc6900d493" class="code"><code>import { useState } from &quot;react&quot;;
+
+const getSummary = (prompt) =&gt; {
+    const url = &#x27;https://localhost:8000&#x27; + &#x27;/summary/&#x27;;
+    const options = {
+        method: &#x27;POST&#x27;,
+        headers: {
+            &#x27;Content-Type&#x27;: &#x27;application/json&#x27; // this part is important!
+        },
+        body: JSON.stringify( // must JSON encode request body
+            {
+                text: prompt
+            }
+        )
+    };
+    return fetch(url, options).then(res =&gt; res.json()); // returns a Promise
+}
+
+function Summarize() {
+	// ...</code></pre><p id="2beab56e-27f8-4268-9588-f7bf11bbdc3b" class="">Here, we basically define the parameters for the request. At the end, we return the fetch request, which is a Promise. We chain on <code>.then</code> to parse the response into JSON so that we can utilize the response data.</p><p id="80e21376-f351-4d2c-98c0-847fca4e50c5" class="">
+</p><p id="ad968b43-3198-4f57-bdb0-4e7b16e928fa" class="">Then we can add it in to <code>onSubmit</code> with some promise handling</p><pre id="b567a42a-b9b1-4728-a630-c7ba9eeb89e1" class="code"><code>// ...
+const onSubmit = () =&gt; {
+    getSummary(prompt).then(result =&gt; {
+        setResult(result);
+    }).catch(error =&gt; {
+        setResult(error.message);
+    });
+};
+// ...</code></pre><p id="a8086c7a-f5da-4c73-b2b2-cbfe9799c2f5" class="">Here, <code>getSummary</code> returns a Promise for the request as mentioned previously. We wait for it to complete and for the response JSON to be parsed with <code>.then</code>, before we grab the final result and set the local <code>result</code> state to it. We add a <code>.catch</code> to catch any errors that may occur and set <code>result</code> to the error message instead. </p><p id="34e7dd7f-7a2c-4a59-8433-16ee8dd98567" class="">
+</p><h3 id="93c48644-5116-4e5a-a2b0-c6aef597eee7" class="">2.4. Test</h3><p id="f5f0269b-3353-4571-a15b-a5f2635df91f" class="">That’s it! Now we can test to see if it’s working. Enter in some text, press the button, and wait for a response. It may take a couple of seconds before you see the result, since the backend needs to wait for OpenAI to process the text. Hopefully everything goes as expected. </p><figure id="ceb4eefd-be3a-420a-8c62-bd4221b43988" class="image"><a href="Screenshot_2023-01-28_at_6.06.40_PM.png"><img style="width:958px" src="Screenshot_2023-01-28_at_6.06.40_PM.png"/></a></figure><p id="b5cf7cd3-cbe5-4f31-847f-2ada565d9e66" class="">It’s not exactly a summarizer, but linking the frontend to the backend via API is the important part here!</p><p id="b21f0bd1-f472-49d8-8e8f-e0e36f183e5d" class="">Now you know how to communicate information between the two. </p><p id="3730d237-c1ad-4569-b186-fb186a6ca4bf" class="">
+</p><h1 id="f209091d-20c4-4b67-b4d6-e65e266ec62a" class="">3. Frontend environment variables</h1><p id="3a691ea5-c28b-4bd1-8b8f-b046550a10ef" class="">In the previous steps, you might have noticed already that the url used by <code>getSummary</code> is a static string to <code>localhost:8000</code>. This works when you’re developing locally on your machine, but when you deploy your frontend, you likely won’t be having the backend running on the same exact server. In fact, the backend will likely be hosted on its own domain/url, separate from the frontend. So, how would you change the url to properly match the context? On your machine, it needs to be <code>localhost:8000</code>. In production, it needs to be whatever url the backend is hosted at. </p><p id="ef5f98eb-aa6c-40c1-86cf-77b7ca54c605" class="">To do this, we can use environment variables, and <code>Vite</code> has out-of-the-box support for environment variable files.</p><p id="551de54e-2786-464d-9e52-cc7a05d59ea9" class="">
+</p><h3 id="48168c12-e34b-444e-87e0-d14d151c4332" class="">3.1. Create development environment file</h3><p id="e547fa80-7c78-43c2-9a20-c552bb7c2b5e" class="">In the root directory of the frontend, create  <code>.env.development</code></p><pre id="fb935d77-0c12-4cd2-adaa-35c92cedd359" class="code"><code>touch .env.development</code></pre><p id="a7af3599-b0bb-4636-80dc-96fe2d1baec9" class="">Note that the name is important here, so be sure not to misspell or change it!</p><p id="cd6651f2-3465-4557-9979-ba00722d55fe" class="">Next, create <code>.env.production</code> </p><pre id="7f6c543d-7eb0-4ec8-8a59-6cded884a2cd" class="code"><code>touch .env.production</code></pre><p id="3565ee4d-b414-4e2d-877b-86d35727c214" class="">To add environment variables, simply do</p><pre id="cbcc54a7-e5f6-4294-abe5-749aba0072fe" class="code"><code># in .env.development
+VITE_API_URL=http://localhost:8000
+
+# in .env.production
+VITE_API_URL=&lt;some-url-where-backend-is-hosted&gt;</code></pre><p id="969c6205-6afe-45c7-9eaa-fcea539cfc0c" class="">where it’s <code>VITE_</code> followed by a name for the variable. </p><p id="fe21f43b-dc51-4155-8690-63d67e4442ad" class="">
+</p><h3 id="d4b2c322-c4e6-4044-a1a2-17c15c39dd3f" class="">3.2. Create settings file</h3><p id="2bbc3700-aa30-4114-8d87-59f614e77731" class="">In the <code>src</code> directory, now create <code>settings.ts</code> (or <code>.js</code> if you’re not using Typescript)</p><pre id="33d266a9-1c0c-4157-98ec-2368a93bb412" class="code"><code>touch src/settings.ts</code></pre><p id="73758799-f125-4558-a0c1-154057944090" class="">Inside, paste the following</p><pre id="fcddd514-6c33-4192-8865-682cab47aae9" class="code"><code>export const API_URL = import.meta.env.VITE_API_URL;</code></pre><p id="bac87470-d21a-4e73-afd6-dc19a56c7ef5" class=""><code>Vite</code> will automatically use the correct <code>.env</code> file depending on the mode (development/production) and insert the environment variable value. </p><p id="b798bc94-9efd-4dc5-8525-3526658383c5" class="">
+</p><p id="005a04c1-2048-41f7-b074-819f715c03fd" class="">Now go back to <code>summarize.tsx</code> and update <code>getSummary</code></p><pre id="fff73148-b3c3-4289-8cbb-dc2d0adf6cea" class="code"><code>import { useState } from &quot;react&quot;;
+import { API_URL } from &quot;../settings&quot;; // new import
+
+const getSummary = (prompt) =&gt; {
+    const url = API_URL + &#x27;/summary/&#x27;; // uses dynamic API_URL
+    const options = {
+        method: &#x27;POST&#x27;,
+        headers: {
+            &#x27;Content-Type&#x27;: &#x27;application/json&#x27;
+        },
+        body: JSON.stringify(
+            {
+                text: prompt
+            }
+        )
+    };
+    return fetch(url, options).then(res =&gt; res.json());
+}</code></pre><p id="f47b7238-9bdb-40fc-bdaf-5436ef5d4990" class="">
+</p><p id="e5063c21-4830-4e50-9f5b-59282ae01c11" class="">With this, <code>.env.development</code> will be used when you run the dev server while developing, and <code>.env.production</code> will be used when you build the app. </p><p id="1fedac2b-c233-4005-86d7-1ea5fce8c3fe" class="">Now you just need to remember to update <code>.env.production</code> with the correct url once the backend is deployed.</p><p id="a9006a72-cc6e-48b4-87b0-19b674ced4d1" class="">
+</p></div></article></body></html>

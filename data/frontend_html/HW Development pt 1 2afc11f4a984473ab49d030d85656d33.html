@@ -1,0 +1,843 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HW: Development pt. 1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2afc11f4-a984-473a-b49d-030d85656d33" class="page sans"><header><img class="page-cover-image" src="https://images.unsplash.com/photo-1494472155656-f34e81b17ddc?ixlib=rb-4.0.3&amp;q=80&amp;fm=jpg&amp;crop=entropy&amp;cs=tinysrgb" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🌊</span></div><h1 class="page-title">HW: Development pt. 1</h1></header><div class="page-body"><hr id="510370d5-110c-40db-86c8-25f2dc1248de"/><p id="3aa8cb43-11dc-4ecb-b0d9-ed82a559f13a" class="">
+</p><p id="8cf404d1-2880-4500-8816-e0ad4555529c" class="">For this step of the Hello World project, we will simply add two basic pages: a hello world page, and an about page. </p><p id="b23ad6d4-ba63-464e-8905-690798227ef1" class="">
+</p><hr id="9c52cab6-1de1-456e-857d-c0ccaa1a0581"/><nav id="ef47c67b-df30-46ef-922f-ccba05611c31" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7aa1dab2-a891-4dce-b677-bf749a063d7b">1. Installing wouter</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c1241cec-1da4-4fa3-ae8b-3ddc195b46c8">2. Remove unneeded boilerplate</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f5ba59fe-a80c-4bee-93ce-da4bcd0c7b09">3. Creating the pages</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#49b0795d-8e71-4ea3-8890-508372493b56">1. Home</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d6ec0d78-f933-48d0-904e-f64e19ae7856">2. About</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#43ad170d-23cf-4bfb-bca9-a9c257497b4a">4. Putting it all together</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d49b60ae-6754-4c74-94a9-6d56cc16351a">5. Adding a navbar component</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3d92230c-27d9-4af0-ae3b-2e6cd2967791">6. Conclusion</a></div></nav><p id="db6e9d51-e806-44ec-8b70-2ddc4556d47e" class="">
+</p><h1 id="7aa1dab2-a891-4dce-b677-bf749a063d7b" class="">1. Installing wouter</h1><p id="5571c620-9103-4223-81f8-1c4e0a24acee" class="">We will be using the wouter library for React routing because it is small and simple.</p><pre id="11e60260-7f38-46ac-9721-df5640917226" class="code"><code># npm
+npm install --save wouter
+
+# yarn
+yarn add wouter</code></pre><h1 id="c1241cec-1da4-4fa3-ae8b-3ddc195b46c8" class="">2. Remove unneeded boilerplate</h1><p id="609e4d70-8f49-424c-b642-68e52a4a3d98" class="">Next, remove unnecessary files and code.</p><ul id="93d2bc71-2b6d-4a02-8127-7509bc55c4b6" class="bulleted-list"><li style="list-style-type:disc">Delete <code>vite.svg</code> from <code>public</code></li></ul><ul id="4a155d4a-f1cc-49c0-9c48-e4fa3976caaa" class="bulleted-list"><li style="list-style-type:disc">Delete <code>react.svg</code> from <code>assets</code></li></ul><ul id="6b06eb29-ff80-4afa-8f9e-4c1b6adaa7db" class="bulleted-list"><li style="list-style-type:disc">Delete everything in <code>App.css </code></li></ul><ul id="292f2cce-adc0-496b-be5d-ee26328fcb92" class="bulleted-list"><li style="list-style-type:disc">Delete everything in <code>index.css</code> except the <code>@tailwind</code> directives.</li></ul><ul id="1fc11d45-2c89-4692-a806-fccc7f8b0bb7" class="bulleted-list"><li style="list-style-type:disc">In <code>App.tsx</code> (or <code>.jsx</code> if you aren’t using typescript)<ul id="5433adc5-a392-4dd1-bf01-e10e0f7c4c36" class="bulleted-list"><li style="list-style-type:circle">Delete everything between the parentheses of the <code>return</code> on line 8<ul id="e215b468-20f3-4e1b-8fa2-609746e671db" class="bulleted-list"><li style="list-style-type:square">Replace with<pre id="44503c50-edaf-4cad-8d8d-5035a7c5d857" class="code"><code>&lt;h1&gt;Hello World&lt;/h1&gt;</code></pre></li></ul></li></ul><ul id="6333f515-0d66-4f49-ace2-c76191daf279" class="bulleted-list"><li style="list-style-type:circle">The delete line <code>6</code> where the <code>count</code> state is declared. </li></ul><p id="3d09f583-0e48-4d6b-8773-4c4b06141258" class="">
+</p></li></ul><p id="b16a19f9-38c6-4c76-bdc2-7fcfc7ef4e2f" class="">After these steps, <code>App.tsx</code> should look like this</p><pre id="9b4fc9ab-9b95-4a6b-8331-c2e9b991107d" class="code"><code>import { useState } from &#x27;react&#x27;
+import &#x27;./App.css&#x27;
+
+function App () {
+
+  return (
+    &lt;h1&gt;Hello World&lt;/h1&gt;
+  );
+}
+
+export default App</code></pre><p id="ff0a9182-4efd-484e-a748-9a78237bc925" class="">And running the dev server (<code>npm run dev</code> or <code>yarn dev</code>) would display</p><figure id="e4cd43a3-f475-4758-8386-70c80eeae1fa" class="image"><a href="Screenshot_2023-01-20_at_9.19.09_PM.png"><img style="width:384px" src="Screenshot_2023-01-20_at_9.19.09_PM.png"/></a></figure><p id="4636ac60-3ba0-44ee-a26c-cdcfdabd3f10" class="">
+</p><p id="7a8951f6-d332-475d-8b27-04d0cb51c7d6" class="">Finally, modify <code>index.html</code>:</p><pre id="a23e4f5e-9384-4723-aab8-84b6a57fd101" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+		&lt;!-- Remove the link to the Vite icon logo --&gt;
+		&lt;!-- &lt;link rel=&quot;icon&quot; type=&quot;image/svg+xml&quot; href=&quot;/vite.svg&quot; /&gt; --&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+		&lt;!-- Update the App title --&gt;
+    &lt;title&gt;Hello World Example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script type=&quot;module&quot; src=&quot;/src/main.tsx&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="8db114c3-c190-46cf-952a-e1179f2c8408" class="">If not using typescript (<code>main.tsx</code> → <code>main.jsx</code>):</p><pre id="7bd0d32f-5eb1-4b3c-964d-c950a696cf97" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot; /&gt;
+		&lt;!-- Remove the link to the Vite icon logo --&gt;
+		&lt;!-- &lt;link rel=&quot;icon&quot; type=&quot;image/svg+xml&quot; href=&quot;/vite.svg&quot; /&gt; --&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+		&lt;!-- Update the App title --&gt;
+    &lt;title&gt;Hello World Example&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id=&quot;root&quot;&gt;&lt;/div&gt;
+    &lt;script type=&quot;module&quot; src=&quot;/src/main.jsx&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><h1 id="f5ba59fe-a80c-4bee-93ce-da4bcd0c7b09" class="">3. Creating the pages</h1><p id="1074a3bd-8775-4fc5-bab1-603e2189cade" class="">We will need two pages with two routes:</p><ol type="1" id="adf870f3-9626-4d2f-983b-921dfd796ec1" class="numbered-list" start="1"><li>The hello world home page (<code>/</code>)</li></ol><ol type="1" id="7d189d76-27ca-491c-9d00-fe3313caf85e" class="numbered-list" start="2"><li>The about page (<code>/about</code>)</li></ol><p id="199f21c7-8204-4262-965b-e7c09852157a" class="">
+</p><p id="6ee36626-1cc5-48e3-bb00-eabeb7f2df70" class="">In the <code>src</code> directory, make a new <code>pages</code> directory</p><pre id="0a2baf1f-4240-4cac-adc0-01e36b86ee4f" class="code"><code>mkdir src/pages</code></pre><p id="18cc7789-2989-4201-b41f-a00272fa8588" class="">
+</p><p id="82d25c9a-3626-4c31-ac37-2d25e5f0f5d2" class="">Then create <code>home.tsx</code> and <code>about.tsx</code>. If you’re not using Typescript, then it would be <code>.jsx</code> instead of <code>.tsx</code>.</p><pre id="025c273a-60b5-4471-a54f-59a943847c97" class="code"><code>touch src/pages/home.tsx
+
+touch src/pages/about.tsx</code></pre><p id="03f69373-d0da-4c8f-92e2-f50b520f2978" class="">
+</p><h3 id="49b0795d-8e71-4ea3-8890-508372493b56" class="">1. Home</h3><p id="fb3a42c0-fd38-4139-ab8b-93f10fd1aca8" class="">In <code>home.tsx</code> add the following component code if you’re using typescript:</p><pre id="331b1ee4-a812-4b82-823a-4a9d79461539" class="code"><code>import { useEffect, useRef, useState } from &quot;react&quot;;
+
+function Home() {
+		// create state to track time string
+    const [time, setTime] = useState((new Date()).toLocaleTimeString());
+		// store interval in a reference to clear it on unmount
+    const intervalRef = useRef&lt;number&gt;();
+		
+		// on component mount
+    useEffect(() =&gt; {
+				// create a recurring interval to update the time
+        intervalRef.current = setInterval(() =&gt; {
+            setTime((new Date()).toLocaleTimeString());
+        }, 1000);
+				
+				// when the component is unmounted, clear the interval
+        return () =&gt; {
+						// need to include &quot;as&quot; here to tell
+						// typescript that we know it will always be defined as a number. 
+            clearInterval(intervalRef.current as number);
+        };
+    }, []);
+
+    return (
+        &lt;h1 className=&quot;text-center text-xl font-bold text-slate-600 mt-20&quot;&gt;
+						Hello World, it is {time}
+				&lt;/h1&gt;
+    );
+}
+
+export default Home;</code></pre><p id="225f4c91-0933-43cd-809e-e51eb8e631bf" class="">Otherwise if you’re using normal javascript:</p><pre id="c7a219fa-00d1-4e7b-a608-ed77ed2cf16f" class="code"><code>import { useEffect, useRef, useState } from &quot;react&quot;;
+
+function Home() {
+		// create state to track time string
+    const [time, setTime] = useState((new Date()).toLocaleTimeString());
+		// store interval in a reference to clear it on unmount
+    const intervalRef = useRef();
+		
+		// on component mount
+    useEffect(() =&gt; {
+				// create a recurring interval to update the time
+        intervalRef.current = setInterval(() =&gt; {
+            setTime((new Date()).toLocaleTimeString());
+        }, 1000);
+				
+				// when the component is unmounted, clear the interval
+        return () =&gt; {
+            clearInterval(intervalRef.current);
+        };
+    }, []);
+
+    return (
+        &lt;h1 className=&quot;text-center text-xl font-bold text-slate-600 mt-20&quot;&gt;
+						Hello World, it is {time}
+				&lt;/h1&gt;
+    );
+}
+
+export default Home;</code></pre><p id="1e22ec9c-b27e-4b85-bb96-2dc859b4259b" class="">Here we add some display text with a self-incrementing clock.</p><p id="7bc53dc7-6501-4758-b83c-d079d3ede9b6" class="">
+</p><h3 id="d6ec0d78-f933-48d0-904e-f64e19ae7856" class="">2. About</h3><p id="a9acb822-9b23-4d85-9bf9-d6841e198a9e" class="">In <code>about.tsx</code> (same for Javascript):</p><pre id="9f5128a6-4b64-467c-bf89-2e291377d8e9" class="code"><code>function About() {
+    return (
+        &lt;h1 className=&quot;text-center text-xl font-bold text-slate-600 mt-20&quot;&gt;
+						About Page
+				&lt;/h1&gt;
+    );
+}
+export default About;</code></pre><p id="031405d7-1381-46a8-8f12-5fc81d9df36c" class="">
+</p><h1 id="43ad170d-23cf-4bfb-bca9-a9c257497b4a" class="">4. Putting it all together</h1><p id="62a99895-8684-4fb7-ab8a-1f4076a381f5" class="">Now it’s time to connect the routes and pages. </p><p id="4c8385d9-0e44-4ad0-9f34-bb751ba1b8a9" class="">Replace <code>App.tsx</code>with the following:</p><pre id="40e95d3a-075e-452b-9884-b6c22995e2e9" class="code"><code>import { Route, Switch } from &#x27;wouter&#x27;;
+import About from &#x27;./pages/about&#x27;;
+import Home from &#x27;./pages/home&#x27;;
+import &#x27;./App.css&#x27;;
+
+function App () {
+    return (
+        &lt;Switch&gt;
+            &lt;Route path=&#x27;/&#x27; component={Home} /&gt;
+            &lt;Route path=&#x27;/about&#x27; component={About} /&gt;
+        &lt;/Switch&gt;
+    );
+}
+
+export default App;</code></pre><p id="64f74c61-23f1-4749-8447-0275027bed52" class="">Here we declare a <code>Switch</code> component so that only one <code>Route</code> is matched at a time. Then we specify a <code>Route</code> for each component with the corresponding path. Wouter will handle the rest for us. </p><p id="2d89d91d-b46a-4f3f-9087-52338d631e4a" class="">
+</p><p id="7e8f19f2-5f28-43fa-b92a-f891f59e9acb" class="">If you stop (<code>ctrl + c</code> in the terminal) and rerun the dev server now, you should see this when you open the app with the time updating every second. </p><figure id="de70389f-f61e-4a37-96d4-a0a1670eae50" class="image"><a href="Screenshot_2023-01-20_at_9.41.34_PM.png"><img style="width:970px" src="Screenshot_2023-01-20_at_9.41.34_PM.png"/></a></figure><p id="d48acaca-e122-40e9-8551-5531427ad9a0" class="">
+</p><p id="fa197a54-40f0-4680-b6df-3667d2574750" class="">If you add <code>about</code> to the url (so something like <code>localhost:5173/about</code>, where 5173 is whatever port the server is hosted out) and enter it into your browser, you should see the about page. </p><figure id="e68b9e40-79ef-428e-84cd-17b98d4ba286" class="image"><a href="Screenshot_2023-01-20_at_9.43.50_PM.png"><img style="width:998px" src="Screenshot_2023-01-20_at_9.43.50_PM.png"/></a></figure><p id="f272d67a-2cae-4e48-8d99-683e6dd071c8" class="">
+</p><h1 id="d49b60ae-6754-4c74-94a9-6d56cc16351a" class="">5. Adding a navbar component</h1><p id="b7065806-5146-417a-8392-ac609f01cce5" class="">Right now the pages are there, but it would be great if a user could navigate between the pages by clicking on navbar links.</p><p id="b3e2499d-ea78-46bc-b93a-3261ed929319" class="">
+</p><p id="f49203c8-aec9-4f5e-bb51-95da1cacf148" class="">Create a new <code>components</code> directory in <code>src</code>.</p><pre id="88f538d4-c65a-4b69-9200-040b8180fdb3" class="code"><code>mkdir src/components</code></pre><p id="7ad9121b-4f99-4f7f-b052-57da72b9594d" class="">Then make a new <code>navbar.tsx</code> file inside (<code>.jsx</code> for javascript, you know the drill).</p><pre id="3ecc57df-b558-4db1-a3dc-82755d1c5748" class="code"><code>touch src/components/navbar.tsx</code></pre><p id="cccf15fa-4450-447b-8988-ce28c2c61c1a" class="">
+</p><p id="0d794f24-d93a-4925-87c0-83d1d28b4198" class="">Inside <code>navbar.tsx</code>, add this:</p><pre id="710a0dda-07df-42d4-a7a0-ab6b7d7bac26" class="code"><code>import { Link } from &quot;wouter&quot;;
+
+function Navbar() {
+    return (
+        &lt;nav className=&quot;container mx-auto max-w-3xl text-blue-600 mt-10 px-5&quot;&gt;
+            &lt;Link href=&quot;/&quot; className=&quot;inline-block mr-5 hover:text-blue-400&quot;&gt;
+                Home
+            &lt;/Link&gt;
+            &lt;Link href=&quot;/about&quot; className=&quot;inline-block hover:text-blue-400&quot;&gt;
+                About
+            &lt;/Link&gt;
+        &lt;/nav&gt;
+    );
+}
+export default Navbar;</code></pre><p id="5ff747a4-0ca0-4655-99bc-fcf7e26867d5" class="">Here we specify a <code>nav</code> with links to the different pages. Note that we use <code>Link</code> here instead of <code>a</code> so that <code>wouter</code> can handle navigation to the right page for us without causing a page reload. Using <code>a</code> tags would tell the browser to navigate to the new page while clearing the current one, causing an unnecessary refresh. </p><p id="aaca58a8-5b69-4e05-84ad-3fafa6346641" class="">
+</p><p id="1bd90b13-d11c-4058-9d75-679862601e72" class="">Finally update <code>App.tsx</code> with the new navbar:</p><pre id="9de7a1cd-c541-42cb-b545-81d7f4efcbb9" class="code"><code>import { Route, Switch } from &#x27;wouter&#x27;;
+import About from &#x27;./pages/about&#x27;;
+import Home from &#x27;./pages/home&#x27;;
+import Navbar from &#x27;./components/navbar&#x27;;
+import &#x27;./App.css&#x27;;
+
+function App () {
+    return (
+        &lt;&gt;
+            &lt;Navbar /&gt;
+            &lt;Switch&gt;
+                &lt;Route path=&#x27;/&#x27; component={Home} /&gt;
+                &lt;Route path=&#x27;/about&#x27; component={About} /&gt;
+            &lt;/Switch&gt;
+        &lt;/&gt;
+    );
+}
+
+export default App;</code></pre><p id="78f6664c-cb3a-42b0-a122-7fcc3a241bb0" class="">The <code>Navbar</code> is put in <code>App.tsx</code> outside the <code>Switch</code> so that it isn’t unnecessarily re-rendered on every page navigation.</p><p id="97bfce0b-7d48-4862-b11b-b996046af442" class="">In order to put the <code>Navbar</code> side-by-side with the <code>Switch</code>, we wrap it in a fragment (the <code>&lt;&gt;&lt;/&gt;</code>) to keep JSX happy. </p><p id="3d831eb9-527f-4d80-b7c5-d11a87f64044" class="">
+</p><p id="81b10bce-64ab-45a5-9ea2-3c264141c2a4" class="">Now you should see this with the dev server restarted</p><figure id="1ddd37cd-cafc-4106-8f32-497c7ce082a1" class="image"><a href="Screenshot_2023-01-20_at_9.54.38_PM.png"><img style="width:991px" src="Screenshot_2023-01-20_at_9.54.38_PM.png"/></a></figure><p id="ae253fb7-e1a8-4dd5-8f63-06312d6df914" class="">
+</p><p id="2b7391c1-c91b-4932-b6ab-3563600c9cc8" class="">Clicking the navigation links instantly switches the page with client-side routing. </p><p id="46e8082a-c86c-4566-bb45-6e73e39f0763" class="">
+</p><h1 id="3d92230c-27d9-4af0-ae3b-2e6cd2967791" class="">6. Conclusion</h1><p id="e7c76363-afbb-45fd-b8d5-4fa9176f9fbd" class="">We have now added two basic pages and simple client-side routing to the <code>Hello World</code> app. </p></div></article></body></html>

@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Python Best Practices</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="175abdde-bbbe-4dca-b910-5ed0493f695f" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/woodcuts_14.jpg" style="object-position:center 60%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="https://www.notion.so/icons/window_green.svg"/></div><h1 class="page-title">Python Best Practices</h1></header><div class="page-body"><p id="e53fc9e3-e16a-4714-9478-787b1af75d2e" class="">Python is one of the most-used programming languages in the world, and with that, comes a variety of use-cases. Ranging from building machine learning models to launching web applications, developers use Python to solve all kinds of problems. Nonetheless, there are a few industry-standard practices that keeps Python code <strong>readable and clean</strong>. Here’s a few helpful tips and tricks.</p><nav id="7b3e0851-bd5f-4e67-b043-f97fd31a9b87" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d50ac5d0-c6c7-4e31-81c9-8a089ab66d08">✋ Read!</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cf34a9b1-2ae3-42be-9d8b-0702defceba1">💫 Virtual Environments</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a28febe6-d30f-40d2-9d6e-fb84485e4b4c">📝 Dependency Requirements </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d675e3d9-1c3a-4a23-bd73-899b812ed373">⌨️ Coding Practices</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d617fbc6-bacf-4215-9852-d66a79981850">PEP8</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#896c72fb-d36e-4858-bbe5-17c8a5b3cc09">Naming</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e3ad2ba2-b0b6-4f7d-a564-b24a55fd7512">Variables</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9444e9ec-bbd3-448e-8123-1ad2c87e2c21">Classes</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b14e72ee-769a-406f-867c-c9640b364756">Functions</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#03d26f80-7f56-47ff-a073-959019c86d40">File Handling</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5d80c208-a42e-4487-ae7c-68e977dd1604">Handling Errors</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f5cf6058-5ef1-495a-b3bc-e3a5c09d5a46"><strong>Try / Except Block</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e4b397cc-c32e-4889-9e19-18ae65682cc6"><strong><strong><strong><strong><strong><strong><strong>Asserts</strong></strong></strong></strong></strong></strong></strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9e22acec-4452-4a84-af9e-3908f741ffde">📖 The Zen of Python </a></div></nav><hr id="2da41585-236f-49b8-980a-815bc4c05481"/><h2 id="d50ac5d0-c6c7-4e31-81c9-8a089ab66d08" class="">✋ Read!</h2><p id="905367cd-845a-4049-a041-8d972800c40e" class="">While there are a wide-variety of beliefs and practices on writing good Python code, it’s important that no matter what you decide, <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>be consistent! </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>Don’t suddenly swap variable naming styles or quotation uses, because that’ll make your code harder to read for someone else. Stick with your choices !! </p><p id="3430c814-1f7c-4835-b33d-a393070b602e" class="">
+</p><hr id="58ee75df-5485-47c3-b521-c2196e4261da"/><h2 id="cf34a9b1-2ae3-42be-9d8b-0702defceba1" class="">💫 Virtual Environments</h2><p id="ee065048-6951-4d90-b4ef-5a7984b0aad6" class="">A virtual environment is an <strong>isolated</strong> Python environment on your local machine that keeps a separate installation of Python and libraries from other environments. This keeps project dependencies away from each other to avoid version issues. </p><p id="10ff3393-21e8-48d6-bfe5-4ca2e003477b" class="">For example, imagine you have a project that requires NumPy version 1.24.0, while another project needs 1.21.0. You can use a virtual environment in each project that has its own specific NumPy installation. </p><p id="60765022-cc32-495c-bfdf-29ee56a8fc2a" class="">You can set up a virtual environment by running the following command inside your project directory via a Terminal window. </p><pre id="064a4493-4821-4b01-b11b-d3795bd86959" class="code"><code>python3 -m venv env_name</code></pre><p id="94b56a48-7a61-4077-95a3-7eb8b2a875c2" class="">Once the environment is created, launch it by running the following command:</p><div id="8cf55d88-df76-4691-86d7-7d1bd10371b2" class="column-list"><div id="41c5e84d-e97f-4fe1-8c48-fcfb867eec4e" style="width:50%" class="column"><p id="3eb775a1-8c05-4bdd-ad1b-5ab5435de272" class=""><strong><strong><strong><strong><strong><strong><strong>[MacOS / Linux]</strong></strong></strong></strong></strong></strong></strong></p><pre id="9ca5b5ea-4c0d-4337-b0e9-7ef32a4522ab" class="code"><code>source env_name/bin/activate</code></pre></div><div id="97350b08-5ecb-43f1-9a47-5803de3b7239" style="width:50%" class="column"><p id="e4595206-60dc-4a26-b906-612ed3fa2d0a" class=""><strong>[Windows]</strong></p><pre id="e5da60ee-daf4-41cb-a5a6-6009d6534447" class="code"><code>env_name/Scripts/activate.bat</code></pre></div></div><p id="30c9e1f0-6f1c-4825-8a77-0da55fd66ef5" class="">You should see some marker that the environment is running. Typically, the next line in your command line tool should start with the environment name in parentheses like so:</p><pre id="d648e605-7b12-4f32-9af0-da29fdbb047b" class="code"><code>(env_name) gokul ~ %: .... </code></pre><p id="eff16811-72be-4bdc-8f1c-f420fe9c8a2e" class="">You can simply enter <code>deactivate</code> in your command line tool to exit the virtual environment! </p><ul id="9ea99758-ec6a-40d5-b200-f90ca58c3767" class="toggle"><li><details open=""><summary><strong><strong><strong><strong><strong><strong><strong>Virtual Environments &amp; GitHub</strong></strong></strong></strong></strong></strong></strong></summary><p id="cfb1d9a1-a327-4a59-a75e-e771d624c17a" class="">Do <strong><mark class="highlight-red">NOT</mark></strong><strong> </strong>push your virtual environment to GitHub! Make sure to add the folder name to your <code>.gitignore</code> file like so: </p><pre id="100ed4d1-ae1d-4ff6-84f7-5f3b5f08f3f7" class="code"><code># ignore the entire virtual env directory
+env_name/</code></pre><p id="339ba355-7936-49b0-a874-18d59a2066f1" class="">Most premade <code>.gitignore</code> files will include common environment names like <code>env</code>, <code>venv</code>, etc. so consider using these!</p></details></li></ul><h2 id="a28febe6-d30f-40d2-9d6e-fb84485e4b4c" class="">📝 Dependency Requirements </h2><p id="3dec0e36-60fb-4fd5-b598-ffccd9286330" class="">If you would like to send information about your dependencies used (including name &amp; version), run the following command to create a requirements file:</p><pre id="a353d3d3-b7ae-4089-9cae-b7c9a46fb204" class="code"><code>pip freeze &gt; requirements.txt</code></pre><p id="bd8e8da1-1993-4758-a852-918a7be30f61" class="">This is push-able to Git, so the next person to use your code can simply run the following command to install all the packages needed for your project! </p><pre id="f5a6c257-9641-48c3-9f49-edc86ebd3c97" class="code"><code>pip install -r requirements.txt </code></pre><p id="dc0e9573-1ae9-4d5a-b8b2-5e5096c2d05b" class="">Now we can see the value of virtual environments, since someone else can just install the absolutely necessary packages, and not every Python library you may have installed on your local machine! </p><h1 id="d675e3d9-1c3a-4a23-bd73-899b812ed373" class="">⌨️ Coding Practices</h1><h2 id="d617fbc6-bacf-4215-9852-d66a79981850" class="">PEP8</h2><p id="6a5dca54-0251-45d9-9378-20f4058daa1e" class=""><code>pep8</code> is the ultimate style guide for Python. It is a collection of tips, suggestions, and rules for writing reusable and shareable code, and has been universally adopted by Python developers worldwide. We’ll cover some of the most important <code>pep8</code> standards here, but you can read about all that it discusses <mark class="highlight-blue"><a href="https://pep8.org/#introduction">here</a></mark>. </p><h2 id="896c72fb-d36e-4858-bbe5-17c8a5b3cc09" class="">Naming</h2><h3 id="e3ad2ba2-b0b6-4f7d-a564-b24a55fd7512" class=""><details open=""><summary>Variables</summary></details></h3><div class="indented"><p id="1117d283-ef29-4b7c-82cf-38a4bdfcd3b9" class="">Avoid using long variable names, and make sure each variable name is specific to the value that it contains, and use _ to break up longer names. </p><p id="c17ce76e-805e-4bcf-8774-78eac9c4ab33" class="">Use entirely-capitalized variable names for constants. </p><pre id="2f9e084e-a736-47e3-a3fa-ef61b17e42c4" class="code"><code># good example
+actor_names = [ ... ]
+
+# bad example: too long 
+list_of_names_of_actors = [ ... ]
+
+# good example
+student_count = 54
+
+# bad example: too vague to know what it means
+x = 54
+
+# good example
+GROUPS = 10</code></pre></div><h3 id="9444e9ec-bbd3-448e-8123-1ad2c87e2c21" class=""><details open=""><summary>Classes</summary></details></h3><div class="indented"><p id="4c2095ad-8ede-4fee-81ad-7b72b0912e01" class="">Classes should follow camelCase in naming, like so:</p><pre id="517f3dc4-7d81-4957-92a7-6e235aa528b8" class="code"><code>class exampleClass():
+
+	...
+	...</code></pre></div><h2 id="b14e72ee-769a-406f-867c-c9640b364756" class="">Functions</h2><p id="2ba2ed1d-00b6-4d52-a611-506c1fd6d154" class="">Documentation is an absolute necessity for good code. If you create a User Defined Function, you should include a brief explanation of what that function does, what to expect from it, and any other critical information that the next user might need. Documentation is written between triple double-quotes right after the function is defined, like so:</p><pre id="a4962a7d-ae3a-4938-90cb-116fbecad2b3" class="code"><code>def example_function(variable_1, variable_2):
+	&quot;&quot;&quot;
+	Here is where I can write some documentation. 
+	This function takes two variables and returns the sum. 
+	&quot;&quot;&quot;
+	return variable_1 + variable_2 </code></pre><p id="2f04514c-7cfb-4784-8a9f-e654680996b7" class="">Functions are also critical to one of the biggest ideas in good programming: </p><p id="ccc3ace6-da79-46d5-bcc4-bbd48681ceb1" class=""><mark class="highlight-red"><span style="border-bottom:0.05em solid"><em><strong>Don’t Repeat Yourself !! </strong></em></span></mark></p><p id="66dd28a9-6424-45c7-a2c0-6c956f23db7b" class="">Use classes, functions, and other modular code to <strong>avoid</strong> repetitive programming. </p><h2 id="03d26f80-7f56-47ff-a073-959019c86d40" class="">File Handling</h2><p id="ee9c2dbe-b998-4ec3-b476-0f7f4c821300" class="">Many of your projects will require manipulation of data from files. Avoid complications with opening / closing these files by always using Python’s <code>with</code> function, like so:</p><pre id="83cd8b49-ca0a-452e-9f17-5d3d806c8049" class="code"><code>with open(&#x27;file.txt&#x27;, &#x27;r&#x27;) as file:
+	...
+	...</code></pre><p id="bf7293ff-aa92-48e3-82d2-3febd0986d77" class="">Because we are using <code>with</code>, if there are any issues in the code, the file will still close, preventing data damage and/or loss. </p><h2 id="5d80c208-a42e-4487-ae7c-68e977dd1604" class="">Handling Errors</h2><p id="cb6c27d6-6ae5-4966-b784-2f74eaa27aaf" class="">Python allows for a variety of error-handling, and it’s good practice to use these:</p><h3 id="f5cf6058-5ef1-495a-b3bc-e3a5c09d5a46" class=""><details open=""><summary><strong>Try / Except Block</strong></summary></details></h3><div class="indented"><p id="2332112f-8ab7-41a0-9891-591d2e12969b" class="">Try / Except is the most common way to handle specific error types, because they allow the user to run certain code in the case of success AND in the case of failure.</p><pre id="a0deb15c-3bba-436b-b4da-112d76628028" class="code"><code>try:
+	...
+	# code to run in case of success 
+	...
+except Exception as e:
+	...
+	# code to run in case of failure
+	...</code></pre><p id="8a0799dd-a77c-47d1-a251-4966a22fb0d6" class="">Try / Except gives you the chance to catch error types you know can happen (entering a float instead of an String, etc.) and handle them without completely killing the program. Use Try / Except blocks for really critical portions of your code. </p><p id="eccf8fd4-8964-4288-ac93-952503168574" class="">You can even include Else / Finally blocks for further scenarios like so:</p><pre id="3c505970-36d2-45bc-a00e-e3e9113b0498" class="code"><code>try:
+	...
+	# code to run in case of success 
+	...
+except Exception as e:
+	...
+	# code to run in case of failure
+	...
+else:
+	...
+	# further code to run w/o error
+	...
+finally:
+	...
+	# code to run at the very end regardless of errors
+	...</code></pre></div><h3 id="e4b397cc-c32e-4889-9e19-18ae65682cc6" class=""><details open=""><summary><strong><strong><strong><strong><strong><strong><strong>Asserts</strong></strong></strong></strong></strong></strong></strong></summary></details></h3><div class="indented"><p id="4ea3c7b7-0f5e-4d1c-8958-3641c37a1ad6" class="">Python’s <code><mark class="highlight-red">assert</mark></code> functionality allows you to test for scenarios where you know something must be true. For example, let’s say you had a function that could only accept positive values, you can write it with asserts like so:</p><pre id="e54fc9a2-85e1-4013-9ff4-eeec12e8c1f1" class="code"><code>def function_with_positive_arguments(arg_1, arg_2):
+	&quot;&quot;&quot;
+	This is a function that only takes in two positive values and returns the sum
+	&quot;&quot;&quot;
+
+	assert arg_1 &gt; 0
+	assert arg_2 &gt; 0 
+
+	return arg_1 + arg_2 </code></pre><p id="c37a4085-5081-4ae8-bc72-bfafc7b2c7ff" class="">The two <code><mark class="highlight-red">assert</mark></code> statements will verify that the two statements are true, and if not, will throw an AssertionError back for you to handle. </p></div><h1 id="9e22acec-4452-4a84-af9e-3908f741ffde" class="">📖 The Zen of Python </h1><p id="37aed514-f205-4395-9280-b3ab826830a4" class="">Open your command line tool, enter “python”, and then run the following command:</p><pre id="d16192cc-a715-43a0-a084-c965f8549ee7" class="code"><code>import this</code></pre><p id="d376bbcf-82e0-4867-bdbc-71588e1bc715" class="">This generates the following snippet: </p><figure id="fb510c50-c9dd-4c82-bd25-bc792f756403" class="image"><a href="Screenshot_2023-01-30_at_9.34.43_PM.png"><img style="width:1120px" src="Screenshot_2023-01-30_at_9.34.43_PM.png"/></a></figure><p id="59ef4ee0-05a7-4cc1-8816-6edd87cb0164" class="">These are a few guiding principles of writing good Python code. While they are all high-level, try and follow these to make readable and reusable code! 🔥</p></div></article></body></html>
